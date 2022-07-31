@@ -1402,7 +1402,7 @@ input::placeholder {
   z-index: -999;
   width: 100%;
   height: 100%;
-  background: url(https://www.toopic.cn/public/uploads/small/1643009840931164300984067.jpg);
+  background: url(https://www.toopic.cn/public/uploads/small/1634203707265163420370758.jpg);
   background-attachment: local;
   background-position: center;
   background-size: cover;
@@ -2389,7 +2389,7 @@ figure.highlight pre .javascript .function {
   margin: 0;
 }
 #recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap .article-meta-label {
-  padding-right: 4px;
+  display: none;
 }
 #recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap .article-meta-separator {
   margin: 0 6px;
