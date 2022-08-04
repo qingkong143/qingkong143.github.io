@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>聊天机器人搭建教程</title>
+      <link href="/2022/08/04/%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/"/>
+      <url>/2022/08/04/%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h1><p>-requests第三方库安装</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br></pre></td></tr></table></figure><h1 id="发送请求"><a class="markdownIt-Anchor" href="#发送请求"></a> 发送请求</h1><p>查看青云客官网 <a href="http://api.qingyunke.com/">http://api.qingyunke.com/</a></p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">i = <span class="built_in">input</span>(<span class="string">&#x27;我：&#x27;</span>)</span><br><span class="line">req = requests.post(<span class="string">&#x27;http://api.qingyunke.com/api.php?key=free&amp;appid=0&amp;msg=&#x27;</span>+i)</span><br></pre></td></tr></table></figure><h1 id="返回响应内容"><a class="markdownIt-Anchor" href="#返回响应内容"></a> 返回响应内容</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = req.json()</span><br></pre></td></tr></table></figure><h1 id="键值对取值"><a class="markdownIt-Anchor" href="#键值对取值"></a> 键值对取值</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;机器人：&#x27;</span>,res[<span class="string">&#x27;content&#x27;</span>]</span><br></pre></td></tr></table></figure><h1 id="优化"><a class="markdownIt-Anchor" href="#优化"></a> 优化</h1><p>因为当前只能够单次操作，效率太低。所以笔者采用while进行循环操作</p><h1 id="源码"><a class="markdownIt-Anchor" href="#源码"></a> 源码</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入模块</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="comment"># 循环运行</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    i = <span class="built_in">input</span>(<span class="string">&#x27;我：&#x27;</span>)</span><br><span class="line">    <span class="comment"># 发送请求</span></span><br><span class="line">    req = requests.post(<span class="string">&#x27;http://api.qingyunke.com/api.php?key=free&amp;appid=0&amp;msg=&#x27;</span>+i)</span><br><span class="line">    <span class="comment"># 返回请求</span></span><br><span class="line">    res = req.json()</span><br><span class="line">    <span class="comment">#键值对取值</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;人工智障：&#x27;</span>,res[<span class="string">&#x27;content&#x27;</span>])</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>更新通知</title>
       <link href="/2022/07/31/%E6%9B%B4%E6%96%B0%E9%80%9A%E7%9F%A5/"/>
       <url>/2022/07/31/%E6%9B%B4%E6%96%B0%E9%80%9A%E7%9F%A5/</url>
