@@ -154,7 +154,11 @@
 
   }
 }
-window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
   const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
   if ($mermaidWrap.length) {
     window.runMermaid = () => {
