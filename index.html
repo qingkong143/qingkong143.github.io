@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Torch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Torch">
+<meta property="og:url" content="http://qingkong143.github.io/index.html">
+<meta property="og:site_name" content="Torch">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Torch">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Torch" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="css/style.css">
+
+  
+    
+<link rel="stylesheet" href="fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="index.html" id="logo">Torch</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="index.html" id="subtitle">灼光划破云间翳，炽念凝成世上灯</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="index.html">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qingkong143.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2025/06/14/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2025-06-14T02:27:08.093Z" itemprop="datePublished">2025-06-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2025/06/14/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2025/06/14/hello-world/" data-id="cmbxfdqve0003akfoadkq6ym7" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-爬取天气数据" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/07/28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time class="dt-published" datetime="2023-07-28T11:17:33.000Z" itemprop="datePublished">2023-07-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/07/28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/">爬取天气数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>最近不是那啥台风来了吗，虽说这不是好事，但是也不是很坏呀。<br>这大夏天的热死人了，台风一来，不就是更凉快些了吗。<br>你不信？咱们拿数据说话。</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>首先是url，我们就来个官方的<a target="_blank" rel="noopener" href="http://www.weather.com.cn/weather1d/101010100.shtml#input">天气</a><br>然后开始发送请求</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://www.weather.com.cn/weather1d/101010100.shtml#input&#x27;</span></span><br><span class="line"><span class="keyword">with</span> requests.get(url) <span class="keyword">as</span> res:</span><br><span class="line">    content = res.content</span><br><span class="line">    html = etree.HTML(content)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="通过lxml模块提取值"><a href="#通过lxml模块提取值" class="headerlink" title="通过lxml模块提取值"></a>通过lxml模块提取值</h1><p>不得不说，这<strong>lxml</strong>比<strong>beautifulsoup</strong>解析在某些场合更香一些</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location = html.xpath(<span class="string">&#x27;//*[@id=&quot;around&quot;]//a[@target=&quot;_blank&quot;]/span/text()&#x27;</span>)</span><br><span class="line">temperature = html.xpath(<span class="string">&#x27;//*[@id=&quot;around&quot;]/div/ul/li/a/i/text()&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;香河&#x27;</span>, <span class="string">&#x27;涿州&#x27;</span>, <span class="string">&#x27;唐山&#x27;</span>, <span class="string">&#x27;沧州&#x27;</span>, <span class="string">&#x27;天津&#x27;</span>, <span class="string">&#x27;廊坊&#x27;</span>, <span class="string">&#x27;太原&#x27;</span>, <span class="string">&#x27;石家庄&#x27;</span>, <span class="string">&#x27;涿鹿&#x27;</span>, <span class="string">&#x27;张家口&#x27;</span>, <span class="string">&#x27;保定&#x27;</span>, <span class="string">&#x27;三河&#x27;</span>, <span class="string">&#x27;北京孔庙&#x27;</span>, <span class="string">&#x27;北京国子监&#x27;</span>, <span class="string">&#x27;中国地质博物馆&#x27;</span>, <span class="string">&#x27;月坛公</span></span><br><span class="line"><span class="string">园&#x27;</span>, <span class="string">&#x27;明城墙遗址公园&#x27;</span>, <span class="string">&#x27;北京市规划展览馆&#x27;</span>, <span class="string">&#x27;什刹海&#x27;</span>, <span class="string">&#x27;南锣鼓巷&#x27;</span>, <span class="string">&#x27;天坛公园&#x27;</span>, <span class="string">&#x27;北海公园&#x27;</span>, <span class="string">&#x27;景山公园&#x27;</span>, <span class="string">&#x27;北京海洋馆&#x27;</span>]</span><br><span class="line"></span><br><span class="line">[<span class="string">&#x27;11/-5°C&#x27;</span>, <span class="string">&#x27;14/-5°C&#x27;</span>, <span class="string">&#x27;12/-6°C&#x27;</span>, <span class="string">&#x27;12/-5°C&#x27;</span>, <span class="string">&#x27;11/-1°C&#x27;</span>, <span class="string">&#x27;11/-5°C&#x27;</span>, <span class="string">&#x27;8/-7°C&#x27;</span>, <span class="string">&#x27;13/-2°C&#x27;</span>, <span class="string">&#x27;8/-6°C&#x27;</span>, <span class="string">&#x27;5/-9°C&#x27;</span>, <span class="string">&#x27;14/-6°C&#x27;</span>, <span class="string">&#x27;11/-4°C&#x27;</span>, <span class="string">&#x27;13/-3°C&#x27;</span></span><br><span class="line">, <span class="string">&#x27;13/-3°C&#x27;</span>, <span class="string">&#x27;12/-3°C&#x27;</span>, <span class="string">&#x27;12/-3°C&#x27;</span>, <span class="string">&#x27;13/-3°C&#x27;</span>, <span class="string">&#x27;12/-2°C&#x27;</span>, <span class="string">&#x27;12/-3°C&#x27;</span>, <span class="string">&#x27;13/-3°C&#x27;</span>, <span class="string">&#x27;12/-2°C&#x27;</span>, <span class="string">&#x27;12/-2°C&#x27;</span>, <span class="string">&#x27;12/-2°C&#x27;</span>, <span class="string">&#x27;12/-3°C&#x27;</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="构造DataFrame对象"><a href="#构造DataFrame对象" class="headerlink" title="构造DataFrame对象"></a>构造DataFrame对象</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(&#123;<span class="string">&#x27;location&#x27;</span>:location, <span class="string">&#x27;temperature&#x27;</span>:temperature&#125;)<span class="built_in">print</span>(<span class="string">&#x27;温度列&#x27;</span>)<span class="built_in">print</span>(df[<span class="string">&#x27;temperature&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<h1 id="正则解析温度值"><a href="#正则解析温度值" class="headerlink" title="正则解析温度值"></a>正则解析温度值</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&#x27;high&#x27;</span>] = df[<span class="string">&#x27;temperature&#x27;</span>].apply(<span class="keyword">lambda</span> x: <span class="built_in">int</span>(re.<span class="keyword">match</span>(<span class="string">&#x27;(-?[0-9]*?)/-?[0-9]*?°C&#x27;</span>, x).group(<span class="number">1</span>) ) )df[<span class="string">&#x27;low&#x27;</span>] = df[<span class="string">&#x27;temperature&#x27;</span>].apply(<span class="keyword">lambda</span> x: <span class="built_in">int</span>(re.<span class="keyword">match</span>(<span class="string">&#x27;-?[0-9]*?/(-?[0-9]*?)°C&#x27;</span>, x).group(<span class="number">1</span>) ) )<span class="built_in">print</span>(df)</span><br></pre></td></tr></table></figure>
+<h1 id="细说子字符创捕获"><a href="#细说子字符创捕获" class="headerlink" title="细说子字符创捕获"></a>细说子字符创捕获</h1><p>除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用()表示的就是要提取的分组（group）。比如：**^(\d{3})-(\d{3,8})$**分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">m = re.<span class="keyword">match</span>(<span class="string">r&#x27;^(\d&#123;3&#125;)-(\d&#123;3,8&#125;)$&#x27;</span>, <span class="string">&#x27;010-12345&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(m.group(<span class="number">0</span>))</span><br><span class="line"><span class="built_in">print</span>(m.group(<span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(m.group(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 010-12345</span></span><br><span class="line"><span class="comment"># 010</span></span><br><span class="line"><span class="comment"># 12345</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果正则表达式中定义了组，就可以在<strong>Match</strong>对象上用**group()**方法提取出子串来。</p>
+<p>注意到**group(0)**永远是原始字符串，<strong>group(1)</strong>、<strong>group(2)</strong>……表示第1、2、……个子串。</p>
+<h1 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Name: temperature, dtype: <span class="built_in">object</span></span><br><span class="line">    location temperature  high  low</span><br><span class="line"><span class="number">0</span>         香河     <span class="number">11</span>/-<span class="number">5</span>°C    <span class="number">11</span>   -<span class="number">5</span></span><br><span class="line"><span class="number">1</span>         涿州     <span class="number">14</span>/-<span class="number">5</span>°C    <span class="number">14</span>   -<span class="number">5</span></span><br><span class="line"><span class="number">2</span>         唐山     <span class="number">12</span>/-<span class="number">6</span>°C    <span class="number">12</span>   -<span class="number">6</span></span><br><span class="line"><span class="number">3</span>         沧州     <span class="number">12</span>/-<span class="number">5</span>°C    <span class="number">12</span>   -<span class="number">5</span></span><br><span class="line"><span class="number">4</span>         天津     <span class="number">11</span>/-<span class="number">1</span>°C    <span class="number">11</span>   -<span class="number">1</span></span><br><span class="line"><span class="number">5</span>         廊坊     <span class="number">11</span>/-<span class="number">5</span>°C    <span class="number">11</span>   -<span class="number">5</span></span><br><span class="line"><span class="number">6</span>         太原      <span class="number">8</span>/-<span class="number">7</span>°C     <span class="number">8</span>   -<span class="number">7</span></span><br><span class="line"><span class="number">7</span>        石家庄     <span class="number">13</span>/-<span class="number">2</span>°C    <span class="number">13</span>   -<span class="number">2</span></span><br><span class="line"><span class="number">8</span>         涿鹿      <span class="number">8</span>/-<span class="number">6</span>°C     <span class="number">8</span>   -<span class="number">6</span></span><br><span class="line"><span class="number">9</span>        张家口      <span class="number">5</span>/-<span class="number">9</span>°C     <span class="number">5</span>   -<span class="number">9</span></span><br><span class="line"><span class="number">10</span>        保定     <span class="number">14</span>/-<span class="number">6</span>°C    <span class="number">14</span>   -<span class="number">6</span></span><br><span class="line"><span class="number">11</span>        三河     <span class="number">11</span>/-<span class="number">4</span>°C    <span class="number">11</span>   -<span class="number">4</span></span><br><span class="line"><span class="number">12</span>      北京孔庙     <span class="number">13</span>/-<span class="number">3</span>°C    <span class="number">13</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">13</span>     北京国子监     <span class="number">13</span>/-<span class="number">3</span>°C    <span class="number">13</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">14</span>   中国地质博物馆     <span class="number">12</span>/-<span class="number">3</span>°C    <span class="number">12</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">15</span>      月坛公园     <span class="number">12</span>/-<span class="number">3</span>°C    <span class="number">12</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">16</span>   明城墙遗址公园     <span class="number">13</span>/-<span class="number">3</span>°C    <span class="number">13</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">17</span>  北京市规划展览馆     <span class="number">12</span>/-<span class="number">2</span>°C    <span class="number">12</span>   -<span class="number">2</span></span><br><span class="line"><span class="number">18</span>       什刹海     <span class="number">12</span>/-<span class="number">3</span>°C    <span class="number">12</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">19</span>      南锣鼓巷     <span class="number">13</span>/-<span class="number">3</span>°C    <span class="number">13</span>   -<span class="number">3</span></span><br><span class="line"><span class="number">20</span>      天坛公园     <span class="number">12</span>/-<span class="number">2</span>°C    <span class="number">12</span>   -<span class="number">2</span></span><br><span class="line"><span class="number">21</span>      北海公园     <span class="number">12</span>/-<span class="number">2</span>°C    <span class="number">12</span>   -<span class="number">2</span></span><br><span class="line"><span class="number">22</span>      景山公园     <span class="number">12</span>/-<span class="number">2</span>°C    <span class="number">12</span>   -<span class="number">2</span></span><br><span class="line"><span class="number">23</span>     北京海洋馆     <span class="number">12</span>/-<span class="number">3</span>°C    <span class="number">12</span>   -<span class="number">3</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Ծ‸Ծ 累死我啦，台风天大家一定要注意安全哦(´-ω-&#96;)，拜拜～</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/07/28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/" data-id="cmbxfdqvi000aakfo9bjw9xkl" data-title="爬取天气数据" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-浅浅写个瑞士军刀" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/" class="article-date">
+  <time class="dt-published" datetime="2023-07-18T03:52:28.000Z" itemprop="datePublished">2023-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/">浅浅写个瑞士军刀</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>闲来无事，于是咱写了个python脚本，实现了瑞士军刀的功能，下面请看代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> shlex</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> textwrap</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">execute</span>(<span class="params">cmd</span>):</span><br><span class="line">    cmd = cmd.strip()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> cmd:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    output = subprocess.check_output(shlex.split(cmd),</span><br><span class="line">                                     stderr=subprocess.STDOUT)</span><br><span class="line">    <span class="keyword">return</span> output.decode()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NetCat</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, args, buffer=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.args = args</span><br><span class="line">        <span class="variable language_">self</span>.buffer = buffer</span><br><span class="line">        <span class="variable language_">self</span>.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        <span class="variable language_">self</span>.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.args.listen:</span><br><span class="line">            <span class="variable language_">self</span>.listen()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.send()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.socket.connect((<span class="variable language_">self</span>.args.target, <span class="variable language_">self</span>.args.port))</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.buffer:</span><br><span class="line">            <span class="variable language_">self</span>.socket.send(<span class="variable language_">self</span>.buffer)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                recv_len = <span class="number">1</span></span><br><span class="line">                response = <span class="string">&#x27;&#x27;</span></span><br><span class="line">                <span class="keyword">while</span> recv_len:</span><br><span class="line">                    data = <span class="variable language_">self</span>.socket.recv(<span class="number">4096</span>)</span><br><span class="line">                    recv_len = <span class="built_in">len</span>(data)</span><br><span class="line">                    response += data.decode()</span><br><span class="line">                    <span class="keyword">if</span> recv_len &lt; <span class="number">4096</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> response:</span><br><span class="line">                    <span class="built_in">print</span>(response)</span><br><span class="line">                    buffer = <span class="built_in">input</span>(<span class="string">&#x27;&gt; &#x27;</span>)</span><br><span class="line">                    buffer += <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">                    <span class="variable language_">self</span>.socket.send(buffer.encode())</span><br><span class="line">        <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;User terminated.&#x27;</span>)</span><br><span class="line">            <span class="variable language_">self</span>.socket.close()</span><br><span class="line">            sys.exit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">listen</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;listening&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.socket.bind((<span class="variable language_">self</span>.args.target, <span class="variable language_">self</span>.args.port))</span><br><span class="line">        <span class="variable language_">self</span>.socket.listen(<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            client_socket, _ = <span class="variable language_">self</span>.socket.accept()</span><br><span class="line">            client_thread = threading.Thread(target=<span class="variable language_">self</span>.handle, args=(client_socket,))</span><br><span class="line">            client_thread.start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">handle</span>(<span class="params">self, client_socket</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.args.execute:</span><br><span class="line">            output = execute(<span class="variable language_">self</span>.args.execute)</span><br><span class="line">            client_socket.send(output.encode())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> <span class="variable language_">self</span>.args.upload:</span><br><span class="line">            file_buffer = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                data = client_socket.recv(<span class="number">4096</span>)</span><br><span class="line">                <span class="keyword">if</span> data:</span><br><span class="line">                    file_buffer += data</span><br><span class="line">                    <span class="built_in">print</span>(<span class="built_in">len</span>(file_buffer))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(<span class="variable language_">self</span>.args.upload, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(file_buffer)</span><br><span class="line">            message = <span class="string">f&#x27;Saved file <span class="subst">&#123;self.args.upload&#125;</span>&#x27;</span></span><br><span class="line">            client_socket.send(message.encode())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> <span class="variable language_">self</span>.args.command:</span><br><span class="line">            cmd_buffer = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    client_socket.send(<span class="string">b&#x27; #&gt; &#x27;</span>)</span><br><span class="line">                    <span class="keyword">while</span> <span class="string">&#x27;\n&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> cmd_buffer.decode():</span><br><span class="line">                        cmd_buffer += client_socket.recv(<span class="number">64</span>)</span><br><span class="line">                    response = execute(cmd_buffer.decode())</span><br><span class="line">                    <span class="keyword">if</span> response:</span><br><span class="line">                        client_socket.send(response.encode())</span><br><span class="line">                    cmd_buffer = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&#x27;server killed <span class="subst">&#123;e&#125;</span>&#x27;</span>)</span><br><span class="line">                    <span class="variable language_">self</span>.socket.close()</span><br><span class="line">                    sys.exit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    parser = argparse.ArgumentParser(</span><br><span class="line">        description=<span class="string">&#x27;BHP Net Tool&#x27;</span>,</span><br><span class="line">        formatter_class=argparse.RawDescriptionHelpFormatter,</span><br><span class="line">        epilog=textwrap.dedent(<span class="string">&#x27;&#x27;&#x27;Example:</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 -l -c # command shell</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 -l -u=mytest.whatisup # upload to file</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 -l -e=\&quot;cat /etc/passwd\&quot; # execute command</span></span><br><span class="line"><span class="string">          echo &#x27;ABCDEFGHI&#x27; | ./netcat.py -t 192.168.1.108 -p 135 # echo local text to server port 135</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 # connect to server</span></span><br><span class="line"><span class="string">          &#x27;&#x27;&#x27;</span>))</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;--command&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;initialize command shell&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-e&#x27;</span>, <span class="string">&#x27;--execute&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;execute specified command&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-l&#x27;</span>, <span class="string">&#x27;--listen&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;listen&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-p&#x27;</span>, <span class="string">&#x27;--port&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">5555</span>, <span class="built_in">help</span>=<span class="string">&#x27;specified port&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-t&#x27;</span>, <span class="string">&#x27;--target&#x27;</span>, default=<span class="string">&#x27;192.168.1.203&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;specified IP&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-u&#x27;</span>, <span class="string">&#x27;--upload&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;upload file&#x27;</span>)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    <span class="keyword">if</span> args.listen:</span><br><span class="line">        buffer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        buffer = sys.stdin.read()</span><br><span class="line"></span><br><span class="line">    nc = NetCat(args, buffer.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    nc.run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>看不太懂？这好说，直接一行一行给咱解读。</p>
+<hr>
+<ol>
+<li><strong>import argparse</strong>：导入argparse模块，用于解析命令行参数。</li>
+<li><strong>import socket</strong>：导入socket模块，用于创建套接字和网络通信。</li>
+<li><strong>import shlex</strong>：导入shlex模块，用于解析字符串成shell单词列表。</li>
+<li><strong>import subprocess</strong>：导入subprocess模块，用于执行外部命令。</li>
+<li><strong>import sys</strong>：导入sys模块，用于访问系统相关的功能。</li>
+<li><strong>import textwrap</strong>：导入textwrap模块，用于格式化文本。</li>
+<li><strong>def execute(cmd):</strong>：定义了一个名为execute的函数，用于执行给定的命令。</li>
+<li><strong>cmd &#x3D; cmd.strip()</strong>：去除命令字符串两端的空白字符。</li>
+<li><strong>if not cmd:</strong>：如果命令为空，则返回。</li>
+<li><strong>output &#x3D; subprocess.check_output(shlex.split(cmd), stderr&#x3D;subprocess.STDOUT)</strong>：使用subprocess模块的check_output函数执行命令，并将结果存储在output变量中。</li>
+<li><strong>return output.decode()</strong>：将output变量解码成字符串并返回。</li>
+<li><strong>class NetCat:</strong>：定义了一个名为NetCat的类，用于实现网络通信功能。</li>
+<li><strong>def <strong>init</strong>(self, args, buffer&#x3D;None):</strong>：NetCat类的初始化方法，接收args和buffer参数。</li>
+<li>self.args &#x3D; args：将参数args赋值给NetCat对象的args属性。</li>
+<li><strong>self.buffer &#x3D; buffer</strong>：将参数buffer赋值给NetCat对象的buffer属性。</li>
+<li><strong>self.socket &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)</strong>：创建一个TCP套接字对象，并将其赋值给NetCat对象的socket属性。</li>
+<li><strong>self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)</strong>：设置套接字选项，以便允许在套接字关闭后重新使用相同的地址。</li>
+<li><strong>def run(self):</strong>：定义了一个名为run的方法，用于根据命令行参数执行不同的操作。</li>
+<li><strong>if self.args.listen:</strong>：检查是否设置了监听模式。</li>
+<li><strong>self.listen()</strong>：调用listen方法开始监听操作。</li>
+<li><strong>self.send()</strong>：调用send方法开始发送操作。</li>
+<li><strong>def send(self):</strong>：定义了一个名为send的方法，用于向目标主机发送数据。</li>
+<li><strong>self.socket.connect((self.args.target, self.args.port))</strong>：和目标主机建立TCP连接。</li>
+<li><strong>if self.buffer:</strong>：检查是否有输入数据。</li>
+<li><strong>self.socket.send(self.buffer)</strong>：发送输入数据到目标主机。</li>
+<li><strong>while True:</strong>：无限循环，用于持续接收和发送数据。</li>
+<li><strong>recv_len &#x3D; 1</strong>：初始化recv_len变量为1。</li>
+<li><strong>response &#x3D; ‘’</strong>：初始化response变量为空字符串。</li>
+<li><strong>while recv_len:</strong>：循环接收数据，直到接收长度为0（连接关闭）。</li>
+<li><strong>data &#x3D; self.socket.recv(4096)</strong>：接收最多4096字节的数据。</li>
+<li><strong>recv_len &#x3D; len(data)</strong>：获取接收到的数据的长度。</li>
+<li><strong>response +&#x3D; data.decode()</strong>：将接收到的数据解码并添加到response变量中。</li>
+<li><strong>if recv_len &lt; 4096:</strong>：如果接收到的数据长度小于4096，则退出循环。</li>
+<li><strong>break</strong>：跳出内部循环。</li>
+<li><strong>if response:</strong>：检查是否接收到了数据。</li>
+<li><strong>print(response)</strong>：打印接收到的数据。</li>
+<li><strong>buffer &#x3D; input(‘&gt; ‘)</strong>：从用户输入获取命令。</li>
+<li><strong>buffer +&#x3D; ‘\n’</strong>：在命令末尾添加换行符。</li>
+<li><strong>self.socket.send(buffer.encode())</strong>：将命令发送给目标主机。</li>
+<li><strong>except KeyboardInterrupt:</strong>：捕获键盘中断异常。</li>
+<li><strong>print(‘User terminated.’)</strong>：打印用户终止信息。</li>
+<li><strong>self.socket.close()</strong>：关闭套接字连接。</li>
+<li><strong>sys.exit()</strong>：退出程序。</li>
+<li><strong>def listen(self):</strong>：定义了一个名为listen的方法，用于开始监听连接请求。</li>
+<li><strong>print(‘listening’)</strong>：打印监听信息。</li>
+<li><strong>self.socket.bind((self.args.target, self.args.port))</strong>：将套接字绑定到指定的IP地址和端口。</li>
+<li><strong>self.socket.listen(5)</strong>：开始监听连接请求，允许同时最多5个连接。</li>
+<li><strong>while True:</strong>：无限循环，用于持续处理连接。</li>
+<li><strong>client_socket, _ &#x3D; self.socket.accept()</strong>：接受客户端连接，返回客户端套接字对象和地址信息。</li>
+<li><strong>client_thread &#x3D; threading.Thread(target&#x3D;self.handle, args&#x3D;(client_socket,))</strong>：创建一个新线程，用于处理客户端连接。</li>
+<li><strong>client_thread.start()</strong>：启动新线程。</li>
+<li><strong>def handle(self, client_socket):</strong>：定义了一个名为handle的方法，用于处理客户端连接。</li>
+<li><strong>if self.args.execute:</strong>：检查是否设置了执行命令参数。</li>
+<li><strong>output &#x3D; execute(self.args.execute)</strong>：执行指定的命令，并将结果赋值给output变量。</li>
+<li><strong>client_socket.send(output.encode())</strong>：将命令执行结果发送回客户端。</li>
+<li><strong>elif self.args.upload:</strong>：检查是否设置了上传文件参数。</li>
+<li><strong>file_buffer &#x3D; b’’</strong>：初始化file_buffer变量为空字节串。</li>
+<li><strong>while True:</strong>：无限循环，用于持续接收文件数据。</li>
+<li><strong>data &#x3D; client_socket.recv(4096)</strong>：接收最多4096字节的文件数据。</li>
+<li><strong>if data:</strong>：检查是否接收到了数据。</li>
+<li><strong>file_buffer +&#x3D; data</strong>：将接收到的数据添加到file_buffer变量中。</li>
+<li><strong>print(len(file_buffer))</strong>：打印已接收文件数据的长度。</li>
+<li><strong>else:</strong>：如果未接收到数据，跳出循环。</li>
+<li><strong>break</strong>：跳出内部循环。</li>
+<li><strong>with open(self.args.upload, ‘wb’) as f:</strong>：以二进制写入模式打开要上传的文件。</li>
+<li><strong>f.write(file_buffer)</strong>：将接收到的文件数据写入文件。</li>
+<li><strong>message &#x3D; f’Saved file {self.args.upload}’</strong>：构造上传成功的消息。</li>
+<li><strong>client_socket.send(message.encode())</strong>：将上传成功的消息发送回客户端。</li>
+<li><strong>elif self.args.command:</strong>：检查是否设置了传输命令参数。</li>
+<li><strong>cmd_buffer &#x3D; b’’</strong>：初始化cmd_buffer变量为空字节串，用于存储传输的命令。</li>
+<li><strong>while True:</strong>：无限循环，用于持续传输命令。</li>
+<li><strong>client_socket.send(b’ #&gt; ‘)</strong>：发送命令提示符给客户端。</li>
+<li><strong>while ‘\n’ not in cmd_buffer.decode():</strong>：循环直到接收到完整的命令。</li>
+<li><strong>cmd_buffer +&#x3D; client_socket.recv(64)</strong>：接收最多64字节的命令数据。</li>
+<li><strong>response &#x3D; execute(cmd_buffer.decode())</strong>：执行接收到的命令，并将结果赋值给response变量。</li>
+<li><strong>if response:</strong>：当命令执行结果非空时。</li>
+<li><strong>client_socket.send(response.encode())</strong>：将命令执行结果发送给客户端。</li>
+<li><strong>cmd_buffer &#x3D; b’’</strong>：清空cmd_buffer变量。</li>
+<li><strong>print(f’server killed {e}’)</strong>：打印服务器被终止的错误信息。</li>
+<li><strong>self.socket.close()</strong>：关闭套接字连接。</li>
+<li><strong>sys.exit()</strong>：退出程序。</li>
+<li><strong>if <strong>name</strong> &#x3D;&#x3D; ‘<strong>main</strong>‘:</strong>：如果当前模块是主程序入口。</li>
+<li><strong>parser &#x3D; argparse.ArgumentParser(…)</strong>：创建一个命令行参数解析器。</li>
+<li><strong>parser.add_argument(…)</strong>：添加命令行参数选项。</li>
+<li><strong>args &#x3D; parser.parse_args()</strong>：解析命令行参数，并将结果赋值给args变量。</li>
+<li><strong>if args.listen:</strong>：检查是否设置了监听模式。</li>
+<li><strong>buffer &#x3D; ‘’</strong>：初始化buffer变量为空字符串。</li>
+<li><strong>else:</strong>：如果不是监听模式。</li>
+<li>**buffer &#x3D; sys.stdin.read()：**从标准输入读取数据，并将结果赋值给buffer变量。</li>
+<li><strong>nc &#x3D; NetCat(args, buffer.encode(‘utf-8’))</strong>：创建一个NetCat对象，将args和编码后的buffer作为参数传入。</li>
+<li><strong>nc.run()</strong>：调用NetCat对象的run方法开始执行。</li>
+</ol>
+<hr>
+<p>唔唔唔，累死窝啦，拜拜！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/" data-id="cmbxfdqvg0007akfoatwr2ync" data-title="浅浅写个瑞士军刀" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/python-%E6%B8%97%E9%80%8F/" rel="tag">python,渗透</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-随手写个gpt小脚本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/07/07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2023-07-07T06:02:32.000Z" itemprop="datePublished">2023-07-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/07/07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/">随手写个gpt脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>在某侠上发现有个大好人发了个api，有这好事，咱必须上啊！<br>于是我一梭子下去，便有了这篇文章。话不多说我们直接开干！<br>先放张图<img src="https://img01.anheyu.com/useruploads/0/2023/07/07/64a7aa394cbe2.jpg" alt="展示"></p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>首先啊，咱用的是python，这是显而易见的，毕竟爬虫一事，不用它用谁。</p>
+<hr>
+<p>咱必须下载这几个库:<strong>requests</strong>、<strong>colorama</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br><span class="line">pip install colorama</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>完事之后咱便开始一把刷了</p>
+<h1 id="写代码"><a href="#写代码" class="headerlink" title="写代码"></a>写代码</h1><p>先把库给导了再说，这可不能忘</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> colorama</span><br></pre></td></tr></table></figure>
+<p>然后，我们开始写功能函数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ai</span>():</span><br><span class="line">  <span class="comment"># api接口</span></span><br><span class="line">	url = <span class="string">&#x27;https://api域名/api/gpt/four/?message=&#x27;</span></span><br><span class="line">	resq = url + ques</span><br><span class="line">  <span class="comment"># 发出请求</span></span><br><span class="line">	res = requests.get(resq,headers=&#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36&#x27;</span>&#125;)</span><br><span class="line">  <span class="comment"># 将json响应转化为字典</span></span><br><span class="line">	reply = res.json()</span><br><span class="line">  <span class="comment">#输出响应</span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;智障&#x27;</span>,<span class="string">&#x27;:&#x27;</span>,reply[<span class="string">&quot;answer&quot;</span>])</span><br></pre></td></tr></table></figure>
+<p>写入主函数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span> :</span><br><span class="line">    <span class="comment"># 输入问题</span></span><br><span class="line">    quest = <span class="built_in">input</span>(<span class="string">&quot;我：&quot;</span>)</span><br><span class="line">    ai(quest)</span><br></pre></td></tr></table></figure>
+<p>你以为这就结束了？看看目录！</p>
+<h1 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h1><ul>
+<li>现在咱确实是实现了问答这个功能，但是它是一次性的，问答结束后它就下班了。这符合咱敬业的性格吗？必须制裁！所以，咱在这用上一个<strong>while</strong>循环，这样就可以一直问答了</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 输入问题</span></span><br><span class="line">    quest = <span class="built_in">input</span>(<span class="string">&quot;我：&quot;</span>)</span><br><span class="line">    ai(quest)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>但是，聪明又机智的咱又发现一个小问题，这确实可以一直问了，但是，咱想停了咋办？有小菜可能想说直接<strong>Ctr+c</strong>，啊这，咱得优雅一点。<br>直接内嵌一个<strong>if•••else</strong>语句，要退出，咱就<strong>break</strong></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		quest = <span class="built_in">input</span>(<span class="string">&quot;我:&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> quest == <span class="string">&#x27;退出&#x27;</span>:</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			ai(quest)		</span><br></pre></td></tr></table></figure>
+<ul>
+<li>到这里，基本就是可以了，但是咱是什么人呐，像咱这般优秀的人，那必须精益求精。so，我们在进行小小的优化一下。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> colorama</span><br><span class="line"><span class="keyword">from</span> colorama <span class="keyword">import</span> Fore, Style</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ai</span>(<span class="params">ques</span>):</span><br><span class="line">	url = <span class="string">&#x27;https://api接口/api/gpt/four/?message=&#x27;</span></span><br><span class="line">	resq = url + ques</span><br><span class="line">	res = requests.get(resq,headers=&#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36&#x27;</span>&#125;)</span><br><span class="line">	reply = res.json()</span><br><span class="line">    <span class="comment"># 高级输出格式，支持彩色输出，看上去跟高端，直接给脚本干上去一个档次</span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;\n\033[7;37m智障\033[0m&#x27;</span>,<span class="string">&#x27;:&#x27;</span>,<span class="string">&#x27;\033[4;32m%s\033[0m\n&#x27;</span>%reply[<span class="string">&quot;answer&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个一言函数，显得咱更有文采</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">yiyan</span>():</span><br><span class="line">	<span class="comment"># 初始化 colorama 库</span></span><br><span class="line">	colorama.init(autoreset=<span class="literal">True</span>)</span><br><span class="line">	<span class="comment"># 发送 GET 请求获取一言的API数据</span></span><br><span class="line">	response = requests.get(<span class="string">&quot;https://v1.hitokoto.cn&quot;</span>)</span><br><span class="line">	<span class="comment"># 解析 API 响应结果</span></span><br><span class="line">	data = response.json()</span><br><span class="line">	<span class="comment"># 提取一言内容并彩色输出</span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&quot;\n<span class="subst">&#123;Fore.YELLOW&#125;</span><span class="subst">&#123;data[<span class="string">&#x27;hitokoto&#x27;</span>]&#125;</span><span class="subst">&#123;Style.RESET_ALL&#125;</span>\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span> :</span><br><span class="line">   <span class="comment"># 亮出咱的大名，更有气势</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">  ===================================================================</span></span><br><span class="line"><span class="string">   ██████╗ ██╗███╗   ██╗ ██████╗ ██╗  ██╗ ██████╗ ███╗   ██╗ ██████╗ </span></span><br><span class="line"><span class="string">  ██╔═══██╗██║████╗  ██║██╔════╝ ██║ ██╔╝██╔═══██╗████╗  ██║██╔════╝ </span></span><br><span class="line"><span class="string">  ██║   ██║██║██╔██╗ ██║██║  ███╗█████╔╝ ██║   ██║██╔██╗ ██║██║  ███╗</span></span><br><span class="line"><span class="string">  ██║▄▄ ██║██║██║╚██╗██║██║   ██║██╔═██╗ ██║   ██║██║╚██╗██║██║   ██║</span></span><br><span class="line"><span class="string">  ╚██████╔╝██║██║ ╚████║╚██████╔╝██║  ██╗╚██████╔╝██║ ╚████║╚██████╔╝</span></span><br><span class="line"><span class="string">   ╚══▀▀═╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝                                            </span></span><br><span class="line"><span class="string">   ===================================================================</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>)</span><br><span class="line">    <span class="comment"># 人性化设计，防止小菜不会退出</span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;友情提示：退出请输入&#x27;退出&#x27;\n&quot;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;清空QQ:\033[95m3186708635\033[0m\n&quot;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&quot;后续更新请前往清空小站:\033[94mhttps://qk.it-02.cf\033[0m&quot;</span>)</span><br><span class="line">	yiyan()</span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		i = <span class="built_in">input</span>(<span class="string">&quot;\033[7;92m你\033[0m:&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> i == <span class="string">&#x27;退出&#x27;</span>:</span><br><span class="line">            <span class="comment"># 走之前，咱在讲几句文化，这感觉，直接飞升</span></span><br><span class="line">			yiyan()</span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&quot;\033[92m清空下班咯～ \033[0m&quot;</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			ai(i)		</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>大功告成！</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>api接口咱就不透露了，大伙应该都有，主要是好不容易嫖到一个，人太多，万一崩了咋办。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/07/07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/" data-id="cmbxfdqvg0006akfo1peoeact" data-title="随手写个gpt脚本" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time class="dt-published" datetime="2023-07-06T14:43:06.000Z" itemprop="datePublished">2023-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/">中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="模型下载"><a href="#模型下载" class="headerlink" title="模型下载"></a>模型下载</h1><h2 id="Linly-Chinese-Falcon"><a href="#Linly-Chinese-Falcon" class="headerlink" title="Linly-Chinese-Falcon"></a>Linly-Chinese-Falcon</h2><p>Chinese-Falcon 模型在 Falcon 基础上扩充中文词表，在中英文数据上增量预训练。 模型以 <a target="_blank" rel="noopener" href="https://www.apache.org/licenses/LICENSE-2.0"> Apache License 2.0 </a> 协议开源，支持商业用途。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/636994073">模型实现和训练细节</a></p>
+<p>| 模型下载 | 分类 | 训练数据 | 训练序列长度 | 版本 | 更新时间 |<br>|—————|——–|——|<br>|<a target="_blank" rel="noopener" href="https://huggingface.co/Linly-AI/Chinese-Falcon-7B">Chinese-Falcon-7B (hf格式)</a>| 基础模型 | 50G通用语聊 | 2048 | v0.2 | 2023.6.15 |</p>
+<h2 id="Linly-Chinese-LLaMA"><a href="#Linly-Chinese-LLaMA" class="headerlink" title="Linly-Chinese-LLaMA"></a>Linly-Chinese-LLaMA</h2><p>Linly-Chinese-LLaMA 系列模型基于 LLaMA 权重和词表，在中文数据上增量预训练。</p>
+<p>使用须知 ⚠️ LLaMA 原始模型权重基于 <a target="_blank" rel="noopener" href="https://www.gnu.org/licenses/gpl-3.0.html"> GNU General Public License v3.0 </a>协议，仅供研究使用，不能用于商业目的。 请确认在已获得<a target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSfqNECQnMkycAp2jP4Z9TFX0cGR4uf7b_fBxjY_OjhJILlKGA/viewform?usp=send_form">许可</a>的前提下使用以下模型权重。</p>
+<p>  模型下载 | 分类 | 训练数据 | 训练序列长度 | 版本 | 更新时间 |<br>|—————|——–|——|<br>|<a target="_blank" rel="noopener" href="https://huggingface.co/Linly-AI/Chinese-LLaMA-7B/">Chinese-LLaMA-7B</a>| 基础模型 | 100G通用语料 | 2048 | v1.2 | 2023.5.29 |<br>|<a target="_blank" rel="noopener" href="https://huggingface.co/Linly-AI/ChatFlow-7B">ChatFlow-7B</a>| 对话模型 | 5M指令数据 | 1024 | v1.1 | 2023.5.14 |</p>
+<h1 id="训练情况"><a href="#训练情况" class="headerlink" title="训练情况"></a>训练情况</h1><h2 id="模型仍在迭代中，本项目定期更新模型权重。"><a href="#模型仍在迭代中，本项目定期更新模型权重。" class="headerlink" title="模型仍在迭代中，本项目定期更新模型权重。"></a>模型仍在迭代中，本项目定期更新模型权重。</h2><p><strong>Linly-Chinese-Falcon</strong></p>
+<p><img src="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cae2a0ed3.png" alt="Linly-Chinese-Falcon"></p>
+<p><strong>Linly-Chinese-LLaMA</strong></p>
+<p><img src="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cbbe84ef7.png" alt="Linly-Chinese-LLaMA"></p>
+<h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h1><p>本章节介绍 TencentPretrain 格式模型权重的使用方法。 下载预训练模型权重，安装依赖。</p>
+<blockquote>
+<p>测试环境: py3.8.12 cuda11.2.2 cudnn8.1.1.33-1 torch1.9.0 bitsandbytes0.37.2</p>
+</blockquote>
+<p>解码参数及详细使用说明请参考 <a target="_blank" rel="noopener" href="https://github.com/ProjectD-AI/llama_inference">llama_inference</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git <span class="built_in">clone</span> https://huggingface.co/Linly-AI/ChatFlow-7B</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ProjectD-AI/llama_inference</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> llama_inference </span><br><span class="line">vi prompts.txt  <span class="comment">#编辑用户输入，例如&quot;上海有什么好玩的地方？&quot;</span></span><br><span class="line"></span><br><span class="line">python3 llama_infer.py --test_path prompts.txt --prediction_path result.txt  \</span><br><span class="line">                      --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                      --config_path config/llama_7b_config.json \</span><br><span class="line">                      --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512</span><br></pre></td></tr></table></figure>
+
+<h2 id="多轮对话"><a href="#多轮对话" class="headerlink" title="多轮对话"></a>多轮对话</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 llama_dialogue.py --seq_length 512 --top_k 10   \</span><br><span class="line">                      --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                      --config_path ./config/llama_7b_config.json \</span><br><span class="line">                      --spm_model_path ../ChatFlow-7B/tokenizer.model</span><br></pre></td></tr></table></figure>
+
+<h2 id="Int8推理加速"><a href="#Int8推理加速" class="headerlink" title="Int8推理加速"></a>Int8推理加速</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 llama_infer.py --test_path prompts.txt --prediction_path result.txt  \</span><br><span class="line">                      --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                      --config_path config/llama_7b_config.json \</span><br><span class="line">                      --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512 --use_int8 </span><br></pre></td></tr></table></figure>
+
+<h2 id="微服务部署"><a href="#微服务部署" class="headerlink" title="微服务部署"></a>微服务部署</h2><p>安装依赖：flask</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python3 llama_server.py --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                        --config_path config/llama_7b_config.json \</span><br><span class="line">                        --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512</span><br><span class="line"></span><br><span class="line">curl -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> http://127.0.0.1:8888/chat -d <span class="string">&#x27;&#123;&quot;question&quot;: &quot;北京有什么好玩的地方？&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Gradio-本地-Demo"><a href="#Gradio-本地-Demo" class="headerlink" title="Gradio 本地 Demo"></a>Gradio 本地 Demo</h2><p>安装依赖：Gradio</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python llama_gradio.py --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                        --config_path config/llama_7b_config.json \</span><br><span class="line">                        --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在网页上打开：<a target="_blank" rel="noopener" href="http://127.0.0.1:7860/">http://127.0.0.1:7860/</a></p>
+<h1 id="模型训练细节"><a href="#模型训练细节" class="headerlink" title="模型训练细节"></a>模型训练细节</h1><p>模型基于 TencentPretrain 预训练和指令精调，更多详细信息参见 ➡️ <a target="_blank" rel="noopener" href="https://github.com/CVI-SZU/Linly/wiki/%E5%A2%9E%E9%87%8F%E8%AE%AD%E7%BB%83">增量训练</a> ⬅️ 。</p>
+<h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><ol>
+<li>模型推理需要多少显存？</li>
+</ol>
+<blockquote>
+<p>7B 模型约 14G，int8 模式 7G。13B 模型 28G，int8模式 14G。</p>
+</blockquote>
+<ol start="2">
+<li>训练时加载模型内存不够怎么办？</li>
+</ol>
+<blockquote>
+<p>训练初始化时，每张卡会加载一个模型的拷贝，因此内存需求为模型大小*GPU数量。 内存不足时可以使用分块加载，详见<a target="_blank" rel="noopener" href="https://github.com/CVI-SZU/Linly/wiki/%E6%A8%A1%E5%9E%8B%E5%88%86%E5%9D%97">模型分块</a>。</p>
+</blockquote>
+<ol start="3">
+<li>是否支持LoRA训练？</li>
+</ol>
+<blockquote>
+<p>公开的模型权重没有用到 LoRA，使用全参数训练（Full-tuning）。 TencentPretrain 框架也支持 LoRA 训练，可以根据需要使用，详见 <a href="%22https://github.com/CVI-SZU/Linly/wiki/LoRA%E8%AE%AD%E7%BB%83">LoRA</a> 训练。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-id="cmbxfdqvf0004akfodbv0678x" data-title="中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-爬某网站图片" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/06/09/%E7%88%AC%E6%9F%90%E7%BD%91%E7%AB%99%E5%9B%BE%E7%89%87/" class="article-date">
+  <time class="dt-published" datetime="2023-06-09T01:16:26.000Z" itemprop="datePublished">2023-06-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/06/09/%E7%88%AC%E6%9F%90%E7%BD%91%E7%AB%99%E5%9B%BE%E7%89%87/">爬取某网站图片</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="爬取图片"><a href="#爬取图片" class="headerlink" title="爬取图片"></a>爬取图片</h1><p>本次演示将向大家介绍如何使用Python编写脚本来爬取<a target="_blank" rel="noopener" href="http://pic.netbian.com/">网站</a>上的图片。我们将使用requests和BeautifulSoup库来实现这个功能。请确保在运行以下代码之前已经安装了这两个库。如果没有安装，可以使用以下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br><span class="line">pip install beautifulsoup4</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-导入所需库"><a href="#1-导入所需库" class="headerlink" title="1. 导入所需库"></a>1. 导入所需库</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> os</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-定义爬取函数"><a href="#2-定义爬取函数" class="headerlink" title="2. 定义爬取函数"></a>2. 定义爬取函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_html</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = requests.get(url)</span><br><span class="line">        response.raise_for_status()</span><br><span class="line">        response.encoding = response.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> response.text</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;获取网页失败：&quot;</span>, e)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-解析网页内容并提取图片链接"><a href="#3-解析网页内容并提取图片链接" class="headerlink" title="3. 解析网页内容并提取图片链接"></a>3. 解析网页内容并提取图片链接</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">parse_html</span>(<span class="params">html</span>):</span><br><span class="line">    soup = BeautifulSoup(html, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    img_tags = soup.find_all(<span class="string">&#x27;img&#x27;</span>)</span><br><span class="line">    img_urls = [img[<span class="string">&#x27;src&#x27;</span>] <span class="keyword">for</span> img <span class="keyword">in</span> img_tags <span class="keyword">if</span> <span class="string">&#x27;src&#x27;</span> <span class="keyword">in</span> img.attrs]</span><br><span class="line">    <span class="keyword">return</span> img_urls</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-将图片下载到本地目录"><a href="#4-将图片下载到本地目录" class="headerlink" title="4. 将图片下载到本地目录"></a>4. 将图片下载到本地目录</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">download_images</span>(<span class="params">img_urls, save_dir</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(save_dir):</span><br><span class="line">        os.makedirs(save_dir)</span><br><span class="line">    <span class="keyword">for</span> img_url <span class="keyword">in</span> img_urls:</span><br><span class="line">        img_name = img_url.split(<span class="string">&#x27;/&#x27;</span>)[-<span class="number">1</span>]</span><br><span class="line">        img_path = os.path.join(save_dir, img_name)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(img_path, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                img_data = requests.get(img_url).content</span><br><span class="line">                f.write(img_data)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;img_name&#125;</span> 已下载&quot;</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;下载图片失败：&quot;</span>, e)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-主程序逻辑"><a href="#5-主程序逻辑" class="headerlink" title="5. 主程序逻辑"></a>5. 主程序逻辑</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    url = <span class="string">&#x27;http://pic.netbian.com/&#x27;</span></span><br><span class="line">    save_dir = <span class="string">&#x27;images&#x27;</span></span><br><span class="line">    img_urls = []</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取网页内容并提取图片链接</span></span><br><span class="line">    html = get_html(url)</span><br><span class="line">    img_urls = parse_html(html) <span class="keyword">if</span> html <span class="keyword">else</span> []</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 将图片下载到本地目录</span></span><br><span class="line">    download_images(img_urls, save_dir) <span class="keyword">if</span> img_urls <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">&quot;未找到图片&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将以上代码保存为一个名为<code>pic_downloader.py</code>的文件。然后在命令行中运行以下命令来执行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python pic_downloader.py</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后，你会发现一个名为<code>images</code>的文件夹被创建在当前目录下，里面包含了从<a target="_blank" rel="noopener" href="http://pic.netbian.com/">网站</a>网站上爬取到的所有图片。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/06/09/%E7%88%AC%E6%9F%90%E7%BD%91%E7%AB%99%E5%9B%BE%E7%89%87/" data-id="cmbxfdqvg0008akfofbf89yd1" data-title="爬取某网站图片" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-导数的简单教学" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/06/08/%E5%AF%BC%E6%95%B0%E7%9A%84%E7%AE%80%E5%8D%95%E6%95%99%E5%AD%A6/" class="article-date">
+  <time class="dt-published" datetime="2023-06-08T10:38:02.000Z" itemprop="datePublished">2023-06-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/06/08/%E5%AF%BC%E6%95%B0%E7%9A%84%E7%AE%80%E5%8D%95%E6%95%99%E5%AD%A6/">简单的导数教程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文是一篇关于导数的教学文章。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>导数是微积分中的一个重要概念，它描述了函数在某一点的变化率。在实际应用中，导数被广泛应用于物理、工程、经济等领域。因此，学习导数对于我们的学习和工作都非常重要。</p>
+<p>在学习导数之前，我们需要先掌握一些基本的数学知识，比如极限、连续性、微分等等。这些知识是学习导数的基础，也是后续学习的重要基础。</p>
+<p>接下来，我们来介绍一下导数的定义和计算方法。导数的定义很简单，它表示函数在某一点的变化率。具体来说，如果函数f(x)在点x0处可导，那么它的导数f’(x0)就是函数f(x)在x0处的变化率。换句话说，f’(x0)表示当x从x0变化到x1时，函数值的变化量与自变量x的变化量的比值。</p>
+<p>导数的计算方法有很多种，其中最常用的是求导法则。求导法则包括链式法则、乘积法则、商法则等等。这些法则可以帮助我们快速地计算出函数在某一点或某一区间上的导数。</p>
+<p>链式法则是指对于一个函数g(x),如果它可以表示为g(u)·v(x),其中u(x)和v(x)都是可导函数，那么g(x)在点x处的导数等于g’(u)·v’(x)。这个法则可以帮助我们将复杂的函数分解成简单的部分，从而更容易地计算导数。</p>
+<p>乘积法则是指对于两个函数f(x)和g(x),如果它们在点x处可导，那么它们的乘积f(x)g(x)在点x处的导数等于f’(x)g(x)+f(x)g’(x)。这个法则可以帮助我们计算多个函数的乘积的导数。</p>
+<p>商法则是指对于两个函数f(x)和g(x),如果它们在点x处可导，那么它们的商f(x)&#x2F;g(x)在点x处的导数等于[f’(x)g(x)-f(x)g’(x)]&#x2F;[g^2(x)]。这个法则可以帮助我们计算两个函数的商的导数。</p>
+<p>除了求导法则之外，还有一些特殊的函数需要特别处理。比如，常数函数、幂函数、指数函数等等。这些函数的导数可以通过一些特殊规则来计算。</p>
+<p>最后，我们来介绍一下导数的应用。导数在物理、工程、经济等领域都有广泛的应用。比如，在物理学中，导数可以用来描述物体的运动状态；在工程学中，导数可以用来分析系统的稳定性和响应速度；在经济学中，导数可以用来研究市场价格的变化趋势等等。</p>
+<p>总之，学习导数对于我们的学习和工作都非常重要。通过掌握导数的基本概念和计算方法，我们可以更好地理解和应用微积分的知识，解决实际问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/06/08/%E5%AF%BC%E6%95%B0%E7%9A%84%E7%AE%80%E5%8D%95%E6%95%99%E5%AD%A6/" data-id="cmbxfdqvf0005akfog7sq82xx" data-title="简单的导数教程" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Windows系统推荐和安装，简单的优化和美化以及一些软件分享" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/06/07/Windows%E7%B3%BB%E7%BB%9F%E6%8E%A8%E8%8D%90%E5%92%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E4%BC%98%E5%8C%96%E5%92%8C%E7%BE%8E%E5%8C%96%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%AB/" class="article-date">
+  <time class="dt-published" datetime="2023-06-07T10:38:46.000Z" itemprop="datePublished">2023-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/06/07/Windows%E7%B3%BB%E7%BB%9F%E6%8E%A8%E8%8D%90%E5%92%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E4%BC%98%E5%8C%96%E5%92%8C%E7%BE%8E%E5%8C%96%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%AB/">windows开荒</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>嘿嘿，时隔不久，我又来水..啊呸，满足各位老哥们的需求了。</p>
+<h1 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h1><p>我用的是Windsys的Windows10 LTSC2021，用了快一个月，感觉很不错，我的电脑处理器是R7 5800H，装着比Windows11流畅不少，以下是这个系统的一些简介，基本改动很少，做了一些优化和bug修复 </p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_fa26211e_0750_3617_791@828x812.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_37259c42_0750_3628_747@1046x622.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_bfdc6e3f_0750_3631_925@1168x820.jpeg.m.jpg"></p>
+<p>俺的界面就这样的😊😊</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_f2a58515_0750_3634_909@1920x1080.jpeg.m.jpg"></p>
+<p>这个大佬也有修改的Windows11和一个自己搞的Windows11类原生方案，有兴趣的自己可以去官网看看，下面是链接<br><a target="_blank" rel="noopener" href="https://windsys.win/">Windsys Project</a></p>
+<p>这个系统里自带了一个Windsys工具箱，这里面有不少好用的工具，感觉有些很有用，大家可以自己看看呀</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_8dbda29d_0750_3643_576@310x642.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_dc4461db_0750_3646_398@296x598.jpeg.m.jpg"></p>
+<h1 id="激活工具"><a href="#激活工具" class="headerlink" title="激活工具"></a>激活工具</h1><p>之前想装2021得时候看很多人说 LTSC 2019可以支持10年，但2021支持五年，于是找很久找到了这个激活工具，可以数字激活成lot版的，听说这个也是支持十年，也支持激活一写office等，反正很不错</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_268a928f_0750_3648_214@690x464.jpeg.m.jpg"></p>
+<h1 id="系统字体"><a href="#系统字体" class="headerlink" title="系统字体"></a>系统字体</h1><p>我的电脑是15.6寸的1080p分辨率的笔记本，微软自己的字体渲染不是很好，之前全局替换过例如大家备受好评的苹方之类的字体，但在我的1080p分辨率上显示效果甚至不如原来的，找了很久找到了这个小米兰亭字体，感觉显示效果比原来好很多，以下是在浏览器里的效果图，不知道明不明显，大家有需要可以自己试试看</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_09ad3689_0750_3658_209@1918x1078.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_b12c25db_0750_366_362@1920x1030.jpeg.m.jpg"></p>
+<p>还有关于怎么全局替换，大家下好我分享的字体解压缩之后会得到以下的文件<br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_89c76e46_0753_204_169@1394x738.jpeg.m.jpg"></p>
+<p>然后在PE系统下复制粘贴前三个，进入系统盘Windows Fonts文件夹替换即可，大家替换之前最好将Fonts文件夹原来的同名文件备份一下，以免后续效果不好还可以重复上面操作换回来，也防止出现bug。这里附上大佬的换字体教程</p>
+<p><img src="https://image.coolapk.com/feed/2023/0607/04/9705929_69c3e698_5017_4463_188@1080x2400.jpeg.m.jpg"></p>
+<h1 id="任务栏的透明美化和开始图标的更换"><a href="#任务栏的透明美化和开始图标的更换" class="headerlink" title="任务栏的透明美化和开始图标的更换"></a>任务栏的透明美化和开始图标的更换</h1><p>用的是StartlsBack这个软件，安装好之后，右击开始图标，点属性就进去软件的设置界面啦，在外观配置，自定义任务特效里可以开启任务栏透明<br><a target="_blank" rel="noopener" href="https://zhutix.com/study/huan-start-orbs/">更换开始按钮 - 入门教程 - 致美化</a></p>
+<h1 id="系统优化和日常优化的一些软件分享"><a href="#系统优化和日常优化的一些软件分享" class="headerlink" title="系统优化和日常优化的一些软件分享"></a>系统优化和日常优化的一些软件分享</h1><p>我自己也没做太多优化，就用Windsys工具箱里的WPD，自己下的wise care365，dism++简单优化了一下</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_55f25c34_0753_2058_670@1190x742.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_a819c9ad_0753_2066_271@1338x892.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_50f29624_0753_2074_48@1238x866.jpeg.m.jpg"></p>
+<p>然后日常清理垃圾用的就是用的Wise Care365和Dism++。没有用任何杀毒软件，我自己电脑正常用也没有啥弹窗和中病毒。平时还用了一个进程管优化理软件Process Lasso，这个软件俺也不知道作用大不大，也没测试过，反正就是一直用着了，用的是俄罗斯大佬破解的，装好后需要用工具激活一下，如果有老哥需要用这个到时候我回复一下</p>
+<p><a target="_blank" rel="noopener" href="https://image.coolapk.com/feed/2023/0606/22/9705929_a77f95f6_0753_2078_773@1424x739.jpeg.m.jpg"></a></p>
+<p>还有就是我是拯救者电脑，Lenovo Legion Toolkit这个软件必装的，很好用，本来之前一直用联想电脑管家，后来好像听说有些内存泄露问题，而且我自己平常也只是用联想电脑管家方便打开独显直连，选择性能模式和充电模式这些，找到这个软件后就感觉联想电脑管家没啥必要了，软件很小也不占后台，不需要设置开机启动，你需要用的时候打开就行</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_959ca59c_0753_2082_11@1426x930.jpeg.m.jpg"></p>
+<p>然后就是浏览器，浏览器下了四个，最近用的比较多的也就是火狐和brave浏览器。之前一直用edge浏览器，刚开始用挺好的，用了很长时间，然后后面越来越臃肿就删除了，如果有需要删除edge浏览器的分享的软件里有一个能彻底删除edge浏览器的软件，可以试试。但不知道对Windows更新有没有影响，系统更新桌面可能还会出现图标，很烦。反正我禁用系统更新了<br>关于浏览器，第一个就是Google Chrome，这不用多说了，平常魔法出去的时候用的比较多。<br>然后是百分浏览器，现在更新比较慢，内核还在102，但用着比较顺手好用，自带了超级拖拽，鼠标手势，内存优化等功能</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_218ed446_0753_209_350@1920x1030.jpeg.m.jpg"><br>直接在官网下载就行<a target="_blank" rel="noopener" href="https://www.centbrowser.cn/">百分浏览器</a></p>
+<p>火狐浏览器用的是奔跑中的奶酪修改的火狐，一直在用，灰常好用</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_4c28aaef_0755_7429_408@1488x1020.jpeg.m.jpg"></p>
+<p>想要了解更多可以去奶酪大大的官网看看，官网还有修改的chrome和edge等浏览器，也有插件推荐说明等很多有用的东西微笑微笑微笑，公众号经常也会发一些有用的教程<br><a target="_blank" rel="noopener" href="https://www.runningcheese.com/">奔跑中的奶酪 - 有智，有趣，有爱</a></p>
+<p>Brave浏览器用的是bigfoxtail大佬编译的版本，主要是删除了区块链和钱包这些东西，用的人比较少，更新的不快，目前内核还在109，反正俺一直在用，感觉还行，如果你需要可以试试</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_1396c940_0755_7432_876@1506x998.jpeg.m.jpg"></p>
+<p>最后就是一些其他自己平常用的软件分享一下吧。其实也就听歌的和浏览器等，听歌用的是洛雪音乐然后搭配上六音音源，我想听的基本都有，基本满足我日常的听歌需求了，六音音源在设置，基本设置，自定义源里加入选择就行</p>
+<p><a target="_blank" rel="noopener" href="https://image.coolapk.com/feed/2023/0606/22/9705929_55e09788_0753_2085_93@1380x890.jpeg.m.jpg"></a></p>
+<p>小白羊云盘和mpv，小白羊云盘就是第三方阿里云盘，我主要是用这两个来看电影的，虽然有不少电影网站，但网站有时候老一卡一卡的。<br>其实我自己的也不差，操作起来也挺简单的，大家可以试试，嘿嘿。<br><a target="_blank" rel="noopener" href="https://qk.it-02.cf/movies/">本博客的视频解析页面</a></p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_fecc9ebf_0755_7434_854@1000x752.jpeg.m.jpg"></p>
+<p>因为阿里官方限制，现在要获取一个叫 refresh_token得东西了，才能加快下载和视频播放速度，如果有兴趣可以自己看下面链接搞一下</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_d76808ff_0755_7438_806@1000x752.jpeg.m.jpg"></p>
+<p><a target="_blank" rel="noopener" href="https://alist.nn.ci/zh/guide/drivers/aliyundrive_open.html">阿里云盘 Open | AList文档</a><br>然后把点击的网盘资源就可以播放了，自带有播放器，但可以自定义，我一般用的是mpv的懒人包播放</p>
+<p><a target="_blank" rel="noopener" href="https://image.coolapk.com/feed/2023/0606/22/9705929_7083cd72_0755_7448_584@1000x752.jpeg.m.jpg"></a><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_7a2b33b4_0755_7452_125@1000x752.jpeg.m.jpg"></p>
+<p>好了，就这么多，不知道对多少人有帮助，反正今晚没事干写这个打发一下时间，对你有帮助就给俺点个赞吧</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/06/07/Windows%E7%B3%BB%E7%BB%9F%E6%8E%A8%E8%8D%90%E5%92%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E4%BC%98%E5%8C%96%E5%92%8C%E7%BE%8E%E5%8C%96%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%AB/" data-id="cmbxfdqvc0001akfoa618a1l0" data-title="windows开荒" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-好久不见" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="2023/05/26/%E5%A5%BD%E4%B9%85%E4%B8%8D%E8%A7%81/" class="article-date">
+  <time class="dt-published" datetime="2023-05-26T13:27:32.000Z" itemprop="datePublished">2023-05-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="2023/05/26/%E5%A5%BD%E4%B9%85%E4%B8%8D%E8%A7%81/">好久不见</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="我回来了⊙▽⊙"><a href="#我回来了⊙▽⊙" class="headerlink" title="我回来了⊙▽⊙"></a>我回来了⊙▽⊙</h1><p>好久没有更新博客了，都差点忘了有这个东西了。<br>现在想起来了，那就更新一下吧</p>
+<hr>
+<p>今日名言 </p>
+<blockquote>
+<p>如果你说“不”是认真的，就用不着再说第二次。</p>
+</blockquote>
+<p><img src="http://lx.linxi.icu/0/ai/" alt="今日美图"></p>
+<hr>
+<h1 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h1><p>相信细心的你肯定已经发现了，我的博客发生了很大的变化。</p>
+<ul>
+<li>优化了主题</li>
+<li>新增了看板娘、音乐播放器、电子表等等</li>
+<li>增设了留言板、壁纸、音乐、电影等页面</li>
+</ul>
+<h1 id="展望未来"><a href="#展望未来" class="headerlink" title="展望未来"></a>展望未来</h1><p>以后，我将继续更新博客，把博客优化得更加精致实用。</p>
+<p>计划：</p>
+<ul>
+<li>进一步优化主题</li>
+<li>优化各页面</li>
+<li>增设功能，如评论等</li>
+</ul>
+<hr>
+<p>敬请期待吧！</p>
+<p><span style='background-color:#fff;'></span></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/05/26/%E5%A5%BD%E4%B9%85%E4%B8%8D%E8%A7%81/" data-id="cmbxfdqvd0002akfo2827dr59" data-title="好久不见" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="categories/Python/">Python</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="tags/python-%E6%B8%97%E9%80%8F/" rel="tag">python,渗透</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="tags/python/" style="font-size: 10px;">python</a> <a href="tags/python-%E6%B8%97%E9%80%8F/" style="font-size: 10px;">python,渗透</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2025/06/">六月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/06/">六月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/05/">五月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="2025/06/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="2023/07/28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/">爬取天气数据</a>
+          </li>
+        
+          <li>
+            <a href="2023/07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/">浅浅写个瑞士军刀</a>
+          </li>
+        
+          <li>
+            <a href="2023/07/07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/">随手写个gpt脚本</a>
+          </li>
+        
+          <li>
+            <a href="2023/07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/">中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></br>
+All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+      
+      &copy; 2025 Torch<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

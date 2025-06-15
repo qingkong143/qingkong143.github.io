@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>浅浅写个瑞士军刀 | Torch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="闲来无事，于是咱写了个python脚本，实现了瑞士军刀的功能，下面请看代码 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅浅写个瑞士军刀">
+<meta property="og:url" content="http://qingkong143.github.io/2023/07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/index.html">
+<meta property="og:site_name" content="Torch">
+<meta property="og:description" content="闲来无事，于是咱写了个python脚本，实现了瑞士军刀的功能，下面请看代码 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-18T03:52:28.000Z">
+<meta property="article:modified_time" content="2023-07-18T03:53:24.000Z">
+<meta property="article:author" content="Torch">
+<meta property="article:tag" content="python,渗透">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="Torch" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="../../../../favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+  
+    
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">Torch</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">灼光划破云间翳，炽念凝成世上灯</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="../../../../atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qingkong143.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-浅浅写个瑞士军刀" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time class="dt-published" datetime="2023-07-18T03:52:28.000Z" itemprop="datePublished">2023-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      浅浅写个瑞士军刀
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>闲来无事，于是咱写了个python脚本，实现了瑞士军刀的功能，下面请看代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> shlex</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> textwrap</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">execute</span>(<span class="params">cmd</span>):</span><br><span class="line">    cmd = cmd.strip()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> cmd:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    output = subprocess.check_output(shlex.split(cmd),</span><br><span class="line">                                     stderr=subprocess.STDOUT)</span><br><span class="line">    <span class="keyword">return</span> output.decode()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NetCat</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, args, buffer=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.args = args</span><br><span class="line">        <span class="variable language_">self</span>.buffer = buffer</span><br><span class="line">        <span class="variable language_">self</span>.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        <span class="variable language_">self</span>.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.args.listen:</span><br><span class="line">            <span class="variable language_">self</span>.listen()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.send()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.socket.connect((<span class="variable language_">self</span>.args.target, <span class="variable language_">self</span>.args.port))</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.buffer:</span><br><span class="line">            <span class="variable language_">self</span>.socket.send(<span class="variable language_">self</span>.buffer)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                recv_len = <span class="number">1</span></span><br><span class="line">                response = <span class="string">&#x27;&#x27;</span></span><br><span class="line">                <span class="keyword">while</span> recv_len:</span><br><span class="line">                    data = <span class="variable language_">self</span>.socket.recv(<span class="number">4096</span>)</span><br><span class="line">                    recv_len = <span class="built_in">len</span>(data)</span><br><span class="line">                    response += data.decode()</span><br><span class="line">                    <span class="keyword">if</span> recv_len &lt; <span class="number">4096</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> response:</span><br><span class="line">                    <span class="built_in">print</span>(response)</span><br><span class="line">                    buffer = <span class="built_in">input</span>(<span class="string">&#x27;&gt; &#x27;</span>)</span><br><span class="line">                    buffer += <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">                    <span class="variable language_">self</span>.socket.send(buffer.encode())</span><br><span class="line">        <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;User terminated.&#x27;</span>)</span><br><span class="line">            <span class="variable language_">self</span>.socket.close()</span><br><span class="line">            sys.exit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">listen</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;listening&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.socket.bind((<span class="variable language_">self</span>.args.target, <span class="variable language_">self</span>.args.port))</span><br><span class="line">        <span class="variable language_">self</span>.socket.listen(<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            client_socket, _ = <span class="variable language_">self</span>.socket.accept()</span><br><span class="line">            client_thread = threading.Thread(target=<span class="variable language_">self</span>.handle, args=(client_socket,))</span><br><span class="line">            client_thread.start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">handle</span>(<span class="params">self, client_socket</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.args.execute:</span><br><span class="line">            output = execute(<span class="variable language_">self</span>.args.execute)</span><br><span class="line">            client_socket.send(output.encode())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> <span class="variable language_">self</span>.args.upload:</span><br><span class="line">            file_buffer = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                data = client_socket.recv(<span class="number">4096</span>)</span><br><span class="line">                <span class="keyword">if</span> data:</span><br><span class="line">                    file_buffer += data</span><br><span class="line">                    <span class="built_in">print</span>(<span class="built_in">len</span>(file_buffer))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(<span class="variable language_">self</span>.args.upload, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(file_buffer)</span><br><span class="line">            message = <span class="string">f&#x27;Saved file <span class="subst">&#123;self.args.upload&#125;</span>&#x27;</span></span><br><span class="line">            client_socket.send(message.encode())</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> <span class="variable language_">self</span>.args.command:</span><br><span class="line">            cmd_buffer = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    client_socket.send(<span class="string">b&#x27; #&gt; &#x27;</span>)</span><br><span class="line">                    <span class="keyword">while</span> <span class="string">&#x27;\n&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> cmd_buffer.decode():</span><br><span class="line">                        cmd_buffer += client_socket.recv(<span class="number">64</span>)</span><br><span class="line">                    response = execute(cmd_buffer.decode())</span><br><span class="line">                    <span class="keyword">if</span> response:</span><br><span class="line">                        client_socket.send(response.encode())</span><br><span class="line">                    cmd_buffer = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&#x27;server killed <span class="subst">&#123;e&#125;</span>&#x27;</span>)</span><br><span class="line">                    <span class="variable language_">self</span>.socket.close()</span><br><span class="line">                    sys.exit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    parser = argparse.ArgumentParser(</span><br><span class="line">        description=<span class="string">&#x27;BHP Net Tool&#x27;</span>,</span><br><span class="line">        formatter_class=argparse.RawDescriptionHelpFormatter,</span><br><span class="line">        epilog=textwrap.dedent(<span class="string">&#x27;&#x27;&#x27;Example:</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 -l -c # command shell</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 -l -u=mytest.whatisup # upload to file</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 -l -e=\&quot;cat /etc/passwd\&quot; # execute command</span></span><br><span class="line"><span class="string">          echo &#x27;ABCDEFGHI&#x27; | ./netcat.py -t 192.168.1.108 -p 135 # echo local text to server port 135</span></span><br><span class="line"><span class="string">          netcat.py -t 192.168.1.108 -p 5555 # connect to server</span></span><br><span class="line"><span class="string">          &#x27;&#x27;&#x27;</span>))</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-c&#x27;</span>, <span class="string">&#x27;--command&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;initialize command shell&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-e&#x27;</span>, <span class="string">&#x27;--execute&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;execute specified command&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-l&#x27;</span>, <span class="string">&#x27;--listen&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;listen&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-p&#x27;</span>, <span class="string">&#x27;--port&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">5555</span>, <span class="built_in">help</span>=<span class="string">&#x27;specified port&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-t&#x27;</span>, <span class="string">&#x27;--target&#x27;</span>, default=<span class="string">&#x27;192.168.1.203&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;specified IP&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;-u&#x27;</span>, <span class="string">&#x27;--upload&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;upload file&#x27;</span>)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    <span class="keyword">if</span> args.listen:</span><br><span class="line">        buffer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        buffer = sys.stdin.read()</span><br><span class="line"></span><br><span class="line">    nc = NetCat(args, buffer.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    nc.run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>看不太懂？这好说，直接一行一行给咱解读。</p>
+<hr>
+<ol>
+<li><strong>import argparse</strong>：导入argparse模块，用于解析命令行参数。</li>
+<li><strong>import socket</strong>：导入socket模块，用于创建套接字和网络通信。</li>
+<li><strong>import shlex</strong>：导入shlex模块，用于解析字符串成shell单词列表。</li>
+<li><strong>import subprocess</strong>：导入subprocess模块，用于执行外部命令。</li>
+<li><strong>import sys</strong>：导入sys模块，用于访问系统相关的功能。</li>
+<li><strong>import textwrap</strong>：导入textwrap模块，用于格式化文本。</li>
+<li><strong>def execute(cmd):</strong>：定义了一个名为execute的函数，用于执行给定的命令。</li>
+<li><strong>cmd &#x3D; cmd.strip()</strong>：去除命令字符串两端的空白字符。</li>
+<li><strong>if not cmd:</strong>：如果命令为空，则返回。</li>
+<li><strong>output &#x3D; subprocess.check_output(shlex.split(cmd), stderr&#x3D;subprocess.STDOUT)</strong>：使用subprocess模块的check_output函数执行命令，并将结果存储在output变量中。</li>
+<li><strong>return output.decode()</strong>：将output变量解码成字符串并返回。</li>
+<li><strong>class NetCat:</strong>：定义了一个名为NetCat的类，用于实现网络通信功能。</li>
+<li><strong>def <strong>init</strong>(self, args, buffer&#x3D;None):</strong>：NetCat类的初始化方法，接收args和buffer参数。</li>
+<li>self.args &#x3D; args：将参数args赋值给NetCat对象的args属性。</li>
+<li><strong>self.buffer &#x3D; buffer</strong>：将参数buffer赋值给NetCat对象的buffer属性。</li>
+<li><strong>self.socket &#x3D; socket.socket(socket.AF_INET, socket.SOCK_STREAM)</strong>：创建一个TCP套接字对象，并将其赋值给NetCat对象的socket属性。</li>
+<li><strong>self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)</strong>：设置套接字选项，以便允许在套接字关闭后重新使用相同的地址。</li>
+<li><strong>def run(self):</strong>：定义了一个名为run的方法，用于根据命令行参数执行不同的操作。</li>
+<li><strong>if self.args.listen:</strong>：检查是否设置了监听模式。</li>
+<li><strong>self.listen()</strong>：调用listen方法开始监听操作。</li>
+<li><strong>self.send()</strong>：调用send方法开始发送操作。</li>
+<li><strong>def send(self):</strong>：定义了一个名为send的方法，用于向目标主机发送数据。</li>
+<li><strong>self.socket.connect((self.args.target, self.args.port))</strong>：和目标主机建立TCP连接。</li>
+<li><strong>if self.buffer:</strong>：检查是否有输入数据。</li>
+<li><strong>self.socket.send(self.buffer)</strong>：发送输入数据到目标主机。</li>
+<li><strong>while True:</strong>：无限循环，用于持续接收和发送数据。</li>
+<li><strong>recv_len &#x3D; 1</strong>：初始化recv_len变量为1。</li>
+<li><strong>response &#x3D; ‘’</strong>：初始化response变量为空字符串。</li>
+<li><strong>while recv_len:</strong>：循环接收数据，直到接收长度为0（连接关闭）。</li>
+<li><strong>data &#x3D; self.socket.recv(4096)</strong>：接收最多4096字节的数据。</li>
+<li><strong>recv_len &#x3D; len(data)</strong>：获取接收到的数据的长度。</li>
+<li><strong>response +&#x3D; data.decode()</strong>：将接收到的数据解码并添加到response变量中。</li>
+<li><strong>if recv_len &lt; 4096:</strong>：如果接收到的数据长度小于4096，则退出循环。</li>
+<li><strong>break</strong>：跳出内部循环。</li>
+<li><strong>if response:</strong>：检查是否接收到了数据。</li>
+<li><strong>print(response)</strong>：打印接收到的数据。</li>
+<li><strong>buffer &#x3D; input(‘&gt; ‘)</strong>：从用户输入获取命令。</li>
+<li><strong>buffer +&#x3D; ‘\n’</strong>：在命令末尾添加换行符。</li>
+<li><strong>self.socket.send(buffer.encode())</strong>：将命令发送给目标主机。</li>
+<li><strong>except KeyboardInterrupt:</strong>：捕获键盘中断异常。</li>
+<li><strong>print(‘User terminated.’)</strong>：打印用户终止信息。</li>
+<li><strong>self.socket.close()</strong>：关闭套接字连接。</li>
+<li><strong>sys.exit()</strong>：退出程序。</li>
+<li><strong>def listen(self):</strong>：定义了一个名为listen的方法，用于开始监听连接请求。</li>
+<li><strong>print(‘listening’)</strong>：打印监听信息。</li>
+<li><strong>self.socket.bind((self.args.target, self.args.port))</strong>：将套接字绑定到指定的IP地址和端口。</li>
+<li><strong>self.socket.listen(5)</strong>：开始监听连接请求，允许同时最多5个连接。</li>
+<li><strong>while True:</strong>：无限循环，用于持续处理连接。</li>
+<li><strong>client_socket, _ &#x3D; self.socket.accept()</strong>：接受客户端连接，返回客户端套接字对象和地址信息。</li>
+<li><strong>client_thread &#x3D; threading.Thread(target&#x3D;self.handle, args&#x3D;(client_socket,))</strong>：创建一个新线程，用于处理客户端连接。</li>
+<li><strong>client_thread.start()</strong>：启动新线程。</li>
+<li><strong>def handle(self, client_socket):</strong>：定义了一个名为handle的方法，用于处理客户端连接。</li>
+<li><strong>if self.args.execute:</strong>：检查是否设置了执行命令参数。</li>
+<li><strong>output &#x3D; execute(self.args.execute)</strong>：执行指定的命令，并将结果赋值给output变量。</li>
+<li><strong>client_socket.send(output.encode())</strong>：将命令执行结果发送回客户端。</li>
+<li><strong>elif self.args.upload:</strong>：检查是否设置了上传文件参数。</li>
+<li><strong>file_buffer &#x3D; b’’</strong>：初始化file_buffer变量为空字节串。</li>
+<li><strong>while True:</strong>：无限循环，用于持续接收文件数据。</li>
+<li><strong>data &#x3D; client_socket.recv(4096)</strong>：接收最多4096字节的文件数据。</li>
+<li><strong>if data:</strong>：检查是否接收到了数据。</li>
+<li><strong>file_buffer +&#x3D; data</strong>：将接收到的数据添加到file_buffer变量中。</li>
+<li><strong>print(len(file_buffer))</strong>：打印已接收文件数据的长度。</li>
+<li><strong>else:</strong>：如果未接收到数据，跳出循环。</li>
+<li><strong>break</strong>：跳出内部循环。</li>
+<li><strong>with open(self.args.upload, ‘wb’) as f:</strong>：以二进制写入模式打开要上传的文件。</li>
+<li><strong>f.write(file_buffer)</strong>：将接收到的文件数据写入文件。</li>
+<li><strong>message &#x3D; f’Saved file {self.args.upload}’</strong>：构造上传成功的消息。</li>
+<li><strong>client_socket.send(message.encode())</strong>：将上传成功的消息发送回客户端。</li>
+<li><strong>elif self.args.command:</strong>：检查是否设置了传输命令参数。</li>
+<li><strong>cmd_buffer &#x3D; b’’</strong>：初始化cmd_buffer变量为空字节串，用于存储传输的命令。</li>
+<li><strong>while True:</strong>：无限循环，用于持续传输命令。</li>
+<li><strong>client_socket.send(b’ #&gt; ‘)</strong>：发送命令提示符给客户端。</li>
+<li><strong>while ‘\n’ not in cmd_buffer.decode():</strong>：循环直到接收到完整的命令。</li>
+<li><strong>cmd_buffer +&#x3D; client_socket.recv(64)</strong>：接收最多64字节的命令数据。</li>
+<li><strong>response &#x3D; execute(cmd_buffer.decode())</strong>：执行接收到的命令，并将结果赋值给response变量。</li>
+<li><strong>if response:</strong>：当命令执行结果非空时。</li>
+<li><strong>client_socket.send(response.encode())</strong>：将命令执行结果发送给客户端。</li>
+<li><strong>cmd_buffer &#x3D; b’’</strong>：清空cmd_buffer变量。</li>
+<li><strong>print(f’server killed {e}’)</strong>：打印服务器被终止的错误信息。</li>
+<li><strong>self.socket.close()</strong>：关闭套接字连接。</li>
+<li><strong>sys.exit()</strong>：退出程序。</li>
+<li><strong>if <strong>name</strong> &#x3D;&#x3D; ‘<strong>main</strong>‘:</strong>：如果当前模块是主程序入口。</li>
+<li><strong>parser &#x3D; argparse.ArgumentParser(…)</strong>：创建一个命令行参数解析器。</li>
+<li><strong>parser.add_argument(…)</strong>：添加命令行参数选项。</li>
+<li><strong>args &#x3D; parser.parse_args()</strong>：解析命令行参数，并将结果赋值给args变量。</li>
+<li><strong>if args.listen:</strong>：检查是否设置了监听模式。</li>
+<li><strong>buffer &#x3D; ‘’</strong>：初始化buffer变量为空字符串。</li>
+<li><strong>else:</strong>：如果不是监听模式。</li>
+<li>**buffer &#x3D; sys.stdin.read()：**从标准输入读取数据，并将结果赋值给buffer变量。</li>
+<li><strong>nc &#x3D; NetCat(args, buffer.encode(‘utf-8’))</strong>：创建一个NetCat对象，将args和编码后的buffer作为参数传入。</li>
+<li><strong>nc.run()</strong>：调用NetCat对象的run方法开始执行。</li>
+</ol>
+<hr>
+<p>唔唔唔，累死窝啦，拜拜！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/" data-id="cmbxfdqvg0007akfoatwr2ync" data-title="浅浅写个瑞士军刀" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../../../tags/python-%E6%B8%97%E9%80%8F/" rel="tag">python,渗透</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          爬取天气数据
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">随手写个gpt脚本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Python/">Python</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/python-%E6%B8%97%E9%80%8F/" rel="tag">python,渗透</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="../../../../tags/python/" style="font-size: 10px;">python</a> <a href="../../../../tags/python-%E6%B8%97%E9%80%8F/" style="font-size: 10px;">python,渗透</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2025/06/">六月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/06/">六月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/05/">五月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2025/06/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="../../28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/">爬取天气数据</a>
+          </li>
+        
+          <li>
+            <a href="">浅浅写个瑞士军刀</a>
+          </li>
+        
+          <li>
+            <a href="../../07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/">随手写个gpt脚本</a>
+          </li>
+        
+          <li>
+            <a href="../../06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/">中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></br>
+All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+      
+      &copy; 2025 Torch<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="../../../../js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="../../../../fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

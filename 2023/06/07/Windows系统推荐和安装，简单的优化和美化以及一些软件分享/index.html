@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>windows开荒 | Torch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="嘿嘿，时隔不久，我又来水..啊呸，满足各位老哥们的需求了。 系统我用的是Windsys的Windows10 LTSC2021，用了快一个月，感觉很不错，我的电脑处理器是R7 5800H，装着比Windows11流畅不少，以下是这个系统的一些简介，基本改动很少，做了一些优化和bug修复   俺的界面就这样的😊😊  这个大佬也有修改的Windows11和一个自己搞的Windows11类原生方案，有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows开荒">
+<meta property="og:url" content="http://qingkong143.github.io/2023/06/07/Windows%E7%B3%BB%E7%BB%9F%E6%8E%A8%E8%8D%90%E5%92%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E4%BC%98%E5%8C%96%E5%92%8C%E7%BE%8E%E5%8C%96%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%AB/index.html">
+<meta property="og:site_name" content="Torch">
+<meta property="og:description" content="嘿嘿，时隔不久，我又来水..啊呸，满足各位老哥们的需求了。 系统我用的是Windsys的Windows10 LTSC2021，用了快一个月，感觉很不错，我的电脑处理器是R7 5800H，装着比Windows11流畅不少，以下是这个系统的一些简介，基本改动很少，做了一些优化和bug修复   俺的界面就这样的😊😊  这个大佬也有修改的Windows11和一个自己搞的Windows11类原生方案，有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_fa26211e_0750_3617_791@828x812.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_37259c42_0750_3628_747@1046x622.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_bfdc6e3f_0750_3631_925@1168x820.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_f2a58515_0750_3634_909@1920x1080.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_8dbda29d_0750_3643_576@310x642.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_dc4461db_0750_3646_398@296x598.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_268a928f_0750_3648_214@690x464.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_09ad3689_0750_3658_209@1918x1078.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_b12c25db_0750_366_362@1920x1030.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_89c76e46_0753_204_169@1394x738.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0607/04/9705929_69c3e698_5017_4463_188@1080x2400.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_55f25c34_0753_2058_670@1190x742.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_a819c9ad_0753_2066_271@1338x892.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_50f29624_0753_2074_48@1238x866.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_959ca59c_0753_2082_11@1426x930.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_218ed446_0753_209_350@1920x1030.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_4c28aaef_0755_7429_408@1488x1020.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_1396c940_0755_7432_876@1506x998.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_fecc9ebf_0755_7434_854@1000x752.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_d76808ff_0755_7438_806@1000x752.jpeg.m.jpg">
+<meta property="og:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_7a2b33b4_0755_7452_125@1000x752.jpeg.m.jpg">
+<meta property="article:published_time" content="2023-06-07T10:38:46.000Z">
+<meta property="article:modified_time" content="2025-06-15T08:50:22.291Z">
+<meta property="article:author" content="Torch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.coolapk.com/feed/2023/0606/22/9705929_fa26211e_0750_3617_791@828x812.jpeg.m.jpg">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="Torch" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="../../../../favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+  
+    
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">Torch</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">灼光划破云间翳，炽念凝成世上灯</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="../../../../atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qingkong143.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Windows系统推荐和安装，简单的优化和美化以及一些软件分享" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time class="dt-published" datetime="2023-06-07T10:38:46.000Z" itemprop="datePublished">2023-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      windows开荒
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>嘿嘿，时隔不久，我又来水..啊呸，满足各位老哥们的需求了。</p>
+<h1 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h1><p>我用的是Windsys的Windows10 LTSC2021，用了快一个月，感觉很不错，我的电脑处理器是R7 5800H，装着比Windows11流畅不少，以下是这个系统的一些简介，基本改动很少，做了一些优化和bug修复 </p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_fa26211e_0750_3617_791@828x812.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_37259c42_0750_3628_747@1046x622.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_bfdc6e3f_0750_3631_925@1168x820.jpeg.m.jpg"></p>
+<p>俺的界面就这样的😊😊</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_f2a58515_0750_3634_909@1920x1080.jpeg.m.jpg"></p>
+<p>这个大佬也有修改的Windows11和一个自己搞的Windows11类原生方案，有兴趣的自己可以去官网看看，下面是链接<br><a target="_blank" rel="noopener" href="https://windsys.win/">Windsys Project</a></p>
+<p>这个系统里自带了一个Windsys工具箱，这里面有不少好用的工具，感觉有些很有用，大家可以自己看看呀</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_8dbda29d_0750_3643_576@310x642.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_dc4461db_0750_3646_398@296x598.jpeg.m.jpg"></p>
+<h1 id="激活工具"><a href="#激活工具" class="headerlink" title="激活工具"></a>激活工具</h1><p>之前想装2021得时候看很多人说 LTSC 2019可以支持10年，但2021支持五年，于是找很久找到了这个激活工具，可以数字激活成lot版的，听说这个也是支持十年，也支持激活一写office等，反正很不错</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_268a928f_0750_3648_214@690x464.jpeg.m.jpg"></p>
+<h1 id="系统字体"><a href="#系统字体" class="headerlink" title="系统字体"></a>系统字体</h1><p>我的电脑是15.6寸的1080p分辨率的笔记本，微软自己的字体渲染不是很好，之前全局替换过例如大家备受好评的苹方之类的字体，但在我的1080p分辨率上显示效果甚至不如原来的，找了很久找到了这个小米兰亭字体，感觉显示效果比原来好很多，以下是在浏览器里的效果图，不知道明不明显，大家有需要可以自己试试看</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_09ad3689_0750_3658_209@1918x1078.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_b12c25db_0750_366_362@1920x1030.jpeg.m.jpg"></p>
+<p>还有关于怎么全局替换，大家下好我分享的字体解压缩之后会得到以下的文件<br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_89c76e46_0753_204_169@1394x738.jpeg.m.jpg"></p>
+<p>然后在PE系统下复制粘贴前三个，进入系统盘Windows Fonts文件夹替换即可，大家替换之前最好将Fonts文件夹原来的同名文件备份一下，以免后续效果不好还可以重复上面操作换回来，也防止出现bug。这里附上大佬的换字体教程</p>
+<p><img src="https://image.coolapk.com/feed/2023/0607/04/9705929_69c3e698_5017_4463_188@1080x2400.jpeg.m.jpg"></p>
+<h1 id="任务栏的透明美化和开始图标的更换"><a href="#任务栏的透明美化和开始图标的更换" class="headerlink" title="任务栏的透明美化和开始图标的更换"></a>任务栏的透明美化和开始图标的更换</h1><p>用的是StartlsBack这个软件，安装好之后，右击开始图标，点属性就进去软件的设置界面啦，在外观配置，自定义任务特效里可以开启任务栏透明<br><a target="_blank" rel="noopener" href="https://zhutix.com/study/huan-start-orbs/">更换开始按钮 - 入门教程 - 致美化</a></p>
+<h1 id="系统优化和日常优化的一些软件分享"><a href="#系统优化和日常优化的一些软件分享" class="headerlink" title="系统优化和日常优化的一些软件分享"></a>系统优化和日常优化的一些软件分享</h1><p>我自己也没做太多优化，就用Windsys工具箱里的WPD，自己下的wise care365，dism++简单优化了一下</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_55f25c34_0753_2058_670@1190x742.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_a819c9ad_0753_2066_271@1338x892.jpeg.m.jpg"><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_50f29624_0753_2074_48@1238x866.jpeg.m.jpg"></p>
+<p>然后日常清理垃圾用的就是用的Wise Care365和Dism++。没有用任何杀毒软件，我自己电脑正常用也没有啥弹窗和中病毒。平时还用了一个进程管优化理软件Process Lasso，这个软件俺也不知道作用大不大，也没测试过，反正就是一直用着了，用的是俄罗斯大佬破解的，装好后需要用工具激活一下，如果有老哥需要用这个到时候我回复一下</p>
+<p><a target="_blank" rel="noopener" href="https://image.coolapk.com/feed/2023/0606/22/9705929_a77f95f6_0753_2078_773@1424x739.jpeg.m.jpg"></a></p>
+<p>还有就是我是拯救者电脑，Lenovo Legion Toolkit这个软件必装的，很好用，本来之前一直用联想电脑管家，后来好像听说有些内存泄露问题，而且我自己平常也只是用联想电脑管家方便打开独显直连，选择性能模式和充电模式这些，找到这个软件后就感觉联想电脑管家没啥必要了，软件很小也不占后台，不需要设置开机启动，你需要用的时候打开就行</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_959ca59c_0753_2082_11@1426x930.jpeg.m.jpg"></p>
+<p>然后就是浏览器，浏览器下了四个，最近用的比较多的也就是火狐和brave浏览器。之前一直用edge浏览器，刚开始用挺好的，用了很长时间，然后后面越来越臃肿就删除了，如果有需要删除edge浏览器的分享的软件里有一个能彻底删除edge浏览器的软件，可以试试。但不知道对Windows更新有没有影响，系统更新桌面可能还会出现图标，很烦。反正我禁用系统更新了<br>关于浏览器，第一个就是Google Chrome，这不用多说了，平常魔法出去的时候用的比较多。<br>然后是百分浏览器，现在更新比较慢，内核还在102，但用着比较顺手好用，自带了超级拖拽，鼠标手势，内存优化等功能</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_218ed446_0753_209_350@1920x1030.jpeg.m.jpg"><br>直接在官网下载就行<a target="_blank" rel="noopener" href="https://www.centbrowser.cn/">百分浏览器</a></p>
+<p>火狐浏览器用的是奔跑中的奶酪修改的火狐，一直在用，灰常好用</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_4c28aaef_0755_7429_408@1488x1020.jpeg.m.jpg"></p>
+<p>想要了解更多可以去奶酪大大的官网看看，官网还有修改的chrome和edge等浏览器，也有插件推荐说明等很多有用的东西微笑微笑微笑，公众号经常也会发一些有用的教程<br><a target="_blank" rel="noopener" href="https://www.runningcheese.com/">奔跑中的奶酪 - 有智，有趣，有爱</a></p>
+<p>Brave浏览器用的是bigfoxtail大佬编译的版本，主要是删除了区块链和钱包这些东西，用的人比较少，更新的不快，目前内核还在109，反正俺一直在用，感觉还行，如果你需要可以试试</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_1396c940_0755_7432_876@1506x998.jpeg.m.jpg"></p>
+<p>最后就是一些其他自己平常用的软件分享一下吧。其实也就听歌的和浏览器等，听歌用的是洛雪音乐然后搭配上六音音源，我想听的基本都有，基本满足我日常的听歌需求了，六音音源在设置，基本设置，自定义源里加入选择就行</p>
+<p><a target="_blank" rel="noopener" href="https://image.coolapk.com/feed/2023/0606/22/9705929_55e09788_0753_2085_93@1380x890.jpeg.m.jpg"></a></p>
+<p>小白羊云盘和mpv，小白羊云盘就是第三方阿里云盘，我主要是用这两个来看电影的，虽然有不少电影网站，但网站有时候老一卡一卡的。<br>其实我自己的也不差，操作起来也挺简单的，大家可以试试，嘿嘿。<br><a target="_blank" rel="noopener" href="https://qk.it-02.cf/movies/">本博客的视频解析页面</a></p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_fecc9ebf_0755_7434_854@1000x752.jpeg.m.jpg"></p>
+<p>因为阿里官方限制，现在要获取一个叫 refresh_token得东西了，才能加快下载和视频播放速度，如果有兴趣可以自己看下面链接搞一下</p>
+<p><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_d76808ff_0755_7438_806@1000x752.jpeg.m.jpg"></p>
+<p><a target="_blank" rel="noopener" href="https://alist.nn.ci/zh/guide/drivers/aliyundrive_open.html">阿里云盘 Open | AList文档</a><br>然后把点击的网盘资源就可以播放了，自带有播放器，但可以自定义，我一般用的是mpv的懒人包播放</p>
+<p><a target="_blank" rel="noopener" href="https://image.coolapk.com/feed/2023/0606/22/9705929_7083cd72_0755_7448_584@1000x752.jpeg.m.jpg"></a><br><img src="https://image.coolapk.com/feed/2023/0606/22/9705929_7a2b33b4_0755_7452_125@1000x752.jpeg.m.jpg"></p>
+<p>好了，就这么多，不知道对多少人有帮助，反正今晚没事干写这个打发一下时间，对你有帮助就给俺点个赞吧</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/06/07/Windows%E7%B3%BB%E7%BB%9F%E6%8E%A8%E8%8D%90%E5%92%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E7%AE%80%E5%8D%95%E7%9A%84%E4%BC%98%E5%8C%96%E5%92%8C%E7%BE%8E%E5%8C%96%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%AB/" data-id="cmbxfdqvc0001akfoa618a1l0" data-title="windows开荒" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../08/%E5%AF%BC%E6%95%B0%E7%9A%84%E7%AE%80%E5%8D%95%E6%95%99%E5%AD%A6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          简单的导数教程
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../05/26/%E5%A5%BD%E4%B9%85%E4%B8%8D%E8%A7%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">好久不见</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Python/">Python</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/python-%E6%B8%97%E9%80%8F/" rel="tag">python,渗透</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="../../../../tags/python/" style="font-size: 10px;">python</a> <a href="../../../../tags/python-%E6%B8%97%E9%80%8F/" style="font-size: 10px;">python,渗透</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2025/06/">六月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/06/">六月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/05/">五月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2025/06/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="../../../07/28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/">爬取天气数据</a>
+          </li>
+        
+          <li>
+            <a href="../../../07/18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/">浅浅写个瑞士军刀</a>
+          </li>
+        
+          <li>
+            <a href="../../../07/07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/">随手写个gpt脚本</a>
+          </li>
+        
+          <li>
+            <a href="../../../07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/">中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></br>
+All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+      
+      &copy; 2025 Torch<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="../../../../js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="../../../../fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

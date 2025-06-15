@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型 | Torch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="模型下载Linly-Chinese-FalconChinese-Falcon 模型在 Falcon 基础上扩充中文词表，在中英文数据上增量预训练。 模型以  Apache License 2.0  协议开源，支持商业用途。模型实现和训练细节 | 模型下载 | 分类 | 训练数据 | 训练序列长度 | 版本 | 更新时间 ||—————|——–|——||Chinese-Falcon-7B (hf格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型">
+<meta property="og:url" content="http://qingkong143.github.io/2023/07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Torch">
+<meta property="og:description" content="模型下载Linly-Chinese-FalconChinese-Falcon 模型在 Falcon 基础上扩充中文词表，在中英文数据上增量预训练。 模型以  Apache License 2.0  协议开源，支持商业用途。模型实现和训练细节 | 模型下载 | 分类 | 训练数据 | 训练序列长度 | 版本 | 更新时间 ||—————|——–|——||Chinese-Falcon-7B (hf格式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cae2a0ed3.png">
+<meta property="og:image" content="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cbbe84ef7.png">
+<meta property="article:published_time" content="2023-07-06T14:43:06.000Z">
+<meta property="article:modified_time" content="2025-06-15T08:50:22.291Z">
+<meta property="article:author" content="Torch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cae2a0ed3.png">
+  
+    <link rel="alternate" href="../../../../atom.xml" title="Torch" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="../../../../favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="../../../../css/style.css">
+
+  
+    
+<link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../../../index.html" id="logo">Torch</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../../../index.html" id="subtitle">灼光划破云间翳，炽念凝成世上灯</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="../../../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="../../../../atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qingkong143.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="" class="article-date">
+  <time class="dt-published" datetime="2023-07-06T14:43:06.000Z" itemprop="datePublished">2023-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="模型下载"><a href="#模型下载" class="headerlink" title="模型下载"></a>模型下载</h1><h2 id="Linly-Chinese-Falcon"><a href="#Linly-Chinese-Falcon" class="headerlink" title="Linly-Chinese-Falcon"></a>Linly-Chinese-Falcon</h2><p>Chinese-Falcon 模型在 Falcon 基础上扩充中文词表，在中英文数据上增量预训练。 模型以 <a target="_blank" rel="noopener" href="https://www.apache.org/licenses/LICENSE-2.0"> Apache License 2.0 </a> 协议开源，支持商业用途。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/636994073">模型实现和训练细节</a></p>
+<p>| 模型下载 | 分类 | 训练数据 | 训练序列长度 | 版本 | 更新时间 |<br>|—————|——–|——|<br>|<a target="_blank" rel="noopener" href="https://huggingface.co/Linly-AI/Chinese-Falcon-7B">Chinese-Falcon-7B (hf格式)</a>| 基础模型 | 50G通用语聊 | 2048 | v0.2 | 2023.6.15 |</p>
+<h2 id="Linly-Chinese-LLaMA"><a href="#Linly-Chinese-LLaMA" class="headerlink" title="Linly-Chinese-LLaMA"></a>Linly-Chinese-LLaMA</h2><p>Linly-Chinese-LLaMA 系列模型基于 LLaMA 权重和词表，在中文数据上增量预训练。</p>
+<p>使用须知 ⚠️ LLaMA 原始模型权重基于 <a target="_blank" rel="noopener" href="https://www.gnu.org/licenses/gpl-3.0.html"> GNU General Public License v3.0 </a>协议，仅供研究使用，不能用于商业目的。 请确认在已获得<a target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSfqNECQnMkycAp2jP4Z9TFX0cGR4uf7b_fBxjY_OjhJILlKGA/viewform?usp=send_form">许可</a>的前提下使用以下模型权重。</p>
+<p>  模型下载 | 分类 | 训练数据 | 训练序列长度 | 版本 | 更新时间 |<br>|—————|——–|——|<br>|<a target="_blank" rel="noopener" href="https://huggingface.co/Linly-AI/Chinese-LLaMA-7B/">Chinese-LLaMA-7B</a>| 基础模型 | 100G通用语料 | 2048 | v1.2 | 2023.5.29 |<br>|<a target="_blank" rel="noopener" href="https://huggingface.co/Linly-AI/ChatFlow-7B">ChatFlow-7B</a>| 对话模型 | 5M指令数据 | 1024 | v1.1 | 2023.5.14 |</p>
+<h1 id="训练情况"><a href="#训练情况" class="headerlink" title="训练情况"></a>训练情况</h1><h2 id="模型仍在迭代中，本项目定期更新模型权重。"><a href="#模型仍在迭代中，本项目定期更新模型权重。" class="headerlink" title="模型仍在迭代中，本项目定期更新模型权重。"></a>模型仍在迭代中，本项目定期更新模型权重。</h2><p><strong>Linly-Chinese-Falcon</strong></p>
+<p><img src="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cae2a0ed3.png" alt="Linly-Chinese-Falcon"></p>
+<p><strong>Linly-Chinese-LLaMA</strong></p>
+<p><img src="https://img01.anheyu.com/useruploads/0/2023/07/06/64a6cbbe84ef7.png" alt="Linly-Chinese-LLaMA"></p>
+<h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h1><p>本章节介绍 TencentPretrain 格式模型权重的使用方法。 下载预训练模型权重，安装依赖。</p>
+<blockquote>
+<p>测试环境: py3.8.12 cuda11.2.2 cudnn8.1.1.33-1 torch1.9.0 bitsandbytes0.37.2</p>
+</blockquote>
+<p>解码参数及详细使用说明请参考 <a target="_blank" rel="noopener" href="https://github.com/ProjectD-AI/llama_inference">llama_inference</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git <span class="built_in">clone</span> https://huggingface.co/Linly-AI/ChatFlow-7B</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ProjectD-AI/llama_inference</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> llama_inference </span><br><span class="line">vi prompts.txt  <span class="comment">#编辑用户输入，例如&quot;上海有什么好玩的地方？&quot;</span></span><br><span class="line"></span><br><span class="line">python3 llama_infer.py --test_path prompts.txt --prediction_path result.txt  \</span><br><span class="line">                      --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                      --config_path config/llama_7b_config.json \</span><br><span class="line">                      --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512</span><br></pre></td></tr></table></figure>
+
+<h2 id="多轮对话"><a href="#多轮对话" class="headerlink" title="多轮对话"></a>多轮对话</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 llama_dialogue.py --seq_length 512 --top_k 10   \</span><br><span class="line">                      --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                      --config_path ./config/llama_7b_config.json \</span><br><span class="line">                      --spm_model_path ../ChatFlow-7B/tokenizer.model</span><br></pre></td></tr></table></figure>
+
+<h2 id="Int8推理加速"><a href="#Int8推理加速" class="headerlink" title="Int8推理加速"></a>Int8推理加速</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 llama_infer.py --test_path prompts.txt --prediction_path result.txt  \</span><br><span class="line">                      --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                      --config_path config/llama_7b_config.json \</span><br><span class="line">                      --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512 --use_int8 </span><br></pre></td></tr></table></figure>
+
+<h2 id="微服务部署"><a href="#微服务部署" class="headerlink" title="微服务部署"></a>微服务部署</h2><p>安装依赖：flask</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python3 llama_server.py --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                        --config_path config/llama_7b_config.json \</span><br><span class="line">                        --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512</span><br><span class="line"></span><br><span class="line">curl -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> http://127.0.0.1:8888/chat -d <span class="string">&#x27;&#123;&quot;question&quot;: &quot;北京有什么好玩的地方？&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Gradio-本地-Demo"><a href="#Gradio-本地-Demo" class="headerlink" title="Gradio 本地 Demo"></a>Gradio 本地 Demo</h2><p>安装依赖：Gradio</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python llama_gradio.py --load_model_path ../ChatFlow-7B/chatflow_7b.bin  \</span><br><span class="line">                        --config_path config/llama_7b_config.json \</span><br><span class="line">                        --spm_model_path ../ChatFlow-7B/tokenizer.model --seq_length 512</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在网页上打开：<a target="_blank" rel="noopener" href="http://127.0.0.1:7860/">http://127.0.0.1:7860/</a></p>
+<h1 id="模型训练细节"><a href="#模型训练细节" class="headerlink" title="模型训练细节"></a>模型训练细节</h1><p>模型基于 TencentPretrain 预训练和指令精调，更多详细信息参见 ➡️ <a target="_blank" rel="noopener" href="https://github.com/CVI-SZU/Linly/wiki/%E5%A2%9E%E9%87%8F%E8%AE%AD%E7%BB%83">增量训练</a> ⬅️ 。</p>
+<h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><ol>
+<li>模型推理需要多少显存？</li>
+</ol>
+<blockquote>
+<p>7B 模型约 14G，int8 模式 7G。13B 模型 28G，int8模式 14G。</p>
+</blockquote>
+<ol start="2">
+<li>训练时加载模型内存不够怎么办？</li>
+</ol>
+<blockquote>
+<p>训练初始化时，每张卡会加载一个模型的拷贝，因此内存需求为模型大小*GPU数量。 内存不足时可以使用分块加载，详见<a target="_blank" rel="noopener" href="https://github.com/CVI-SZU/Linly/wiki/%E6%A8%A1%E5%9E%8B%E5%88%86%E5%9D%97">模型分块</a>。</p>
+</blockquote>
+<ol start="3">
+<li>是否支持LoRA训练？</li>
+</ol>
+<blockquote>
+<p>公开的模型权重没有用到 LoRA，使用全参数训练（Full-tuning）。 TencentPretrain 框架也支持 LoRA 训练，可以根据需要使用，详见 <a href="%22https://github.com/CVI-SZU/Linly/wiki/LoRA%E8%AE%AD%E7%BB%83">LoRA</a> 训练。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qingkong143.github.io/2023/07/06/%E4%B8%AD%E6%96%87%20Falcon%20&%20LLaMA%20&%20OpenLLaMA%20%E5%A4%A7%E6%A8%A1%E5%9E%8B/" data-id="cmbxfdqvf0004akfodbv0678x" data-title="中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          随手写个gpt脚本
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../../06/09/%E7%88%AC%E6%9F%90%E7%BD%91%E7%AB%99%E5%9B%BE%E7%89%87/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">爬取某网站图片</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/Python/">Python</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../tags/python-%E6%B8%97%E9%80%8F/" rel="tag">python,渗透</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="../../../../tags/python/" style="font-size: 10px;">python</a> <a href="../../../../tags/python-%E6%B8%97%E9%80%8F/" style="font-size: 10px;">python,渗透</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2025/06/">六月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/06/">六月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2023/05/">五月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../../../2025/06/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="../../28/%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94%E6%95%B0%E6%8D%AE/">爬取天气数据</a>
+          </li>
+        
+          <li>
+            <a href="../../18/%E6%B5%85%E6%B5%85%E5%86%99%E4%B8%AA%E7%91%9E%E5%A3%AB%E5%86%9B%E5%88%80/">浅浅写个瑞士军刀</a>
+          </li>
+        
+          <li>
+            <a href="../../07/%E9%9A%8F%E6%89%8B%E5%86%99%E4%B8%AAgpt%E5%B0%8F%E8%84%9A%E6%9C%AC/">随手写个gpt脚本</a>
+          </li>
+        
+          <li>
+            <a href="">中文 Falcon &amp; LLaMA &amp; OpenLLaMA 大模型</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></br>
+All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+      
+      &copy; 2025 Torch<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="../../../../js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="../../../../fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="../../../../js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
