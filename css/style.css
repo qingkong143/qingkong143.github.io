@@ -1865,22 +1865,6 @@ button {
 .archives-category-list-link:before {
   font-weight: 700;
 }
-.post-categories-wrapper.flex-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.post-categories-wrap {
-  flex: 1 1 calc(50% - 10px);
-  max-width: calc(50% - 10px);
-  box-sizing: border-box;
-}
-@media (max-width: 768px) {
-  .post-categories-wrap {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-}
 #footer {
   background-color: linear-gradient(to top, var(--color-footer-background) 50%, transparent);
   padding: 40px 0 20px;
