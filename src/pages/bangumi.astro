@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BangumiGrid from '../components/BangumiGrid.astro';
+import bangumis from '../data/bangumis.json';
+---
+<BaseLayout title="追番 - Torch Blog" description="追番列表">
+  <BangumiGrid bangumis={bangumis} />
+</BaseLayout>

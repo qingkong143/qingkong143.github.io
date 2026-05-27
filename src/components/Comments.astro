@@ -1,0 +1,32 @@
+---
+import { siteConfig } from '../data/site';
+---
+{siteConfig.comments.twikoo.enable && (
+  <section id="comments">
+    <div class="comment-header">
+      <h2 class="comment-title">说些什么吧！</h2>
+    </div>
+    <div class="twikoo-comment"></div>
+    <script is:inline define:vars={{ envId: siteConfig.comments.twikoo.envId, region: siteConfig.comments.twikoo.region, src: siteConfig.comments.twikoo.src, integrity: siteConfig.comments.twikoo.integrity }}>
+      const container = document.querySelector('.twikoo-comment');
+      if (container && !window.__twikooLoaded) {
+        window.__twikooLoaded = true;
+        const script = document.createElement('script');
+        script.src = src;
+        script.integrity = integrity;
+        script.crossOrigin = 'anonymous';
+        script.onload = () => {
+          if (window.twikoo) {
+            window.twikoo.init({
+              envId,
+              el: '.twikoo-comment',
+              region,
+              lang: document.documentElement.lang || 'zh-CN'
+            });
+          }
+        };
+        document.head.appendChild(script);
+      }
+    </script>
+  </section>
+)}

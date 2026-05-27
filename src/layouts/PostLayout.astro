@@ -1,0 +1,31 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Comments from '../components/Comments.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const date = post.data.date?.toLocaleDateString('zh-CN') ?? '';
+---
+<BaseLayout title={`${post.data.title} - Torch Blog`} description={post.data.description || post.data.brief || post.data.summary}>
+  <article class="article">
+    <div class="article-inner">
+      <div class="article-meta">
+        {date && <span class="article-date">{date}</span>}
+        {post.data.categories && <span>{Array.isArray(post.data.categories) ? post.data.categories.join(' / ') : post.data.categories}</span>}
+      </div>
+      <header class="article-header">
+        <h1 class="article-title">{post.data.title}</h1>
+      </header>
+      <div class="hr-line"></div>
+      <div class="article-entry">
+        <Content />
+      </div>
+    </div>
+  </article>
+  {post.data.comments !== false && <Comments />}
+</BaseLayout>

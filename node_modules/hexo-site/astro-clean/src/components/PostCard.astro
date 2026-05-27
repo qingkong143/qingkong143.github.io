@@ -1,0 +1,42 @@
+---
+import { siteConfig } from '../data/site';
+
+interface Props {
+  post: {
+    slug: string;
+    data: {
+      title: string;
+      date?: Date;
+      cover?: string;
+      brief?: string;
+      summary?: string;
+      description?: string;
+    };
+    body?: string;
+  };
+  index: number;
+}
+
+const { post, index } = Astro.props;
+const manualSummary = post.data.brief || post.data.summary || post.data.description;
+const autoSummary = siteConfig.postcard === 'enable' ? post.body?.replace(/<[^>]*>/g, '').slice(0, 160) : '';
+const summary = manualSummary || autoSummary;
+const summaryOnly = Boolean(manualSummary && !autoSummary);
+const cover = post.data.cover || siteConfig.defaultCover;
+const href = `/posts/${post.slug}/`;
+---
+<div class="post-wrapper">
+  <article class:list={['post-wrap', index % 2 === 0 ? 'left' : 'right']}>
+    <a class="post-link" href={href} aria-label={post.data.title}></a>
+    <div class:list={['post-cover', index % 2 === 0 ? 'left' : 'right']}>
+      <img src={cover} alt={post.data.title} loading="lazy" />
+    </div>
+    <div class:list={['post-info', summaryOnly && 'summary-only']}>
+      <div class="post-meta">
+        {post.data.date && <span>{post.data.date.toLocaleDateString('zh-CN')}</span>}
+      </div>
+      <h2 class="post-title">{post.data.title}</h2>
+      {summary && <div class="post-brief">{summary}</div>}
+    </div>
+  </article>
+</div>

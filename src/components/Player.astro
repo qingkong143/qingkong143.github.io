@@ -1,0 +1,34 @@
+---
+import { siteConfig } from '../data/site';
+---
+{siteConfig.player.aplayer.enable && siteConfig.player.meting.enable && (
+  <div class="player-card">
+    <link rel="stylesheet" href={siteConfig.player.aplayer.css} integrity={siteConfig.player.aplayer.cssIntegrity} crossorigin="anonymous" />
+    <meting-js
+      id={siteConfig.player.meting.id}
+      server={siteConfig.player.meting.server}
+      type={siteConfig.player.meting.type}
+      theme="var(--red-1)"
+      list-folded="true"
+      preload="none"
+    />
+    <script is:inline define:vars={{ aplayerSrc: siteConfig.player.aplayer.src, aplayerIntegrity: siteConfig.player.aplayer.integrity, metingSrc: siteConfig.player.meting.src, metingIntegrity: siteConfig.player.meting.integrity }}>
+      const loadScriptOnce = (src, integrity) => new Promise((resolve) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+          existing.addEventListener('load', resolve, { once: true });
+          resolve();
+          return;
+        }
+        const script = document.createElement('script');
+        script.src = src;
+        script.integrity = integrity;
+        script.crossOrigin = 'anonymous';
+        script.onload = resolve;
+        document.head.appendChild(script);
+      });
+
+      loadScriptOnce(aplayerSrc, aplayerIntegrity).then(() => loadScriptOnce(metingSrc, metingIntegrity));
+    </script>
+  </div>
+)}

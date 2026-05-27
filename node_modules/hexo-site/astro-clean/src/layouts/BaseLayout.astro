@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import Player from '../components/Player.astro';
+import { siteConfig } from '../data/site';
+
+const { title = siteConfig.title, description = siteConfig.description, sidebar = true, mainClass = '' } = Astro.props;
+const searchConfig = siteConfig.search;
+const searchPosts = searchConfig.enable ? (await getCollection('blog'))
+  .sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0))
+  .map((post) => ({
+    title: post.data.title,
+    href: `/posts/${post.slug}/`,
+    date: post.data.date?.toLocaleDateString('zh-CN') || '',
+    text: [
+      post.data.title,
+      post.data.description,
+      post.data.brief,
+      post.data.summary,
+      ...(Array.isArray(post.data.categories) ? post.data.categories : [post.data.categories]),
+      ...(Array.isArray(post.data.tags) ? post.data.tags : [post.data.tags])
+    ].filter(Boolean).join(' ')
+  })) : [];
+---
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body style={`--global-bg-image: url('${siteConfig.globalBackground.image}'); --global-bg-opacity: ${siteConfig.globalBackground.opacity}; --global-bg-blur: ${siteConfig.globalBackground.blur}px; --global-bg-attachment: ${siteConfig.globalBackground.attachment};`}>
+    <div class="site-shell">
+      <header id="header-nav">
+        <nav class="nav-inner" aria-label="站点导航">
+          <a class="site-name" href="/">{siteConfig.title}</a>
+          <div class="main-nav">
+            {siteConfig.nav.map((item) => <a class="main-nav-link" href={item.href}>{item.label}</a>)}
+          </div>
+          <div class="nav-controls">
+            {searchConfig.enable && (
+              <button id="search-toggle" class="nav-control-button" type="button" aria-label={searchConfig.buttonLabel} aria-controls="search-panel" aria-expanded="false">
+                <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M44 72a28 28 0 1 1 19.8-8.2L82 82M64 64l18 18" /></svg>
+              </button>
+            )}
+            <button id="theme-toggle" class="dark-mode-switch" type="button" aria-label="切换暗色模式">
+              <svg class="dark-mode-icon dark-mode-icon-sun" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 18v8m0 48v8M82 50h-8M26 50h-8m54.6 22.6-5.7-5.7M33.1 33.1l-5.7-5.7m45.2 0-5.7 5.7M33.1 66.9l-5.7 5.7M64.2 50A14.2 14.2 0 1 1 50 35.8 14.3 14.3 0 0 1 64.2 50Z" /></svg>
+              <svg class="dark-mode-icon dark-mode-icon-moon" viewBox="0 0 100 100" aria-hidden="true"><path d="M82.1 61.2a31.9 31.9 0 0 1-12.4 2.4A33.3 33.3 0 0 1 36.4 30.3a31.9 31.9 0 0 1 2.4-12.4A33.3 33.3 0 1 0 82.1 61.2Z" /></svg>
+            </button>
+          </div>
+        </nav>
+        {searchConfig.enable && (
+          <div id="search-panel" class="search-panel" aria-hidden="true">
+            <div class="search-box">
+              <label class="search-label" for="search-input">{searchConfig.label}</label>
+              <input id="search-input" class="search-input" type="search" placeholder={searchConfig.placeholder} autocomplete="off" />
+              <div id="search-results" class="search-results" role="list"></div>
+            </div>
+          </div>
+        )}
+      </header>
+      <main id="main" class:list={[sidebar && 'has-sidebar', mainClass]}>
+        {sidebar ? (
+          <>
+            <div class="content-column">
+              <slot />
+            </div>
+            <div class="sidebar-column"><Sidebar /><Player /></div>
+          </>
+        ) : (
+          <slot />
+        )}
+      </main>
+      <footer id="footer">
+        <div class="footer-line"></div>
+        <p>© 2021-2026 {siteConfig.author}. Powered by Astro.</p>
+      </footer>
+    </div>
+    <script is:inline define:vars={{ searchPosts, searchConfig }}>
+      const root = document.documentElement;
+      const button = document.querySelector('#theme-toggle');
+      const searchToggle = document.querySelector('#search-toggle');
+      const searchPanel = document.querySelector('#search-panel');
+      const searchInput = document.querySelector('#search-input');
+      const searchResults = document.querySelector('#search-results');
+      const saved = localStorage.getItem('theme') || 'light';
+      root.dataset.theme = saved;
+      button?.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        localStorage.setItem('theme', next);
+      });
+
+      const closeSearch = () => {
+        searchPanel?.classList.remove('open');
+        searchToggle?.setAttribute('aria-expanded', 'false');
+        searchPanel?.setAttribute('aria-hidden', 'true');
+      };
+
+      const renderResults = (keyword) => {
+        if (!searchResults) return;
+        const value = keyword.trim().toLowerCase();
+        if (!value) {
+          searchResults.innerHTML = `<div class="search-empty">${searchConfig.emptyText}</div>`;
+          return;
+        }
+        const results = searchPosts.filter((post) => post.text.toLowerCase().includes(value)).slice(0, searchConfig.maxResults);
+        searchResults.innerHTML = results.length
+          ? results.map((post) => `<a class="search-result" href="${post.href}" role="listitem"><span>${post.title}</span>${post.date ? `<time>${post.date}</time>` : ''}</a>`).join('')
+          : `<div class="search-empty">${searchConfig.noResultsText}</div>`;
+      };
+
+      searchToggle?.addEventListener('click', () => {
+        const opened = searchPanel?.classList.toggle('open');
+        searchToggle.setAttribute('aria-expanded', String(Boolean(opened)));
+        searchPanel?.setAttribute('aria-hidden', String(!opened));
+        if (opened) {
+          renderResults(searchInput?.value || '');
+          requestAnimationFrame(() => searchInput?.focus());
+        }
+      });
+
+      searchInput?.addEventListener('input', () => renderResults(searchInput.value));
+      document.addEventListener('click', (event) => {
+        if (!searchPanel?.classList.contains('open')) return;
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (searchPanel.contains(target) || searchToggle?.contains(target)) return;
+        closeSearch();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && searchPanel?.classList.contains('open')) {
+          closeSearch();
+        }
+      });
+    </script>
+  </body>
+</html>
