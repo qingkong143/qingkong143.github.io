@@ -45,6 +45,7 @@ const href = withBase(getPostPath(post, postPathMap));
         loading={isPriorityCover ? 'eager' : 'lazy'}
         fetchpriority={isPriorityCover ? 'high' : 'auto'}
         decoding="async"
+        referrerpolicy="no-referrer"
       />
     </div>
     <div class:list={['post-info', summaryOnly && 'summary-only', !hasSummary && 'title-only']}>

@@ -45,7 +45,7 @@ const items = Object.entries(statusMap).flatMap(([key, label]) =>
   <div class="bangumi-grid">
     {items.map((item) => (
       <article class="bangumi-card">
-        {item.cover && <img class="bangumi-cover" src={item.cover} srcset={item.coverSrcset} sizes="(max-width: 767px) calc(100vw - 32px), 260px" alt={item.title} loading="lazy" decoding="async" />}
+        {item.cover && <img class="bangumi-cover" src={item.cover} srcset={item.coverSrcset} sizes="(max-width: 767px) calc(100vw - 32px), 260px" alt={item.title} loading="lazy" decoding="async" referrerpolicy="no-referrer" />}
         <div class="bangumi-card-body">
           <div class="bangumi-card-header">
             <h2 class="bangumi-card-title">
