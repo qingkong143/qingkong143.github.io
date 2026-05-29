@@ -1,5 +1,8 @@
 node_modules/
 .astro/
+.claude/
+.codegraph/
+.vs/
 dist/
 .DS_Store
 Thumbs.db
