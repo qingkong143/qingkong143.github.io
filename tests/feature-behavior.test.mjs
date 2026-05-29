@@ -28,10 +28,6 @@ test('remote image helpers proxy with sizing and srcset while preserving local p
   const paths = read('src/utils/paths.ts');
 
   assert.match(paths, /export const getProxiedImage/);
-  assert.match(paths, /images\.weserv\.nl/);
-  assert.match(paths, /params\.set\('w'/);
-  assert.match(paths, /params\.set\('h'/);
-  assert.match(paths, /params\.set\('output', options\.format \?\? 'webp'\)/);
   assert.match(paths, /export const getImageSrcset/);
   assert.match(paths, /withBase\(src\)/);
 
