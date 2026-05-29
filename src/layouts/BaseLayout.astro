@@ -2,7 +2,6 @@
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
-import Player from '../components/Player.astro';
 import { siteConfig } from '../data/site';
 import { withBase } from '../utils/paths';
 
@@ -62,7 +61,7 @@ const bodyStyle = globalBackground.enable
             <div class="content-column">
               <slot />
             </div>
-            <div class="sidebar-column"><Sidebar /><Player /></div>
+            <div class="sidebar-column"><Sidebar /></div>
           </>
         ) : (
           <slot />
@@ -237,12 +236,53 @@ const bodyStyle = globalBackground.enable
 
         document.addEventListener('astro:after-swap', () => {
           setTheme();
-          requestAnimationFrame(hidePageLoader);
+          requestAnimationFrame(() => { hidePageLoader(); initCopyButtons(); });
         });
+
+        const initCopyButtons = () => {
+          document.querySelectorAll('.article-entry pre').forEach((pre) => {
+            if (pre.querySelector('.copy-btn')) return;
+            const btn = document.createElement('button');
+            btn.className = 'copy-btn';
+            btn.textContent = '复制';
+            btn.addEventListener('click', () => {
+              const code = pre.querySelector('code');
+              const text = code ? code.textContent : pre.textContent;
+              navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '已复制';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+              }).catch(() => {});
+            });
+            pre.appendChild(btn);
+          });
+        };
 
         document.addEventListener('astro:page-load', () => {
           setTheme();
           hidePageLoader();
+          initCopyButtons();
+        });
+
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          if (target.tagName === 'IMG' && target.closest('.article-entry') && !target.closest('a')) {
+            const overlay = document.createElement('div');
+            const img = document.createElement('img');
+            overlay.className = 'image-lightbox-overlay';
+            img.src = target.src;
+            img.alt = target.alt || '';
+            overlay.appendChild(img);
+            document.body.appendChild(overlay);
+            const close = () => {
+              overlay.classList.add('closing');
+              overlay.addEventListener('animationend', () => overlay.remove(), { once: true });
+            };
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+            const onKey = (e) => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); } };
+            document.addEventListener('keydown', onKey);
+          }
         });
       }
       })();

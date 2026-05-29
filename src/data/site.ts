@@ -6,6 +6,7 @@ export const siteConfig = {
   nav: [
     { href: '/', label: '首页' },
     { href: '/archive/', label: '归档' },
+    { href: '/music/', label: '音乐馆' },
     { href: '/about/', label: '关于' },
     { href: '/friend/', label: '友链' },
     { href: '/bangumi/', label: '追番' }

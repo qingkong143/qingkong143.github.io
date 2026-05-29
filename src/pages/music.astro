@@ -1,0 +1,432 @@
+---
+import { siteConfig } from '../data/site';
+---
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="音乐馆 — 戴上耳机，进入只属于自己的世界" />
+    <title>音乐馆 - {siteConfig.title}</title>
+    <style is:global>
+      :root {
+        --red-0: #8a4037;
+        --red-1: #d45a4c;
+        --red-2: #f08a76;
+        --red-3: #ffc1b2;
+        --color-background: #1d1516;
+        --color-text: #fff1ea;
+        --color-meta: rgba(255,229,218,0.78);
+        --glass-card-border: rgba(255,211,190,0.28);
+        --font-basic: "LXGW WenKai", "Noto Serif SC", "Microsoft YaHei", sans-serif;
+      }
+      html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0d0a0b; }
+      body {
+        font-family: var(--font-basic); color: #fff;
+        background: radial-gradient(circle at 18% 10%, rgba(240,138,118,0.2), transparent 30rem),
+                    linear-gradient(180deg, rgba(34,21,20,0.36), rgba(25,18,19,0.78));
+      }
+      a { color: inherit; text-decoration: none; }
+      * { box-sizing: border-box; }
+      body { user-select: none; -webkit-user-select: none; }
+
+      /* ====== music page layout ====== */
+      .music-shell {
+        position: fixed; inset: 0;
+        z-index: 1;
+        display: flex; flex-direction: column;
+        font-family: var(--font-basic);
+        color: #fff;
+        background: rgba(0,0,0,0.55);
+      }
+      .music-topbar {
+        flex-shrink: 0;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 24px; height: 56px;
+        background: rgba(0,0,0,0.3);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        z-index: 2;
+      }
+      .music-topbar .back {
+        font-size: 15px; font-weight: 600; color: var(--color-meta); cursor: pointer;
+        transition: color 0.2s; user-select: none; -webkit-user-select: none;
+      }
+      .music-topbar .back:hover { color: #fff; }
+      .music-topbar .title { font-size: 17px; font-weight: 700; }
+      .music-topbar .source { font-size: 12px; color: var(--color-meta); }
+
+      /* bg */
+      .music-bg {
+        position: absolute; inset: 0; z-index: -1;
+      }
+      .music-bg-blur {
+        width: 100%; height: 100%;
+        background-size: cover; background-position: center;
+        filter: blur(70px) brightness(0.3) saturate(0.8);
+        transition: background-image 0.8s ease;
+        position: absolute; inset: 0;
+      }
+
+      .music-body {
+        flex: 1; display: flex; flex-direction: column;
+        max-width: 1300px; width: 100%; margin: 0 auto;
+        padding: 12px 24px 16px; box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      /* main area */
+      .music-main {
+        flex: 1; display: flex; gap: 20px;
+        overflow: hidden; margin-bottom: 12px;
+      }
+
+      /* left: playlist 3/5 */
+      .music-pl { flex: 3; display: flex; flex-direction: column; overflow: hidden; padding: 8px 8px 8px 12px; }
+      .music-pl h2 { margin: 0 0 12px 8px; font-size: 19px; color: #fff; flex-shrink: 0; }
+      .music-pl-list { flex: 1; overflow-y: auto; list-style: none; margin: 0; padding: 0; }
+      .music-pl-list::-webkit-scrollbar { width: 4px; }
+      .music-pl-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 2px; }
+      .pl-item {
+        display: flex; align-items: center; gap: 12px;
+        padding: 9px 12px; margin: 2px 0; border-radius: 8px;
+        cursor: pointer; transition: background 0.2s, box-shadow 0.2s;
+        user-select: none; -webkit-user-select: none;
+      }
+      .pl-item:hover { background: rgba(255,255,255,0.1); }
+      .pl-item.on { background: rgba(210,90,76,0.32); box-shadow: 0 0 16px rgba(210,90,76,0.25); }
+      .pl-idx { min-width: 26px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.45); }
+      .pl-item.on .pl-idx { color: #fff; }
+      .pl-name { flex: 1; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .pl-artist { font-size: 12px; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; min-width: 70px; }
+      .pl-item.on .pl-artist { color: rgba(255,255,255,0.8); }
+
+      /* right: player 2/5 */
+      .music-pr { flex: 2; display: flex; flex-direction: column; overflow: hidden; padding: 8px; }
+      .pr-inner { display: flex; flex-direction: column; align-items: center; flex: 1; gap: 8px; }
+      .pr-cover {
+        width: 170px; height: 170px; flex-shrink: 0; border-radius: 12px;
+        background-size: cover; background-position: center;
+        background-color: rgba(255,255,255,0.04);
+        box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+      }
+      .pr-info { text-align: center; width: 100%; flex-shrink: 0; }
+      .pr-title { font-size: 19px; font-weight: 700; }
+      .pr-artist { font-size: 14px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+      .pr-lrc {
+        flex: 1; width: 100%; max-width: 420px;
+        margin-top: 4px; padding: 10px 0;
+        text-align: center; overflow: hidden;
+        position: relative;
+        mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+      }
+      .pr-lrc-inner { transition: transform 0.35s ease; }
+      .pr-ln {
+        margin: 0; padding: 5px 0; line-height: 2;
+        font-size: 14px; color: rgba(255,255,255,0.4);
+        transition: all 0.3s ease;
+      }
+      .pr-ln.cur { color: #fff; font-size: 17px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.25); }
+
+      /* controls */
+      .music-ctl {
+        flex-shrink: 0;
+        padding: 12px 20px; border-radius: 12px;
+        background: rgba(0,0,0,0.28);
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      }
+      .ctl-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
+      .ctl-btn {
+        width: 34px; height: 34px; border-radius: 50%;
+        border: 0; background: rgba(255,255,255,0.1);
+        color: #fff; font-size: 12px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.2s, transform 0.12s;
+        flex-shrink: 0;
+      }
+      .ctl-btn:hover { background: rgba(255,255,255,0.22); }
+      .ctl-btn:active { transform: scale(0.9); }
+      .ctl-btn.ctl-play { width: 44px; height: 44px; font-size: 15px; background: var(--red-2); }
+      .ctl-btn.ctl-play:hover { background: var(--red-1); }
+      .ctl-btn.ctl-mode { width: 48px; border-radius: 18px; font-size: 10px; }
+
+      .ctl-prog { flex: 1; height: 5px; min-width: 120px; background: rgba(255,255,255,0.12); border-radius: 3px; position: relative; cursor: pointer; }
+      .ctl-prog-fill { height: 100%; width: 0; background: var(--red-3); border-radius: 3px; transition: width 0.15s linear; }
+      .ctl-prog-knob { position: absolute; top: 50%; left: 0; transform: translate(-50%,-50%); width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.35); pointer-events: none; }
+
+      .ctl-time { display: flex; align-items: center; gap: 2px; font-size: 12px; color: rgba(255,255,255,0.6); min-width: 64px; user-select: none; -webkit-user-select: none; }
+
+      .ctl-vol { display: flex; align-items: center; gap: 5px; }
+      .ctl-vol-icon { font-size: 14px; cursor: pointer; user-select: none; -webkit-user-select: none; flex-shrink: 0; }
+      .ctl-vol-hbar { width: 56px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; cursor: pointer; overflow: hidden; }
+      .ctl-vol-hfill { height: 100%; width: 70%; background: var(--red-3); border-radius: 2px; }
+
+      @media (max-width: 768px) {
+        .music-body { padding: 8px 10px 12px; }
+        .music-main { flex-direction: column; gap: 8px; }
+        .music-pl { flex: auto; max-height: 160px; padding: 4px; }
+        .music-pl h2 { font-size: 16px; margin-bottom: 6px; }
+        .music-pr { flex: auto; padding: 4px; }
+        .pr-cover { width: 110px; height: 110px; }
+        .pr-title { font-size: 16px; }
+        .pr-artist { font-size: 12px; }
+        .pr-lrc { max-width: 100%; }
+        .pr-ln { font-size: 12px; padding: 3px 0; }
+        .pr-ln.cur { font-size: 14px; }
+        .ctl-row { gap: 5px; }
+        .ctl-btn { width: 28px; height: 28px; font-size: 10px; }
+        .ctl-btn.ctl-play { width: 36px; height: 36px; font-size: 13px; }
+        .ctl-prog { min-width: 60px; }
+        .ctl-time { font-size: 10px; min-width: 52px; }
+        .ctl-vol-hbar { width: 40px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="music-shell">
+      <!-- top bar -->
+      <div class="music-topbar">
+        <a class="back" href="/">← 返回首页</a>
+        <span class="title">音乐馆</span>
+        <span class="source">网易云音乐</span>
+      </div>
+
+      <!-- bg -->
+      <div class="music-bg"><div class="music-bg-blur" id="bg-blur"></div></div>
+
+      <!-- body -->
+      <div class="music-body">
+        <div class="music-main">
+          <!-- left -->
+          <div class="music-pl">
+            <h2>播放列表</h2>
+            <ul class="music-pl-list" id="playlist"></ul>
+          </div>
+          <!-- right -->
+          <div class="music-pr">
+            <div class="pr-inner">
+              <div class="pr-cover" id="cover"></div>
+              <div class="pr-info">
+                <div class="pr-title" id="title">--</div>
+                <div class="pr-artist" id="artist">--</div>
+              </div>
+              <div class="pr-lrc" id="lrc-box"><div class="pr-lrc-inner" id="lrc-inner"><p class="pr-ln">加载中…</p></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- controls -->
+        <div class="music-ctl">
+          <div class="ctl-row">
+            <button class="ctl-btn" id="btn-prev">⏮</button>
+            <button class="ctl-btn ctl-play" id="btn-play">▶</button>
+            <button class="ctl-btn" id="btn-next">⏭</button>
+            <div class="ctl-prog" id="prog">
+              <div class="ctl-prog-fill" id="prog-fill"></div>
+              <div class="ctl-prog-knob" id="prog-knob"></div>
+            </div>
+            <div class="ctl-time">
+              <span id="t-cur">0:00</span><span>/</span><span id="t-tot">0:00</span>
+            </div>
+            <div class="ctl-vol">
+              <span class="ctl-vol-icon" id="vol-icon">🔊</span>
+              <div class="ctl-vol-hbar" id="vol-bar">
+                <div class="ctl-vol-hfill" id="vol-fill"></div>
+              </div>
+            </div>
+            <button class="ctl-btn ctl-mode" id="btn-mode">🔁</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{
+      metingId: siteConfig.player.meting.id,
+      metingServer: siteConfig.player.meting.server,
+      metingType: siteConfig.player.meting.type,
+    }}>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const fmt = (s) => { const m = Math.floor(s/60); return String(m).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0'); };
+
+        const parseLrc = (raw) => {
+          if (!raw) return [];
+          const out = [];
+          for (const line of raw.split('\n')) {
+            const m = line.match(/^\[(\d{2}):(\d{2})(?:[.:](\d{2,3}))?\](.*)/);
+            if (m) { const ms = m[3] ? parseInt(m[3].padEnd(3,'0').slice(0,3),10) : 0; out.push({ t: parseInt(m[1])*60+parseInt(m[2])+ms/1000, txt: m[4].trim() }); }
+          }
+          return out.sort((a,b) => a.t - b.t);
+        };
+
+        const init = async () => {
+          const api = `https://api.i-meto.com/meting/api?server=${metingServer}&type=${metingType}&id=${metingId}`;
+          const res = await fetch(api);
+          if (!res.ok) throw new Error('API error ' + res.status);
+          const data = await res.json();
+          if (!Array.isArray(data) || !data.length) throw new Error('Empty playlist');
+          const songs = data.map(s => ({
+            name: s.name||s.title||'?', artist: s.artist||s.author||'?',
+            url: s.url||'', cover: s.cover||s.pic||'',
+            id: s.id||s.song_id||s.songid||'',
+            lrcRaw: (s.lrc||s.lyric||'').trim(),
+            lrcFetched: '',
+          }));
+
+          const audio = new Audio(); audio.volume = 0.7;
+          let cur = 0, playing = false, mode = 0;
+          let lrcData = [], lrcIdx = -1;
+
+          // Build playlist
+          const pl = $('playlist');
+          songs.forEach((s, i) => {
+            const li = document.createElement('li');
+            li.className = 'pl-item';
+            li.innerHTML = `<span class="pl-idx">${i+1}</span><span class="pl-name">${s.name}</span><span class="pl-artist">${s.artist}</span>`;
+            li.addEventListener('click', () => load(i));
+            pl.appendChild(li);
+          });
+          const items = [...pl.querySelectorAll('.pl-item')];
+
+          // Lyrics
+          const renderLrc = () => {
+            const inner = $('lrc-inner'); inner.innerHTML = '';
+            if (!lrcData.length) { inner.innerHTML = '<p class="pr-ln">暂无歌词</p>'; return; }
+            lrcData.forEach((l, i) => {
+              const p = document.createElement('p'); p.className = 'pr-ln'; p.textContent = l.txt; p.dataset.i = i; inner.appendChild(p);
+            });
+            // Force layout so offsetTop is correct
+            inner.style.transform = 'translateY(0px)';
+            void inner.offsetHeight;
+          };
+
+          const updateLrc = (t) => {
+            if (!lrcData.length) return;
+            let idx = -1;
+            for (let i = lrcData.length-1; i >= 0; i--) { if (t >= lrcData[i].t) { idx = i; break; } }
+            if (idx === lrcIdx) return;
+            lrcIdx = idx;
+            const inner = $('lrc-inner'), box = $('lrc-box');
+            inner.querySelectorAll('.pr-ln').forEach(el => el.classList.remove('cur'));
+            if (idx < 0) return;
+            const el = inner.querySelector(`[data-i="${idx}"]`);
+            if (!el) return;
+            el.classList.add('cur');
+            // Center the line in the visible box
+            const innerTop = inner.getBoundingClientRect().top;
+            const elTop = el.getBoundingClientRect().top;
+            const lineY = elTop - innerTop;
+            const target = lineY - box.clientHeight/2 + el.clientHeight/2;
+            inner.style.transform = `translateY(${-Math.max(0, target)}px)`;
+          };
+
+          const updateProg = () => {
+            const t = audio.currentTime, d = audio.duration||0;
+            const pct = d ? (t/d*100) : 0;
+            $('prog-fill').style.width = pct+'%';
+            $('prog-knob').style.left = pct+'%';
+            $('t-cur').textContent = fmt(t);
+            $('t-tot').textContent = fmt(d);
+            updateLrc(t);
+          };
+
+          const fetchLrc = async (s) => {
+            if (s.lrcFetched) return s.lrcFetched;
+            let raw = s.lrcRaw;
+            // If lrc looks like a URL, fetch it
+            if (raw && (raw.startsWith('http://') || raw.startsWith('https://'))) {
+              try { const r = await fetch(raw); raw = await r.text(); } catch { raw = ''; }
+            }
+            // If still no lyrics and we have song id, try meting lrc API
+            if (!raw && s.id) {
+              try {
+                const r = await fetch(`https://api.i-meto.com/meting/api?server=${metingServer}&type=lrc&id=${s.id}`);
+                const j = await r.json();
+                raw = (j && (j.lrc || j.lyric)) || '';
+              } catch { raw = ''; }
+            }
+            s.lrcFetched = raw || ' ';
+            return s.lrcFetched;
+          };
+
+          const load = async (i) => {
+            cur = i; const s = songs[i];
+            $('cover').style.backgroundImage = `url(${s.cover})`;
+            $('bg-blur').style.backgroundImage = `url(${s.cover})`;
+            $('title').textContent = s.name;
+            $('artist').textContent = s.artist;
+            items.forEach((el, j) => el.classList.toggle('on', j===i));
+            audio.src = s.url;
+            audio.play().then(() => { playing = true; $('btn-play').textContent = '⏸'; }).catch(() => {});
+            // Fetch lyrics lazily
+            const raw = await fetchLrc(s);
+            lrcData = parseLrc(raw); lrcIdx = -1; renderLrc();
+          };
+
+          const toggle = () => {
+            if (playing) { audio.pause(); }
+            else { if (!audio.src) load(cur); else { audio.play().then(() => { playing = true; $('btn-play').textContent = '⏸'; }).catch(()=>{}); } }
+          };
+
+          const next = () => {
+            let i;
+            if (mode === 2) i = cur;
+            else if (mode === 1) { i = Math.floor(Math.random()*songs.length); }
+            else i = (cur+1) % songs.length;
+            load(i);
+          };
+
+          const prev = () => {
+            let i;
+            if (mode === 1) { i = Math.floor(Math.random()*songs.length); }
+            else if (mode === 2) i = cur;
+            else i = (cur-1+songs.length) % songs.length;
+            load(i);
+          };
+
+          // Bind events
+          $('btn-play').addEventListener('click', toggle);
+          $('btn-prev').addEventListener('click', prev);
+          $('btn-next').addEventListener('click', next);
+          $('btn-mode').addEventListener('click', () => { mode = (mode+1)%3; $('btn-mode').textContent = ['🔁','🔀','🔂'][mode]; });
+          $('prog').addEventListener('click', (e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            audio.currentTime = Math.max(0, Math.min(1, (e.clientX-r.left)/r.width)) * (audio.duration||0);
+          });
+
+          // Volume: click icon to mute/unmute, click bar to adjust
+          $('vol-icon').addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            $('vol-icon').textContent = audio.muted ? '🔇' : '🔊';
+            $('vol-fill').style.width = audio.muted ? '0%' : (audio.volume*100)+'%';
+          });
+          $('vol-bar').addEventListener('click', (e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+            audio.volume = pct;
+            audio.muted = false;
+            $('vol-fill').style.width = (pct*100)+'%';
+            $('vol-icon').textContent = '🔊';
+          });
+
+          // Audio events
+          audio.addEventListener('timeupdate', updateProg);
+          audio.addEventListener('ended', next);
+          audio.addEventListener('play', () => { playing = true; $('btn-play').textContent = '⏸'; });
+          audio.addEventListener('pause', () => { playing = false; $('btn-play').textContent = '▶'; });
+
+          // Init first song display (lyrics load when played)
+          const first = songs[0];
+          $('cover').style.backgroundImage = `url(${first.cover})`;
+          $('title').textContent = first.name;
+          $('artist').textContent = first.artist;
+          $('lrc-inner').innerHTML = '<p class="pr-ln">点击播放查看歌词</p>';
+          $('vol-fill').style.width = '70%';
+          items[0]?.classList.add('on');
+        };
+
+        init().catch((e) => { console.error(e); $('title').textContent = '加载失败'; $('artist').textContent = e.message || '请刷新重试'; });
+      })();
+    </script>
+  </body>
+</html>

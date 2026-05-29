@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import Sidebar from '../components/Sidebar.astro';
-import Player from '../components/Player.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../data/site';
 import { createPostPathMap } from '../utils/posts';
@@ -21,6 +20,6 @@ const postPathMap = createPostPathMap(posts);
     <section class="post-list" aria-label="文章列表">
       {posts.map((post, index) => <PostCard post={post} index={index} postPathMap={postPathMap} />)}
     </section>
-    <div class="sidebar-column"><Sidebar /><Player /></div>
+    <div class="sidebar-column"><Sidebar /></div>
   </div>
 </BaseLayout>

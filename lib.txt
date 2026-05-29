@@ -1,0 +1,1603 @@
+一、音乐页面功能介绍
+为Hexo博客添加一个功能完整、视觉美观的自定义音乐页面，支持音乐播放、歌词同步显示、动态背景切换和响应式设计。
+
+1. 实现效果
+✨ 完整的音乐播放控制（播放/暂停、上一首/下一首）
+✨ 三种播放模式（顺序播放、随机播放、单曲循环）
+✨ 实时歌词同步显示，平滑滚动效果
+✨ 动态背景切换，根据当前歌曲封面自动更新
+✨ 黑夜模式设计，黑色透明背景提升视觉舒适度
+✨ 响应式布局，适配桌面端和手机端
+✨ 音量调节，垂直滑块设计
+✨ 进度条拖动定位
+二、创建音乐页面
+1. 生成新页面
+在Hexo博客根目录执行以下命令生成音乐页面：
+
+hexo new page music
+2. 修改页面内容
+编辑生成的页面文件 source/music/index.md（此目录可自己定义），添加以下内容：
+
+---
+title: 音乐
+layout: music
+top_img: false
+comments: false
+aside: false
+body_class: music-page
+---
+同时修改 theme\butterfly\layout\layout.pug 文件，
+
+doctype html
+html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside)
+  head
+    include ./head.pug
+  body(class=page.body_class)
+在body后面添加(class=page.body_class)
+
+3. 添加页面模板
+在主题目录下创建音乐页面模板文件 themes/butterfly/layout/music.pug：
+
+extends includes/layout.pug
+
+block content
+  
+  // 音乐页面内容
+  #content-inner.layout.hide-aside
+    .music-background
+      .cover-blur
+    .music-container
+      .music-main-area
+        .music-list-section
+          h2 正在播放
+          ul.music-list
+            //- 动态生成播放列表项
+            //- 实际使用时会被JavaScript替换为music.json中的歌曲
+            li.music-item
+              .music-index 1
+              .music-title 青花瓷
+              .music-artist 周杰伦
+            li.music-item
+              .music-index 2
+              .music-title 稻香
+              .music-artist 周杰伦
+        .music-player-section
+          .player-content
+            .album-cover
+              .cover-image
+            .music-info-display
+              .current-song-title 青花瓷
+              .current-song-artist 周杰伦
+            .music-lyrics
+              p 暂无歌词
+      .music-controls
+        .control-row
+          .btn-prev
+            i(class='fas fa-step-backward')
+          .btn-play-pause
+            i(class='fas fa-play')
+          .btn-next
+            i(class='fas fa-step-forward')
+          .progress-container
+            .progress-bar
+            .progress-knob
+          .duration-display
+            .current-time 0:00
+            .duration-separator /
+            .total-time 0:00
+          .volume-control
+            i(class='fas fa-volume-up')
+            .volume-slider-container
+              .volume-bar
+          .btn-toggle
+            i(class='fas fa-list')
+    
+  // 引入APlayer JS和自定义音乐脚本
+  script(src='https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js')
+  script(src='/js/music/music.js')
+三、添加CSS样式
+1. 创建样式文件
+在主题目录下创建音乐页面样式文件 themes/butterfly/source/css/_layout/music.styl：
+
+/* 音乐页面专属样式 - 所有样式均以.music-page为前缀，只作用于音乐页面 */
+
+.music-page {
+  /* 确保html和body背景透明，没有滚动条 */
+  html,
+  body {
+    overflow: hidden
+    height: 100vh
+    margin: 0
+    padding: 0
+    background: transparent !important
+  }
+
+  /* 隐藏不需要的元素 - 只隐藏与内容相关的元素，不隐藏背景 */
+  #footer,
+  #page-site-info,
+  #site-info,
+  #scroll-down,
+  .title-seo,
+  #page-header::before {
+    display: none !important
+    visibility: hidden !important
+    opacity: 0 !important
+    height: 0 !important
+    width: 0 !important
+    margin: 0 !important
+    padding: 0 !important
+    overflow: hidden !important
+  }
+
+  /* 调整导航栏样式 - 去掉毛玻璃效果 */
+  #nav {
+    background: rgba(70, 110, 230, 0.8) !important
+    backdrop-filter: none !important
+    height: 60px !important
+    line-height: 60px !important
+    padding: 0 20px !important
+    border-radius: 0 !important
+    margin: 0 !important
+    border: none !important
+  }
+
+  /* 确保导航栏菜单项正常显示 */
+  #nav li {
+    position: relative !important
+    display: inline-block !important
+  }
+
+  /* 确保导航栏链接正常显示 */
+  #nav a {
+    display: block !important
+    padding: 0 15px !important
+    color: white !important
+    text-decoration: none !important
+  }
+
+  /* 确保导航栏下拉菜单触发器正常工作 */
+  #nav li.menu-item-has-children > a::after {
+    display: inline-block !important
+    margin-left: 5px !important
+    content: '▼' !important
+    font-size: 10px !important
+    vertical-align: middle !important
+  }
+
+  /* 2. body-wrap - 相对定位，作为main的定位父容器 */
+  #body-wrap {
+    position: relative !important
+    width: 100% !important
+    height: 100vh !important
+    min-height: 100vh !important
+    margin: 0 !important
+    padding: 0 !important
+    overflow: hidden !important
+    width: 100% !important
+    max-width: 100% !important
+    min-width: 100% !important
+    background: transparent !important
+  }
+
+  /* 3. header - 相对定位，z-index大于main */
+  #page-header {
+    background: transparent !important
+    padding: 0 !important
+    height: 60px !important
+    min-height: 60px !important
+    line-height: 60px !important
+    overflow: visible !important
+    margin: 0 !important
+    border: none !important
+    position: relative !important
+    z-index: 100 !important
+  }
+
+  /* 4. 调整导航栏样式 - 背景透明度100% */
+  #nav {
+    background: transparent !important
+    backdrop-filter: none !important
+    height: 60px !important
+    line-height: 60px !important
+    padding: 0 20px !important
+    border-radius: 0 !important
+    margin: 0 !important
+    border: none !important
+    overflow: visible !important
+  }
+
+  /* 5. 导航栏主菜单项样式 */
+  #nav > ul > li {
+    display: inline-block !important
+    position: relative !important
+  }
+
+  /* 6. 子菜单默认隐藏，悬停时显示 */
+  #nav ul.sub-menu {
+    display: none !important
+    position: absolute !important
+    top: 100% !important
+    left: 0 !important
+    z-index: 200 !important
+    background: rgba(70, 110, 230, 0.9) !important
+    min-width: 150px !important
+    padding: 5px 0 !important
+    margin: 0 !important
+    border: none !important
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important
+  }
+
+  /* 7. 悬停时显示子菜单 */
+  #nav li:hover > ul.sub-menu {
+    display: block !important
+  }
+
+  /* 8. 子菜单项样式 */
+  #nav ul.sub-menu li {
+    display: block !important
+    width: 100% !important
+  }
+
+  /* 9. 子菜单链接样式 */
+  #nav ul.sub-menu a {
+    padding: 10px 15px !important
+    line-height: 20px !important
+    white-space: nowrap !important
+  }
+
+  /* 10. 子菜单链接悬停样式 */
+  #nav ul.sub-menu a:hover {
+    background: rgba(255, 255, 255, 0.2) !important
+  }
+
+  /* 4. main - 绝对定位，铺满整个body-wrap */
+  #content-inner {
+    position: absolute !important
+    top: 0 !important
+    left: 0 !important
+    width: 100% !important
+    height: 100% !important
+    margin: 0 !important
+    padding: 0 !important
+    background: transparent !important
+    z-index: 10 !important
+    box-sizing: border-box !important
+    overflow-x: hidden !important
+    max-width: 100% !important
+    min-width: 100% !important
+    overflow-y: auto !important
+    padding: 0
+    min-height: calc(100vh - 60px)
+  }
+
+  /* 确保main区域的所有子容器也铺满 */
+  #content-inner > * {
+    width: 100% !important
+    max-width: 100% !important
+    min-width: 100% !important
+    box-sizing: border-box !important
+  }
+
+  /* 5. 音乐页面主容器 */
+  #music-page {
+    width: 100% !important
+    height: 100% !important
+    margin: 0 !important
+    padding: 0 !important
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    box-sizing: border-box !important
+    padding-top: 60px !important
+    margin: 0
+    padding: 0
+    width: 100%
+    height: calc(100vh - 60px)
+  }
+
+  /* 修复底部栏和右侧按钮的层级关系 */
+  #rightside {
+    z-index: 1000
+  }
+
+  /* 确保#body-wrap填满剩余空间 */
+  #body-wrap {
+    min-height: 100vh
+    overflow: hidden
+  }
+
+  /* 音乐页面整体布局 */
+  #content-inner.layout.hide-aside {
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    min-height: 100vh
+    padding: 20px
+    box-sizing: border-box
+    overflow: hidden
+    position: relative
+    background: transparent !important
+  }
+
+  /* 音乐背景 */
+  .music-background {
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: rgba(0, 0, 0, 0.5) !important
+    z-index: -1
+  }
+
+  .cover-blur {
+    width: 100%
+    height: 100%
+    background: transparent
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+    filter: blur(50px) brightness(0.4) saturate(0.9)
+    position: absolute
+    top: 0
+    left: 0
+    z-index: -1
+    transition: background-image 0.5s ease-in-out
+  }
+
+  /* 音乐容器 */
+  .music-container {
+    width: 100%
+    max-width: 1400px
+    height: calc(100vh - 200px) /* 增加顶部间距，避免与导航栏重合 */
+    display: flex
+    flex-direction: column
+    border-radius: 20px
+    overflow: hidden
+    color: white
+    margin: 60px auto 20px /* 增加顶部margin，与导航栏保持更大距离 */
+    padding: 0 20px /* 左右内边距 */
+  }
+
+  /* 主区域布局 - 左右分栏，上下结构 */
+  .music-container {
+    display: flex
+    flex-direction: column
+    height: 100%
+  }
+
+  /* 主内容区域 - 包含左右分栏 */
+  .music-main-area {
+    display: flex
+    flex: 1
+    overflow: hidden
+    margin-bottom: 20px
+    gap: 20px /* 左右区域间距，替代分界线 */
+    padding: 0 10px
+  }
+
+  /* 音乐列表区域 - 左侧 占比五分之三 */
+  .music-list-section {
+    flex: 3
+    padding: 20px 20px 20px 40px /* 增加左侧内边距，向右靠 */
+    display: flex
+    flex-direction: column
+    overflow: hidden
+    border-radius: 10px
+  }
+
+  .music-list-section h2 {
+    margin: 0 0 20px 0
+    font-size: 1.5em
+    text-align: center
+    color: white
+  }
+
+  /* 音乐列表 */
+  .music-list {
+    list-style: none
+    padding: 0
+    margin: 0
+    overflow-y: auto
+    flex: 1
+  }
+
+  .music-item {
+    padding: 12px 15px
+    margin: 5px 0
+    border-radius: 8px
+    cursor: pointer
+    display: flex
+    align-items: center
+    transition: background 0.3s ease
+    gap: 15px
+  }
+
+  .music-item:hover {
+    background: rgba(255, 255, 255, 0.2)
+  }
+
+  .music-item.active {
+    background: rgba(102, 126, 234, 0.5)
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.5)
+  }
+
+  .music-index {
+    min-width: 30px
+    text-align: center
+    color: rgba(255, 255, 255, 0.7)
+    font-size: 14px
+  }
+
+  .music-title {
+    flex: 1
+    font-size: 16px
+    font-weight: bold
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    text-align: left
+  }
+
+  .music-artist {
+    flex: 1
+    font-size: 14px
+    color: rgba(255, 255, 255, 0.7)
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    text-align: right
+    min-width: 100px
+  }
+
+  .music-duration {
+    min-width: 50px
+    font-size: 14px
+    color: rgba(255, 255, 255, 0.7)
+    text-align: right
+  }
+
+  /* 播放器区域 - 右侧 占比五分之二 */
+  .music-player-section {
+    flex: 2
+    padding: 30px
+    display: flex
+    flex-direction: column
+    overflow-y: auto
+    border-radius: 10px
+  }
+
+  /* 播放器内容区域 - 包含封面、歌曲信息和歌词 */
+  .player-content {
+    display: flex
+    flex-direction: column
+    flex: 1
+    align-items: center
+    justify-content: flex-start /* 内容从顶部开始排列，减少中间留白 */
+    gap: 5px /* 进一步减小元素间的间距 */
+    padding: 10px 0 0 0 /* 只保留顶部10px内边距，去掉其他方向内边距 */
+  }
+
+  /* 专辑封面 - 减小尺寸，改为正方形 */
+  .album-cover {
+    flex: 0 0 200px
+    /* 减小尺寸，确保正方形 */
+    width: 200px
+    height: 200px
+    margin: 0 auto
+    border-radius: 10px
+    overflow: hidden
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3)
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4)
+    display: flex
+    align-items: center
+    justify-content: center
+  }
+
+  .cover-image {
+    width: 100%
+    height: 100%
+    background: linear-gradient(45deg, #a1c4fd, #c2e9fb)
+    display: flex
+    align-items: center
+    justify-content: center
+    color: white
+    font-size: 18px
+    text-align: center
+  }
+
+  /* 歌词区域 - 固定高度，隐藏滚动条 */
+  .music-lyrics {
+    flex: 5
+    width: 100%
+    max-width: 500px
+    padding: 20px
+    border-radius: 10px
+    text-align: center
+    display: block
+    overflow: hidden !important /* 强制隐藏滚动条 */
+    margin-top: 15px
+    height: 300px !important /* 固定高度，不随内容变化 */
+    min-height: 300px !important
+    max-height: 300px !important
+    position: relative
+    box-sizing: border-box
+  }
+
+  /* 内部歌词容器 - 用于滚动 */
+  .lyrics-inner-container {
+    width: 100%
+    transition: transform 0.3s ease-in-out
+    text-align: center
+    position: relative
+  }
+
+  /* 歌词行基础样式 */
+  .lyrics-line {
+    margin: 10px 0
+    line-height: 2.2
+    transition: all 0.3s ease-in-out
+    text-align: center
+    box-sizing: border-box
+  }
+
+  /* 当前播放信息 */
+  .music-info-display {
+    text-align: center
+    width: 100%
+    max-width: 500px
+    margin: 0
+    padding: 0 20px
+  }
+
+  .current-song-title {
+    font-size: 24px
+    font-weight: bold
+    margin-bottom: 8px
+    color: white
+  }
+
+  .current-song-artist {
+    font-size: 18px
+    color: rgba(255, 255, 255, 0.8)
+    margin-bottom: 15px
+  }
+
+  .music-lyrics p {
+    margin: 8px 0 /* 合适的行间距 */
+    color: rgba(255, 255, 255, 0.7)
+    line-height: 2.2 /* 增大行高，提高可读性 */
+    font-size: 16px
+    transition: all 0.3s ease
+  }
+
+  /* 隐藏歌词容器的滚动条 */
+  .music-lyrics {
+    -ms-overflow-style: none /* IE and Edge */
+    scrollbar-width: none /* Firefox */
+  }
+
+  .music-lyrics::-webkit-scrollbar {
+    display: none /* Chrome, Safari, Opera */
+  }
+
+  /* 播放控制区域 - 移到整个页面最底部 */
+  .music-controls {
+    width: 100%
+    max-width: 1000px
+    margin: 0 auto
+    padding: 20px
+    border-radius: 10px
+  }
+
+  /* 控制行 - 所有控件在一行 */
+  .control-row {
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 15px
+    width: 100%
+    flex-wrap: nowrap
+  }
+
+  /* 进度条容器 */
+  .progress-container {
+    flex: 1
+    height: 6px
+    background: rgba(255, 255, 255, 0.2)
+    border-radius: 3px
+    position: relative
+    cursor: pointer
+    min-width: 200px
+    margin: 0 10px
+  }
+
+  .progress-bar {
+    height: 100%
+    width: 30%
+    background: linear-gradient(to right, #667eea, #764ba2)
+    border-radius: 3px
+    transition: width 0.1s ease
+  }
+
+  .progress-knob {
+    position: absolute
+    top: 50%
+    left: 30%
+    transform: translate(-50%, -50%)
+    width: 14px
+    height: 14px
+    border-radius: 50%
+    background: white
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3)
+    cursor: pointer
+    transition: left 0.1s ease
+  }
+
+  /* 所有按钮样式 */
+  .btn-prev, .btn-play-pause, .btn-next, .btn-toggle {
+    width: 40px
+    height: 40px
+    border-radius: 50%
+    background: linear-gradient(45deg, #667eea, #764ba2)
+    border: none
+    color: white
+    font-size: 12px
+    cursor: pointer
+    display: flex
+    align-items: center
+    justify-content: center
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2)
+    transition: all 0.3s ease
+    min-width: 40px
+  }
+
+  .btn-prev:hover, .btn-play-pause:hover, .btn-next:hover, .btn-toggle:hover {
+    transform: scale(1.1)
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3)
+  }
+
+  /* 播放/暂停按钮稍微大一点 */
+  .btn-play-pause {
+    width: 50px
+    height: 50px
+    min-width: 50px
+    font-size: 14px
+  }
+
+  /* 时长显示 */
+  .duration-display {
+    display: flex
+    align-items: center
+    gap: 5px
+    color: white
+    font-size: 14px
+    min-width: 80px
+  }
+
+  .current-time, .total-time, .duration-separator {
+    user-select: none
+  }
+
+  /* 音量控制 */
+  .volume-control {
+    display: flex
+    align-items: center
+    gap: 10px
+    position: relative
+    min-width: 24px
+  }
+
+  .volume-control i {
+    font-size: 16px
+    color: white
+    cursor: pointer
+    transition: color 0.3s ease
+  }
+
+  .volume-control i:hover {
+    color: rgba(255, 255, 255, 0.8)
+  }
+
+  /* 音量滑块容器 */
+  .volume-slider-container {
+    position: absolute
+    bottom: 100%
+    left: 50%
+    transform: translateX(-50%)
+    margin-bottom: 10px
+    display: none
+    z-index: 100
+    background: transparent
+    padding: 5px
+    border-radius: 8px
+  }
+
+  /* 显示音量滑块 */
+  .volume-control.active .volume-slider-container {
+    display: block
+  }
+
+  .volume-bar {
+    width: 4px
+    height: 100px
+    background: rgba(255, 255, 255, 0.2)
+    border-radius: 2px
+    position: relative
+    cursor: pointer
+    transition: all 0.3s ease
+  }
+
+  /* 音量进度条 */
+  .volume-progress {
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 100%
+    height: 70%
+    background: linear-gradient(to top, #667eea, #764ba2)
+    border-radius: 2px
+    transition: height 0.1s ease
+  }
+
+  /* 音量滑块 */
+  .volume-knob {
+    position: absolute
+    top: 30%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 12px
+    height: 12px
+    border-radius: 50%
+    background: white
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+    cursor: pointer
+    transition: top 0.1s ease
+    cursor: grab
+  }
+
+  .volume-knob:active {
+    cursor: grabbing
+  }
+
+  /* 切换按钮（循环/随机） */
+  .btn-toggle {
+    font-size: 11px
+    width: 60px
+    border-radius: 20px
+    background: linear-gradient(45deg, #667eea, #764ba2)
+  }
+
+  /* 响应式设计 - 手机端优化 */
+  @media (max-width: 768px) {
+    /* 调整音乐容器高度，适应手机屏幕 */
+    .music-container {
+      height: auto
+      min-height: calc(100vh - 120px)
+      margin: 60px 0 20px
+      padding: 0 10px
+    }
+
+    /* 主内容区域改为垂直布局 */
+    .music-main-area {
+      flex-direction: column
+      gap: 15px
+      padding: 0
+      margin-bottom: 15px
+    }
+
+    /* 音乐列表和播放器区域都占满宽度 */
+    .music-list-section,
+    .music-player-section {
+      flex: auto
+      width: 100%
+      padding: 15px
+    }
+
+    /* 减小音乐列表左侧内边距 */
+    .music-list-section {
+      padding: 15px
+    }
+
+    /* 减小专辑封面尺寸 */
+    .album-cover {
+      flex: 0 0 150px
+      width: 150px
+      height: 150px
+    }
+
+    /* 调整歌曲标题和艺术家字体大小 */
+    .current-song-title {
+      font-size: 20px
+    }
+
+    .current-song-artist {
+      font-size: 16px
+    }
+
+    /* 减小歌词区域高度 */
+    .music-lyrics {
+      height: 200px !important
+      min-height: 200px !important
+      max-height: 200px !important
+      padding: 10px
+    }
+
+    /* 调整控制行布局，允许换行 */
+    .control-row {
+      flex-wrap: wrap
+      gap: 10px
+    }
+
+    /* 减小进度条最小宽度 */
+    .progress-container {
+      min-width: 150px
+      margin: 0 5px
+    }
+
+    /* 减小按钮尺寸 */
+    .btn-prev, .btn-play-pause, .btn-next, .btn-toggle {
+      width: 35px
+      height: 35px
+      min-width: 35px
+      font-size: 10px
+    }
+
+    .btn-play-pause {
+      width: 45px
+      height: 45px
+      min-width: 45px
+      font-size: 12px
+    }
+
+    /* 减小音量条高度 */
+    .volume-bar {
+      height: 80px
+    }
+
+    /* 调整时长显示字体大小 */
+    .duration-display {
+      font-size: 12px
+      min-width: 70px
+    }
+
+    /* 调整音乐项内边距和间距 */
+    .music-item {
+      padding: 10px
+      gap: 10px
+    }
+
+    /* 减小音乐标题和艺术家字体大小 */
+    .music-title {
+      font-size: 14px
+    }
+
+    .music-artist {
+      font-size: 12px
+      min-width: 80px
+    }
+
+    /* 减小音乐列表标题字体大小 */
+    .music-list-section h2 {
+      font-size: 1.2em
+      margin: 0 0 15px 0
+    }
+
+    /* 调整歌词行间距和字体大小 */
+    .lyrics-line {
+      margin: 8px 0
+      line-height: 2
+      font-size: 14px
+    }
+
+    /* 调整播放器内容区域间距 */
+    .player-content {
+      gap: 3px
+      padding: 5px 0 0 0
+    }
+  }
+}
+三、编写JavaScript逻辑
+1. 创建音乐数据文件
+在 source/js/music/ 目录下创建 music.json 文件，添加歌曲信息：
+
+[
+  {
+    "name": "青花瓷",
+    "artist": "周杰伦",
+    "url": "/music/qinghuaci.mp3",
+    "cover": "/music/qinghuaci.jpg",
+    "lrc": "/music/qinghuaci.lrc"
+  },
+  {
+    "name": "稻香",
+    "artist": "周杰伦",
+    "url": "/music/daoxiang.mp3",
+    "cover": "/music/daoxiang.jpg",
+    "lrc": "/music/daoxiang.lrc"
+  }
+]
+2. 创建JavaScript主文件
+在 source/js/music/ 目录下创建 music.js 文件，添加核心播放逻辑：
+
+// 音乐播放器初始化脚本
+// 等待DOM加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    // 1. 先获取所有需要的DOM元素，确保它们存在
+    const domElements = {
+      musicContainer: document.querySelector('.music-container'),
+      playPauseBtn: document.querySelector('.btn-play-pause'),
+      prevBtn: document.querySelector('.btn-prev'),
+      nextBtn: document.querySelector('.btn-next'),
+      randomBtn: document.querySelector('.btn-toggle'),
+      progressContainer: document.querySelector('.progress-container'),
+      progressBar: document.querySelector('.progress-bar'),
+      progressKnob: document.querySelector('.progress-knob'),
+      volumeControl: document.querySelector('.volume-control'),
+      volumeIcon: document.querySelector('.volume-control i'),
+      volumeSliderContainer: document.querySelector('.volume-slider-container'),
+      volumeBar: document.querySelector('.volume-bar'),
+      currentTime: document.querySelector('.current-time'),
+      totalTime: document.querySelector('.total-time'),
+      currentSongTitle: document.querySelector('.current-song-title'),
+      currentSongArtist: document.querySelector('.current-song-artist'),
+      coverImage: document.querySelector('.cover-image'),
+      musicLyrics: document.querySelector('.music-lyrics'),
+      musicList: document.querySelector('.music-list')
+    };
+
+    // 2. 检查必要的DOM元素是否存在
+    const missingElements = Object.entries(domElements).filter(([key, element]) => !element);
+    if (missingElements.length > 0) {
+      console.error('缺少必要的DOM元素:', missingElements.map(([key]) => key));
+      return;
+    }
+
+    // 3. 确保歌词容器高度固定
+    if (domElements.musicLyrics) {
+      domElements.musicLyrics.style.height = '300px';
+      domElements.musicLyrics.style.overflow = 'hidden';
+      domElements.musicLyrics.style.textAlign = 'center';
+      domElements.musicLyrics.style.position = 'relative';
+      domElements.musicLyrics.style.boxSizing = 'border-box';
+    }
+
+    // 4. 加载歌曲数据
+    fetch('/js/music/music.json')
+      .then(response => response.json())
+      .then(songs => {
+        if (!songs || songs.length === 0) {
+          console.error('歌曲列表为空');
+          return;
+        }
+
+        // 5. 动态生成播放列表
+        domElements.musicList.innerHTML = '';
+        songs.forEach((song, index) => {
+          const li = document.createElement('li');
+          li.className = 'music-item';
+          li.innerHTML = `
+            <div class="music-index">${index + 1}</div>
+            <div class="music-title">${song.name}</div>
+            <div class="music-artist">${song.artist}</div>
+          `;
+          domElements.musicList.appendChild(li);
+        });
+
+        // 更新DOM元素引用
+        const musicItems = document.querySelectorAll('.music-item');
+
+
+        // 6. 创建音频元素（直接使用原生audio元素，更可靠）
+        const audio = new Audio();
+        audio.volume = 0.7;
+        audio.loop = false;
+
+
+        // 7. 播放器状态
+        let currentIndex = 0;
+        // 播放模式：0-顺序播放，1-随机播放，2-单曲循环
+        let playMode = 0;
+        let isPlaying = false;
+        let lrcData = [];
+        let currentLineIndex = 0; // 当前歌词行索引
+        // 移除旧的isRandom变量，统一使用playMode
+
+        // 格式化时间函数：将秒数转换为分:秒格式
+        function formatTime(seconds) {
+          if (isNaN(seconds) || seconds < 0) return '0:00';
+          const mins = Math.floor(seconds / 60);
+          const secs = Math.floor(seconds % 60);
+          return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // 8. 更新进度条的函数
+        function updateProgressBar(currentTime, duration) {
+          if (isNaN(duration) || duration <= 0) {
+
+            return;
+          }
+          const percent = (currentTime / duration) * 100;
+          
+          // 更新进度条
+          if (domElements.progressBar) {
+            domElements.progressBar.style.width = percent + '%';
+          }
+          if (domElements.progressKnob) {
+            domElements.progressKnob.style.left = percent + '%';
+          }
+          
+          // 更新时长显示
+          if (domElements.currentTime) {
+            domElements.currentTime.textContent = formatTime(currentTime);
+          }
+        }
+
+        // 9. 渲染歌词的函数 - 简化实现
+        function renderLyrics() {
+          if (!lrcData || lrcData.length === 0) {
+            if (domElements.musicLyrics) {
+              domElements.musicLyrics.innerHTML = '<p style="color: rgba(255, 255, 255, 0.7);">暂无歌词</p>';
+            }
+            return;
+          }
+          
+          // 创建歌词容器
+          const lyricsContainer = document.createElement('div');
+          lyricsContainer.className = 'lyrics-container';
+          
+          // 渲染所有歌词行
+          lrcData.forEach((line, index) => {
+            const lineEl = document.createElement('div');
+            lineEl.className = 'lyric-line';
+            lineEl.textContent = line.text;
+            lineEl.dataset.index = index;
+            
+            // 设置基础样式
+            lineEl.style.margin = '10px 0';
+            lineEl.style.lineHeight = '2.2';
+            lineEl.style.textAlign = 'center';
+            lineEl.style.transition = 'all 0.3s ease';
+            
+            lyricsContainer.appendChild(lineEl);
+          });
+          
+          if (domElements.musicLyrics) {
+            domElements.musicLyrics.innerHTML = '';
+            domElements.musicLyrics.appendChild(lyricsContainer);
+            
+            // 更新当前歌词样式
+            updateCurrentLyricStyle();
+            // 滚动到当前歌词
+            scrollToCurrentLyric();
+          }
+        }
+
+        // 10. 更新当前歌词样式
+        function updateCurrentLyricStyle() {
+          if (!domElements.musicLyrics) return;
+          
+          const lyricsContainer = domElements.musicLyrics.querySelector('.lyrics-container');
+          if (!lyricsContainer) return;
+          
+          const allLines = lyricsContainer.querySelectorAll('.lyric-line');
+          allLines.forEach((line, index) => {
+            const isCurrent = index === currentLineIndex;
+            
+            if (isCurrent) {
+              // 当前歌词样式
+              line.style.opacity = '1';
+              line.style.fontSize = '20px';
+              line.style.fontWeight = 'bold';
+              line.style.color = 'white';
+            } else {
+              // 普通歌词样式
+              line.style.opacity = '0.5';
+              line.style.fontSize = '16px';
+              line.style.fontWeight = 'normal';
+              line.style.color = 'rgba(255, 255, 255, 0.6)';
+            }
+          });
+        }
+
+        // 11. 滚动到当前歌词
+        function scrollToCurrentLyric() {
+          if (!domElements.musicLyrics) return;
+          
+          const lyricsContainer = domElements.musicLyrics.querySelector('.lyrics-container');
+          if (!lyricsContainer) return;
+          
+          const currentLine = lyricsContainer.querySelector(`[data-index="${currentLineIndex}"]`);
+          if (!currentLine) return;
+          
+          // 计算滚动位置，使当前歌词居中
+          const containerHeight = domElements.musicLyrics.clientHeight;
+          const lineTop = currentLine.offsetTop;
+          const scrollAmount = lineTop - (containerHeight / 2) + (currentLine.clientHeight / 2);
+          
+          // 使用transform实现平滑滚动
+          lyricsContainer.style.transform = `translateY(-${scrollAmount}px)`;
+          lyricsContainer.style.transition = 'transform 0.3s ease';
+        }
+
+        // 12. 更新歌词的函数
+        function updateLyrics(currentTime) {
+          if (!lrcData || lrcData.length === 0) {
+            return;
+          }
+          
+          // 查找当前时间对应的歌词行
+          let newLineIndex = 0;
+          for (let i = lrcData.length - 1; i >= 0; i--) {
+            if (currentTime >= lrcData[i].time) {
+              newLineIndex = i;
+              break;
+            }
+          }
+          
+          // 如果歌词行发生变化
+          if (newLineIndex !== currentLineIndex) {
+            currentLineIndex = newLineIndex;
+            updateCurrentLyricStyle();
+            scrollToCurrentLyric();
+          }
+        }
+
+        // 13. 解析LRC歌词的函数
+        function parseLRC(lrcText) {
+          const lines = lrcText.split('\n');
+          const result = [];
+          
+          const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/g;
+          
+          lines.forEach(line => {
+            const matches = [...line.matchAll(timeRegex)];
+            if (matches.length > 0) {
+              const text = line.replace(timeRegex, '').trim();
+              if (text) {
+                matches.forEach(match => {
+                  const minutes = parseInt(match[1]);
+                  const seconds = parseInt(match[2]);
+                  const milliseconds = parseInt(match[3].padEnd(3, '0'));
+                  const time = minutes * 60 + seconds + milliseconds / 1000;
+                  result.push({ time, text });
+                });
+              }
+            }
+          });
+          
+          // 按时间排序
+          result.sort((a, b) => a.time - b.time);
+          return result;
+        }
+
+        // 14. 加载歌词的函数
+        function loadLyrics(url) {
+
+          fetch(url)
+            .then(response => response.text())
+            .then(text => {
+
+              lrcData = parseLRC(text);
+              currentLineIndex = 0;
+
+              renderLyrics();
+            })
+            .catch(error => {
+              console.error('加载歌词失败:', error);
+              lrcData = [];
+              currentLineIndex = 0;
+              renderLyrics();
+            });
+        }
+
+        // 15. 加载并播放指定索引的歌曲
+        function loadAndPlay(index) {
+
+          if (index < 0 || index >= songs.length) {
+            console.error('无效的歌曲索引:', index);
+            return;
+          }
+          
+          currentIndex = index;
+          const song = songs[index];
+          
+          // 更新当前歌曲信息
+          if (domElements.currentSongTitle) {
+            domElements.currentSongTitle.textContent = song.name;
+          }
+          if (domElements.currentSongArtist) {
+            domElements.currentSongArtist.textContent = song.artist;
+          }
+          if (domElements.coverImage) {
+            domElements.coverImage.style.backgroundImage = 'url(' + song.cover + ')';
+            domElements.coverImage.style.backgroundSize = 'cover';
+            domElements.coverImage.style.backgroundPosition = 'center';
+          }
+          
+          // 更新背景图片为当前歌曲封面（毛玻璃效果）
+          const coverBlurElement = document.querySelector('.cover-blur');
+          if (coverBlurElement) {
+            coverBlurElement.style.backgroundImage = 'url(' + song.cover + ')';
+          }
+          
+          // 更新播放列表选中状态
+          musicItems.forEach((item, i) => {
+            if (i === index) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+          
+          // 加载歌词
+          loadLyrics(song.lrc);
+          
+          // 加载并播放音频
+          audio.src = song.url;
+          audio.play().then(() => {
+            isPlaying = true;
+            if (domElements.playPauseBtn.querySelector('i')) {
+              domElements.playPauseBtn.querySelector('i').className = 'fas fa-pause';
+            }
+
+          }).catch(error => {
+            console.error('播放失败:', error);
+            isPlaying = false;
+          });
+        }
+
+        // 16. 播放/暂停切换
+        function togglePlayPause() {
+
+          if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            if (domElements.playPauseBtn.querySelector('i')) {
+              domElements.playPauseBtn.querySelector('i').className = 'fas fa-play';
+            }
+
+          } else {
+            if (audio.src) {
+              audio.play().then(() => {
+                isPlaying = true;
+                if (domElements.playPauseBtn.querySelector('i')) {
+                  domElements.playPauseBtn.querySelector('i').className = 'fas fa-pause';
+                }
+
+              }).catch(error => {
+                console.error('播放失败:', error);
+              });
+            } else {
+              // 如果还没有加载歌曲，加载第一首
+              loadAndPlay(currentIndex);
+            }
+          }
+        }
+
+        // 17. 播放下一首
+        function playNext() {
+
+          let nextIndex;
+          
+          if (playMode === 2) {
+            // 单曲循环：播放当前歌曲
+            nextIndex = currentIndex;
+          } else if (playMode === 1) {
+            // 随机播放
+            nextIndex = Math.floor(Math.random() * songs.length);
+            while (nextIndex === currentIndex) {
+              nextIndex = Math.floor(Math.random() * songs.length);
+            }
+          } else {
+            // 顺序播放
+            nextIndex = (currentIndex + 1) % songs.length;
+          }
+          loadAndPlay(nextIndex);
+        }
+
+        // 18. 播放上一首
+        function playPrev() {
+
+          let prevIndex;
+          if (playMode === 1) { // 随机播放
+            prevIndex = Math.floor(Math.random() * songs.length);
+            while (prevIndex === currentIndex) {
+              prevIndex = Math.floor(Math.random() * songs.length);
+            }
+          } else if (playMode === 2) { // 单曲循环
+            prevIndex = currentIndex;
+          } else { // 顺序播放
+            prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+          }
+          loadAndPlay(prevIndex);
+        }
+
+        // 19. 切换播放模式（顺序->随机->单曲循环->顺序...）
+        function togglePlayMode() {
+          // 循环切换播放模式：0-顺序播放，1-随机播放，2-单曲循环
+          playMode = (playMode + 1) % 3;
+
+          
+          const icon = domElements.randomBtn.querySelector('i');
+          if (icon) {
+            // 根据播放模式设置对应的图标（使用Font Awesome 7.1.0兼容的图标）
+            switch (playMode) {
+              case 0: // 顺序播放
+                icon.className = 'fas fa-list';
+                break;
+              case 1: // 随机播放
+                icon.className = 'fas fa-shuffle';
+                break;
+              case 2: // 单曲循环
+                icon.className = 'fas fa-repeat';
+                break;
+            }
+          }
+        }
+
+        // 20. 绑定播放/暂停按钮
+        domElements.playPauseBtn.addEventListener('click', togglePlayPause);
+
+        // 21. 绑定上一曲按钮
+        domElements.prevBtn.addEventListener('click', playPrev);
+
+        // 22. 绑定下一曲按钮
+        domElements.nextBtn.addEventListener('click', playNext);
+
+        // 23. 绑定播放模式切换按钮
+        domElements.randomBtn.addEventListener('click', togglePlayMode);
+
+        // 24. 绑定进度条点击
+        domElements.progressContainer.addEventListener('click', (e) => {
+
+          const rect = domElements.progressContainer.getBoundingClientRect();
+          const percent = (e.clientX - rect.left) / rect.width;
+          const seekTime = percent * audio.duration;
+          audio.currentTime = seekTime;
+          updateProgressBar(seekTime, audio.duration);
+          updateLyrics(seekTime);
+        });
+
+        // 25. 绑定音量条点击
+        if (domElements.volumeBar) {
+          domElements.volumeBar.addEventListener('click', (e) => {
+
+            const rect = domElements.volumeBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.volume = percent;
+            
+            // 更新音量图标
+            updateVolumeIcon();
+          });
+        }
+        
+        // 更新音量图标
+        function updateVolumeIcon() {
+          if (!domElements.volumeIcon) return;
+          
+          if (audio.volume === 0) {
+            domElements.volumeIcon.className = 'fas fa-volume-mute';
+          } else if (audio.volume < 0.5) {
+            domElements.volumeIcon.className = 'fas fa-volume-down';
+          } else {
+            domElements.volumeIcon.className = 'fas fa-volume-up';
+          }
+        }
+        
+        // 更新音量进度条
+        function updateVolumeProgress() {
+          // 创建音量进度条元素（如果不存在）
+          let volumeProgress = domElements.volumeBar.querySelector('.volume-progress');
+          if (!volumeProgress) {
+            volumeProgress = document.createElement('div');
+            volumeProgress.className = 'volume-progress';
+            domElements.volumeBar.appendChild(volumeProgress);
+          }
+          
+          // 创建音量滑块元素（如果不存在）
+          let volumeKnob = domElements.volumeBar.querySelector('.volume-knob');
+          if (!volumeKnob) {
+            volumeKnob = document.createElement('div');
+            volumeKnob.className = 'volume-knob';
+            domElements.volumeBar.appendChild(volumeKnob);
+            
+            // 绑定鼠标拖动事件
+            bindVolumeDragging(volumeKnob);
+          }
+          
+          // 更新音量进度（垂直方向）
+          const volumePercent = audio.volume * 100;
+          volumeProgress.style.height = volumePercent + '%';
+          volumeKnob.style.top = (100 - volumePercent) + '%';
+        }
+        
+        // 切换音量滑块显示/隐藏
+        function toggleVolumeSlider() {
+          if (!domElements.volumeControl) return;
+          domElements.volumeControl.classList.toggle('active');
+        }
+        
+        // 绑定音量滑块拖动事件
+        function bindVolumeDragging(volumeKnob) {
+          let isDragging = false;
+          
+          // 鼠标按下事件
+          volumeKnob.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            e.stopPropagation();
+          });
+          
+          // 鼠标移动事件
+          document.addEventListener('mousemove', (e) => {
+            if (!isDragging || !domElements.volumeBar) return;
+            
+            const rect = domElements.volumeBar.getBoundingClientRect();
+            // 计算垂直方向的百分比（从底部开始）
+            const percent = Math.max(0, Math.min(100, 100 - ((e.clientY - rect.top) / rect.height) * 100));
+            audio.volume = percent / 100;
+            updateVolumeProgress();
+            updateVolumeIcon();
+            e.stopPropagation();
+          });
+          
+          // 鼠标释放事件
+          document.addEventListener('mouseup', () => {
+            if (isDragging) {
+              isDragging = false;
+            }
+          });
+        }
+        
+        // 26. 绑定播放列表点击
+        musicItems.forEach((item, index) => {
+          item.addEventListener('click', () => {
+  
+            loadAndPlay(index);
+          });
+        });
+
+        // 27. 绑定音量图标点击
+        if (domElements.volumeIcon) {
+          domElements.volumeIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleVolumeSlider();
+          });
+        }
+        
+        // 28. 绑定音量条点击
+        if (domElements.volumeBar) {
+          domElements.volumeBar.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const rect = domElements.volumeBar.getBoundingClientRect();
+            // 计算垂直方向的百分比（从底部开始）
+            const percent = Math.max(0, Math.min(100, 100 - ((e.clientY - rect.top) / rect.height) * 100));
+            audio.volume = percent / 100;
+            updateVolumeProgress();
+            updateVolumeIcon();
+          });
+        }
+        
+        // 29. 点击页面其他地方隐藏音量滑块
+        document.addEventListener('click', (e) => {
+          if (domElements.volumeControl && !domElements.volumeControl.contains(e.target)) {
+            domElements.volumeControl.classList.remove('active');
+          }
+        });
+
+        // 30. 初始化进度条和音量进度条
+        updateProgressBar(0, 1); // 初始进度条位置为0%
+        updateVolumeProgress();
+
+        // 31. 监听音频事件
+        audio.addEventListener('timeupdate', () => {
+          // 更新进度条
+          updateProgressBar(audio.currentTime, audio.duration);
+          // 更新歌词
+          updateLyrics(audio.currentTime);
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+
+          
+          // 更新当前歌曲的时长显示
+          const durationElement = musicItems[currentIndex].querySelector('.music-duration');
+          if (durationElement) {
+            durationElement.textContent = formatTime(audio.duration);
+          }
+          
+          // 更新总时长显示
+          if (domElements.totalTime) {
+            domElements.totalTime.textContent = formatTime(audio.duration);
+          }
+        });
+
+        audio.addEventListener('ended', () => {
+
+          playNext();
+        });
+
+        audio.addEventListener('play', () => {
+          isPlaying = true;
+          if (domElements.playPauseBtn.querySelector('i')) {
+            domElements.playPauseBtn.querySelector('i').className = 'fas fa-pause';
+          }
+
+        });
+
+        audio.addEventListener('pause', () => {
+          isPlaying = false;
+          if (domElements.playPauseBtn.querySelector('i')) {
+            domElements.playPauseBtn.querySelector('i').className = 'fas fa-play';
+          }
+
+        });
+
+        // 28. 初始化第一首歌的信息
+        if (songs.length > 0) {
+          const firstSong = songs[0];
+          if (domElements.currentSongTitle) {
+            domElements.currentSongTitle.textContent = firstSong.name;
+          }
+          if (domElements.currentSongArtist) {
+            domElements.currentSongArtist.textContent = firstSong.artist;
+          }
+          if (domElements.coverImage) {
+            domElements.coverImage.style.backgroundImage = 'url(' + firstSong.cover + ')';
+            domElements.coverImage.style.backgroundSize = 'cover';
+            domElements.coverImage.style.backgroundPosition = 'center';
+          }
+          
+          // 初始状态不设置背景图片，保持完全透明
+          // 只在播放时才设置背景
+          
+          if (musicItems.length > 0) {
+            musicItems[0].classList.add('active');
+          }
+          // 预加载第一首歌的歌词
+          loadLyrics(firstSong.lrc);
+        }
+
+
+      })
+      .catch(error => {
+        console.error('加载歌曲数据失败:', error);
+      });
+  } catch (error) {
+    console.error('音乐播放器初始化异常:', error);
+  }
+});
+
+四、配置导航菜单
+1. 修改主题配置
+编辑主题配置文件 themes/butterfly/_config.yml，添加音乐页面到导航菜单：
+
+menu:
+  首页: /
+  归档: /archives/
+  分类: /categories/
+  标签: /tags/
+  音乐: /music/
+  关于: /about/
+五、部署和测试
+1. 本地测试
+在Hexo博客根目录执行以下命令启动本地服务器：
+
+hexo s
+2. 部署到服务器
+执行以下命令生成静态文件并部署到服务器：
+
+hexo clean && hexo g && hexo d
+六、后续优化建议
+添加歌曲搜索功能
+支持添加到播放队列
+实现音乐收藏功能
+添加歌词翻译显示
+优化加载速度和性能
+添加播放历史记录
+支持多种音频格式
+添加音效均衡器
+九、声明
+本文代码参考了网络上的音乐播放器实现，并根据Hexo博客的特点进行了修改和优化。使用时请遵守相关版权法规，确保音乐资源的合法性。
+
+通过以上步骤，你可以在Hexo博客中添加一个功能完整、视觉美观的自定义音乐页面，为你的博客增添更多互动性和趣味性。
