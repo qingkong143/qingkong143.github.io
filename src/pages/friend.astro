@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Comments from '../components/Comments.astro';
+import { siteConfig } from '../data/site';
+import { getImageSrcset, getProxiedImage } from '../utils/paths';
 
 const friends = [
   {
@@ -11,7 +13,7 @@ const friends = [
   }
 ];
 ---
-<BaseLayout title="友情链接 - Torch Blog" description="友情链接">
+<BaseLayout title={`友情链接 - ${siteConfig.title}`} description="友情链接">
   <article class="article">
     <div class="article-inner">
       <header class="article-header"><h1 class="article-title">友情链接</h1></header>
@@ -33,7 +35,14 @@ const friends = [
         <div class="friend-grid">
           {friends.map((friend) => (
             <a class="friend-card" href={friend.url} target="_blank" rel="noopener noreferrer">
-              <img src={friend.image} alt={friend.name} loading="lazy" />
+              <img
+                src={getProxiedImage(friend.image, { width: 116, height: 116, fit: 'cover', quality: 82 })}
+                srcset={getImageSrcset(friend.image, [58, 116, 174], { width: 116, height: 116, fit: 'cover', quality: 82 })}
+                sizes="58px"
+                alt={friend.name}
+                loading="lazy"
+                decoding="async"
+              />
               <span class="friend-name">{friend.name}</span>
               <span class="friend-desc">{friend.desc}</span>
             </a>

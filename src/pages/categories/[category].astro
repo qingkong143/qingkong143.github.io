@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../../data/site';
+import { withBase } from '../../utils/paths';
+import { createPostPathMap, getPostPath } from '../../utils/posts';
+
+const toList = (value?: string | string[]) => {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+};
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const categories = new Set<string>();
+
+  posts.forEach((post) => {
+    const value = post.data.categories;
+    if (!value) return;
+    (Array.isArray(value) ? value : [value]).forEach((category) => categories.add(category));
+  });
+
+  return [...categories].map((category) => ({
+    params: { category },
+    props: { category }
+  }));
+}
+
+const posts = await getCollection('blog');
+const { category } = Astro.props;
+const matchedPosts = posts
+  .filter((post) => toList(post.data.categories).includes(category))
+  .sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0));
+const postPathMap = createPostPathMap(posts);
+---
+<BaseLayout title={`分类：${category} - ${siteConfig.title}`} description={`分类 ${category} 下的文章`}>
+  <article class="article taxonomy-page">
+    <div class="article-inner">
+      <header class="article-header">
+        <p class="taxonomy-eyebrow">分类</p>
+        <h1 class="article-title">{category}</h1>
+        <p class="taxonomy-count">共 {matchedPosts.length} 篇文章</p>
+      </header>
+      <div class="hr-line"></div>
+      <ul class="archive-list">
+        {matchedPosts.map((post) => (
+          <li><time>{post.data.date?.toLocaleDateString('zh-CN')}</time><a href={withBase(getPostPath(post, postPathMap))}>{post.data.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  </article>
+</BaseLayout>

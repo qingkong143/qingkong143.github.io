@@ -44,16 +44,16 @@ export const siteConfig = {
       enable: true,
       envId: 'https://twikoo.318670.xyz/',
       region: '',
-      src: 'https://npm.webcache.cn/twikoo@1.6.44/dist/twikoo.all.min.js',
+      src: 'https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.all.min.js',
       integrity: 'sha384-kwWLC0HjeZZnVPqCJ1AncI8tsk+kQqF9TbAmCclcc9Z0hGkfgHRzeQZxmdmZhE0K'
     }
   },
   player: {
     aplayer: {
       enable: true,
-      src: 'https://npm.webcache.cn/aplayer@1.10.1/dist/APlayer.min.js',
+      src: 'https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js',
       integrity: 'sha384-gdGYZwHnfJM54evoZhpO0s6ZF5BQiybkiyW7VXr+h5UfruuRL/aORyw+5+HZoU6e',
-      css: 'https://npm.webcache.cn/aplayer@1.10.1/dist/APlayer.min.css',
+      css: 'https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css',
       cssIntegrity: 'sha384-tLMkTWh2pfXNWGFlUS0w1TFtRG5xZ9lPWFOooj+vDDLIL+xBGQU/voDBY5XE2lVh'
     },
     meting: {
@@ -61,7 +61,7 @@ export const siteConfig = {
       id: '5354878100',
       server: 'netease',
       type: 'playlist',
-      src: 'https://npm.webcache.cn/meting@2.0.1/dist/Meting.min.js',
+      src: 'https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js',
       integrity: 'sha384-ASVlpKF80A22OXTK3tfEjZm1EL6uFMKIC4p8+0maanw1S/IyB+Y4JG+ZDU7GpKE8'
     }
   },

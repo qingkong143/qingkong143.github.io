@@ -1,17 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { siteConfig } from '../data/site';
+import { withBase } from '../utils/paths';
+import { createPostPathMap, getPostPath } from '../utils/posts';
 
 const posts = (await getCollection('blog')).sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0));
+const postPathMap = createPostPathMap(posts);
 ---
-<BaseLayout title="归档 - Torch Blog" description="文章归档">
+<BaseLayout title={`归档 - ${siteConfig.title}`} description="文章归档">
   <article class="article">
     <div class="article-inner">
       <header class="article-header"><h1 class="article-title">归档</h1></header>
       <div class="hr-line"></div>
       <ul class="archive-list">
         {posts.map((post) => (
-          <li><time>{post.data.date?.toLocaleDateString('zh-CN')}</time><a href={`/posts/${post.slug}/`}>{post.data.title}</a></li>
+          <li><time>{post.data.date?.toLocaleDateString('zh-CN')}</time><a href={withBase(getPostPath(post, postPathMap))}>{post.data.title}</a></li>
         ))}
       </ul>
     </div>

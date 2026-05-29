@@ -1,27 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import Player from '../components/Player.astro';
 import { siteConfig } from '../data/site';
+import { withBase } from '../utils/paths';
 
 const { title = siteConfig.title, description = siteConfig.description, sidebar = true, mainClass = '' } = Astro.props;
 const searchConfig = siteConfig.search;
-const searchPosts = searchConfig.enable ? (await getCollection('blog'))
-  .sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0))
-  .map((post) => ({
-    title: post.data.title,
-    href: `/posts/${post.slug}/`,
-    date: post.data.date?.toLocaleDateString('zh-CN') || '',
-    text: [
-      post.data.title,
-      post.data.description,
-      post.data.brief,
-      post.data.summary,
-      ...(Array.isArray(post.data.categories) ? post.data.categories : [post.data.categories]),
-      ...(Array.isArray(post.data.tags) ? post.data.tags : [post.data.tags])
-    ].filter(Boolean).join(' ')
-  })) : [];
+const searchIndexUrl = withBase('/search-index.json');
+const globalBackground = siteConfig.globalBackground;
+const globalBackgroundImage = withBase(globalBackground.image);
+const globalBackgroundPreload = globalBackground.enable ? globalBackgroundImage : undefined;
+const bodyStyle = globalBackground.enable
+  ? `--global-bg-image: url('${globalBackgroundImage}'); --global-bg-opacity: ${globalBackground.opacity}; --global-bg-blur: ${globalBackground.blur}px; --global-bg-attachment: ${globalBackground.attachment};`
+  : '--global-bg-image: none; --global-bg-opacity: 0; --global-bg-blur: 0px; --global-bg-attachment: scroll;';
 ---
 <!doctype html>
 <html lang="zh-CN" data-theme="light">
@@ -29,15 +22,17 @@ const searchPosts = searchConfig.enable ? (await getCollection('blog'))
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {globalBackgroundPreload && <link rel="preload" href={globalBackgroundPreload} as="image" fetchpriority="high" />}
+    <ClientRouter />
     <title>{title}</title>
   </head>
-  <body style={`--global-bg-image: url('${siteConfig.globalBackground.image}'); --global-bg-opacity: ${siteConfig.globalBackground.opacity}; --global-bg-blur: ${siteConfig.globalBackground.blur}px; --global-bg-attachment: ${siteConfig.globalBackground.attachment};`}>
+  <body style={bodyStyle}>
     <div class="site-shell">
       <header id="header-nav">
         <nav class="nav-inner" aria-label="站点导航">
-          <a class="site-name" href="/">{siteConfig.title}</a>
+          <a class="site-name" href={withBase('/')}>{siteConfig.title}</a>
           <div class="main-nav">
-            {siteConfig.nav.map((item) => <a class="main-nav-link" href={item.href}>{item.label}</a>)}
+            {siteConfig.nav.map((item) => <a class="main-nav-link" href={withBase(item.href)}>{item.label}</a>)}
           </div>
           <div class="nav-controls">
             {searchConfig.enable && (
@@ -78,63 +73,179 @@ const searchPosts = searchConfig.enable ? (await getCollection('blog'))
         <p>© 2021-2026 {siteConfig.author}. Powered by Astro.</p>
       </footer>
     </div>
-    <script is:inline define:vars={{ searchPosts, searchConfig }}>
-      const root = document.documentElement;
-      const button = document.querySelector('#theme-toggle');
-      const searchToggle = document.querySelector('#search-toggle');
-      const searchPanel = document.querySelector('#search-panel');
-      const searchInput = document.querySelector('#search-input');
-      const searchResults = document.querySelector('#search-results');
-      const saved = localStorage.getItem('theme') || 'light';
-      root.dataset.theme = saved;
-      button?.addEventListener('click', () => {
-        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-        root.dataset.theme = next;
-        localStorage.setItem('theme', next);
-      });
+    <div id="page-transition-loader" aria-hidden="true">
+      <div class="page-transition-card">
+        <span class="page-transition-spinner"></span>
+        <span>页面加载中</span>
+      </div>
+    </div>
+    <script is:inline define:vars={{ searchConfig, searchIndexUrl }}>
+      (() => {
+        window.__astroCleanPageLoader = window.__astroCleanPageLoader || { timer: 0, startedAt: 0 };
+        window.__astroCleanSearch = window.__astroCleanSearch || { posts: null, promise: null };
+      const pageLoaderState = window.__astroCleanPageLoader;
+      const searchState = window.__astroCleanSearch;
+
+      const setTheme = () => {
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';
+      };
+
+      const showPageLoader = () => {
+        window.clearTimeout(pageLoaderState.timer);
+        pageLoaderState.startedAt = Date.now();
+        document.documentElement.classList.add('is-page-transitioning');
+      };
+
+      const hidePageLoader = () => {
+        const elapsed = Date.now() - pageLoaderState.startedAt;
+        const delay = Math.max(0, 420 - elapsed);
+        window.clearTimeout(pageLoaderState.timer);
+        pageLoaderState.timer = window.setTimeout(() => {
+          document.documentElement.classList.remove('is-page-transitioning');
+        }, delay);
+      };
 
       const closeSearch = () => {
+        const searchToggle = document.querySelector('#search-toggle');
+        const searchPanel = document.querySelector('#search-panel');
         searchPanel?.classList.remove('open');
         searchToggle?.setAttribute('aria-expanded', 'false');
         searchPanel?.setAttribute('aria-hidden', 'true');
       };
 
-      const renderResults = (keyword) => {
+      const loadSearchPosts = async () => {
+        if (searchState.posts) return searchState.posts;
+        searchState.promise ||= fetch(searchIndexUrl)
+          .then((response) => response.ok ? response.json() : [])
+          .then((posts) => {
+            searchState.posts = Array.isArray(posts) ? posts : [];
+            return searchState.posts;
+          })
+          .catch(() => {
+            searchState.posts = [];
+            return searchState.posts;
+          });
+        return searchState.promise;
+      };
+
+      const setSearchEmpty = (message) => {
+        const searchResults = document.querySelector('#search-results');
+        if (!searchResults) return;
+        const empty = document.createElement('div');
+        empty.className = 'search-empty';
+        empty.textContent = message;
+        searchResults.replaceChildren(empty);
+      };
+
+      const renderResults = async (keyword) => {
+        const searchResults = document.querySelector('#search-results');
         if (!searchResults) return;
         const value = keyword.trim().toLowerCase();
         if (!value) {
-          searchResults.innerHTML = `<div class="search-empty">${searchConfig.emptyText}</div>`;
+          setSearchEmpty(searchConfig.emptyText);
           return;
         }
+        const searchPosts = await loadSearchPosts();
         const results = searchPosts.filter((post) => post.text.toLowerCase().includes(value)).slice(0, searchConfig.maxResults);
-        searchResults.innerHTML = results.length
-          ? results.map((post) => `<a class="search-result" href="${post.href}" role="listitem"><span>${post.title}</span>${post.date ? `<time>${post.date}</time>` : ''}</a>`).join('')
-          : `<div class="search-empty">${searchConfig.noResultsText}</div>`;
+        if (!results.length) {
+          setSearchEmpty(searchConfig.noResultsText);
+          return;
+        }
+        searchResults.replaceChildren(...results.map((post) => {
+          const link = document.createElement('a');
+          const title = document.createElement('span');
+          link.className = 'search-result';
+          link.href = post.href;
+          link.setAttribute('role', 'listitem');
+          title.textContent = post.title;
+          link.append(title);
+          if (post.date) {
+            const time = document.createElement('time');
+            time.textContent = post.date;
+            link.append(time);
+          }
+          return link;
+        }));
       };
 
-      searchToggle?.addEventListener('click', () => {
-        const opened = searchPanel?.classList.toggle('open');
-        searchToggle.setAttribute('aria-expanded', String(Boolean(opened)));
-        searchPanel?.setAttribute('aria-hidden', String(!opened));
+      const toggleSearch = () => {
+        const searchToggle = document.querySelector('#search-toggle');
+        const searchPanel = document.querySelector('#search-panel');
+        const searchInput = document.querySelector('#search-input');
+        if (!searchPanel) return;
+        const opened = !searchPanel.classList.contains('open');
+        searchPanel.classList.toggle('open', opened);
+        searchToggle?.setAttribute('aria-expanded', String(opened));
+        searchPanel.setAttribute('aria-hidden', String(!opened));
         if (opened) {
           renderResults(searchInput?.value || '');
           requestAnimationFrame(() => searchInput?.focus());
         }
-      });
+      };
 
-      searchInput?.addEventListener('input', () => renderResults(searchInput.value));
-      document.addEventListener('click', (event) => {
-        if (!searchPanel?.classList.contains('open')) return;
-        const target = event.target;
-        if (!(target instanceof Node)) return;
-        if (searchPanel.contains(target) || searchToggle?.contains(target)) return;
-        closeSearch();
-      });
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && searchPanel?.classList.contains('open')) {
+      setTheme();
+
+      if (!window.__astroCleanLayoutBound) {
+        window.__astroCleanLayoutBound = true;
+
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+
+          if (target.closest('#theme-toggle')) {
+            const root = document.documentElement;
+            const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            root.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            return;
+          }
+
+          if (target.closest('#search-toggle')) {
+            toggleSearch();
+            return;
+          }
+
+          const searchPanel = document.querySelector('#search-panel');
+          const searchToggle = document.querySelector('#search-toggle');
+          if (!searchPanel?.classList.contains('open')) return;
+          if (searchPanel.contains(target) || searchToggle?.contains(target)) return;
           closeSearch();
-        }
-      });
+        });
+
+        document.addEventListener('input', (event) => {
+          const target = event.target;
+          if (target instanceof HTMLInputElement && target.matches('#search-input')) {
+            renderResults(target.value);
+          }
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && document.querySelector('#search-panel')?.classList.contains('open')) {
+            closeSearch();
+          }
+        });
+
+        document.addEventListener('astro:before-preparation', () => {
+          closeSearch();
+          showPageLoader();
+        });
+
+        document.addEventListener('astro:before-swap', (event) => {
+          event.newDocument.documentElement.dataset.theme = localStorage.getItem('theme') || 'light';
+          event.newDocument.documentElement.classList.add('is-page-transitioning');
+        });
+
+        document.addEventListener('astro:after-swap', () => {
+          setTheme();
+          requestAnimationFrame(hidePageLoader);
+        });
+
+        document.addEventListener('astro:page-load', () => {
+          setTheme();
+          hidePageLoader();
+        });
+      }
+      })();
     </script>
   </body>
 </html>

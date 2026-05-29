@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../data/site';
+import { withBase } from '../utils/paths';
 
 const posts = await getCollection('blog');
 const categories = new Set(posts.flatMap((post) => {
@@ -18,7 +19,7 @@ const tags = new Set(posts.flatMap((post) => {
   <div class="sidebar-wrapper-container sticky">
     <div class="sidebar-wrap">
       <div class="sidebar-author">
-        <img src={siteConfig.avatar} alt={siteConfig.author} loading="lazy" />
+        <img src={withBase(siteConfig.avatar)} alt={siteConfig.author} loading="lazy" />
         <div class="sidebar-author-name">{siteConfig.author}</div>
         <div class="sidebar-description">{siteConfig.subtitle}</div>
       </div>
@@ -42,20 +43,20 @@ const tags = new Set(posts.flatMap((post) => {
         ))}
       </div>
       <nav class="sidebar-menu" aria-label="侧栏导航">
-        {siteConfig.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        {siteConfig.nav.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
       </nav>
     </div>
     <div class="sidebar-widget">
       <section class="sidebar-widget-card">
         <h2>分类</h2>
         <div class="sidebar-chip-list">
-          {[...categories].map((category) => <span>{category}</span>)}
+          {[...categories].map((category) => <a href={withBase(`/categories/${encodeURIComponent(category)}/`)}>{category}</a>)}
         </div>
       </section>
       <section class="sidebar-widget-card">
         <h2>标签</h2>
         <div class="sidebar-chip-list">
-          {[...tags].map((tag) => <span>{tag}</span>)}
+          {[...tags].map((tag) => <a href={withBase(`/tags/${encodeURIComponent(tag)}/`)}>{tag}</a>)}
         </div>
       </section>
     </div>

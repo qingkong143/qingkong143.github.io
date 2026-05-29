@@ -1,9 +1,12 @@
 ---
+import { getImageSrcset, getProxiedImage } from '../utils/paths';
+
 interface Item {
   title: string;
   type?: string;
   area?: string;
   cover?: string;
+  coverSrcset?: string;
   totalCount?: string;
   id?: number;
   score?: number;
@@ -17,26 +20,23 @@ const statusMap = {
   watched: '看过'
 };
 
-const normalizeCover = (cover?: string) => {
-  if (!cover || !/^https?:\/\//i.test(cover)) return cover;
-  try {
-    const url = new URL(cover);
-    return `https://images.weserv.nl/?url=${encodeURIComponent(`${url.host}${url.pathname}`)}`;
-  } catch {
-    return cover;
-  }
-};
+const normalizeCover = (cover?: string) => cover
+  ? getProxiedImage(cover, { width: 440, height: 275, fit: 'cover', quality: 82 })
+  : cover;
+
+const getCoverSrcset = (cover?: string) => cover
+  ? getImageSrcset(cover, [320, 440, 640], { width: 440, height: 275, fit: 'cover', quality: 82 })
+  : undefined;
 
 const getBangumiUrl = (item: Item) => item.id ? `https://www.bilibili.com/bangumi/media/md${item.id}/` : undefined;
 
 const bangumis = Astro.props.bangumis as Record<keyof typeof statusMap, Item[]>;
 const items = Object.entries(statusMap).flatMap(([key, label]) =>
-  (bangumis[key as keyof typeof statusMap] || []).map((item) => ({ ...item, status: label, cover: normalizeCover(item.cover) }))
+  (bangumis[key as keyof typeof statusMap] || []).map((item) => ({ ...item, status: label, cover: normalizeCover(item.cover), coverSrcset: getCoverSrcset(item.cover) }))
 );
 ---
 <section class="bangumi-page">
   <header class="bangumi-hero">
-    <p class="bangumi-eyebrow">追番</p>
     <h1 class="bangumi-title">追番</h1>
     <p class="bangumi-subtitle">把喜欢的作品、补番进度和观后感收进同一页。</p>
     <div class="bangumi-description">生命不息，追番不止！</div>
@@ -45,7 +45,7 @@ const items = Object.entries(statusMap).flatMap(([key, label]) =>
   <div class="bangumi-grid">
     {items.map((item) => (
       <article class="bangumi-card">
-        {item.cover && <img class="bangumi-cover" src={item.cover} alt={item.title} loading="lazy" />}
+        {item.cover && <img class="bangumi-cover" src={item.cover} srcset={item.coverSrcset} sizes="(max-width: 767px) calc(100vw - 32px), 260px" alt={item.title} loading="lazy" decoding="async" />}
         <div class="bangumi-card-body">
           <div class="bangumi-card-header">
             <h2 class="bangumi-card-title">
