@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Comments from '../components/Comments.astro';
 import type { CollectionEntry } from 'astro:content';
+import { siteConfig } from '../data/site';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -11,7 +12,7 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 const date = post.data.date?.toLocaleDateString('zh-CN') ?? '';
 ---
-<BaseLayout title={`${post.data.title} - Torch Blog`} description={post.data.description || post.data.brief || post.data.summary}>
+<BaseLayout title={`${post.data.title} - ${siteConfig.title}`} description={post.data.description || post.data.brief || post.data.summary}>
   <article class="article">
     <div class="article-inner">
       <div class="article-meta">

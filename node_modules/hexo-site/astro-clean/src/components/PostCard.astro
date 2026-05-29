@@ -1,5 +1,8 @@
 ---
 import { siteConfig } from '../data/site';
+import { getImageSrcset, getProxiedImage, withBase } from '../utils/paths';
+import { getPostPath } from '../utils/posts';
+import type { PostPathMap } from '../utils/posts';
 
 interface Props {
   post: {
@@ -15,23 +18,36 @@ interface Props {
     body?: string;
   };
   index: number;
+  postPathMap?: PostPathMap;
 }
 
-const { post, index } = Astro.props;
+const { post, index, postPathMap } = Astro.props;
 const manualSummary = post.data.brief || post.data.summary || post.data.description;
 const autoSummary = siteConfig.postcard === 'enable' ? post.body?.replace(/<[^>]*>/g, '').slice(0, 160) : '';
 const summary = manualSummary || autoSummary;
+const hasSummary = Boolean(summary);
 const summaryOnly = Boolean(manualSummary && !autoSummary);
-const cover = post.data.cover || siteConfig.defaultCover;
-const href = `/posts/${post.slug}/`;
+const rawCover = post.data.cover || siteConfig.defaultCover;
+const cover = getProxiedImage(rawCover, { width: 520, height: 302, fit: 'cover', quality: 82 });
+const coverSrcset = getImageSrcset(rawCover, [360, 520, 720], { width: 520, height: 302, fit: 'cover', quality: 82 });
+const isPriorityCover = index === 0;
+const href = withBase(getPostPath(post, postPathMap));
 ---
 <div class="post-wrapper">
   <article class:list={['post-wrap', index % 2 === 0 ? 'left' : 'right']}>
     <a class="post-link" href={href} aria-label={post.data.title}></a>
     <div class:list={['post-cover', index % 2 === 0 ? 'left' : 'right']}>
-      <img src={cover} alt={post.data.title} loading="lazy" />
+      <img
+        src={cover}
+        srcset={coverSrcset}
+        sizes="(max-width: 767px) calc(100vw - 32px), 318px"
+        alt={post.data.title}
+        loading={isPriorityCover ? 'eager' : 'lazy'}
+        fetchpriority={isPriorityCover ? 'high' : 'auto'}
+        decoding="async"
+      />
     </div>
-    <div class:list={['post-info', summaryOnly && 'summary-only']}>
+    <div class:list={['post-info', summaryOnly && 'summary-only', !hasSummary && 'title-only']}>
       <div class="post-meta">
         {post.data.date && <span>{post.data.date.toLocaleDateString('zh-CN')}</span>}
       </div>

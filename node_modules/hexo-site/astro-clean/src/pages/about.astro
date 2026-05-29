@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Comments from '../components/Comments.astro';
+import { siteConfig } from '../data/site';
 ---
-<BaseLayout title="关于 - Torch Blog" description="关于这个博客">
+<BaseLayout title={`关于 - ${siteConfig.title}`} description="关于这个博客">
   <article class="article">
     <div class="article-inner">
       <header class="article-header"><h1 class="article-title">关于</h1></header>

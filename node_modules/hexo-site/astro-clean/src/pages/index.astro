@@ -5,20 +5,21 @@ import Sidebar from '../components/Sidebar.astro';
 import Player from '../components/Player.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../data/site';
+import { createPostPathMap } from '../utils/posts';
 
 const posts = (await getCollection('blog')).sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0));
+const postPathMap = createPostPathMap(posts);
 ---
 <BaseLayout title={siteConfig.title} description={siteConfig.description} sidebar={false} mainClass="home-main">
   <section class="home-hero">
     <div class="home-hero-content">
-      <p class="eyebrow">Astro Clean</p>
       <h1>{siteConfig.title}</h1>
       <p>{siteConfig.subtitle}</p>
     </div>
   </section>
   <div class="home-content-grid">
     <section class="post-list" aria-label="文章列表">
-      {posts.map((post, index) => <PostCard post={post} index={index} />)}
+      {posts.map((post, index) => <PostCard post={post} index={index} postPathMap={postPathMap} />)}
     </section>
     <div class="sidebar-column"><Sidebar /><Player /></div>
   </div>
