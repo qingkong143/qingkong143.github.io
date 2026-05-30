@@ -115,8 +115,9 @@ import { siteConfig } from '../data/site';
       .pr-lrc {
         flex: 1; width: 100%; max-width: 420px;
         margin-top: 4px; padding: 10px 0;
-        text-align: center; overflow: hidden;
-        position: relative;
+        text-align: center;
+        overflow-y: auto;          /* 必须为 auto，使滚动生效 */
+        /* 移除 position: relative？不需要，scrollIntoView 不依赖它 */
         mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
         -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
       }
@@ -314,30 +315,30 @@ import { siteConfig } from '../data/site';
             });
             box.appendChild(inner);
 
-            // Immediately scroll to the current lyric position
-            // (audio has already been playing while lyrics were fetched)
-            updateLrc(audio.currentTime || 0);
+            if (audio && audio.currentTime !== undefined) {
+              updateLrc(audio.currentTime);
+            }
           };
 
           const updateLrc = (t) => {
             if (!lrcData.length) return;
             let idx = -1;
-            for (let i = lrcData.length-1; i >= 0; i--) { if (t >= lrcData[i].t) { idx = i; break; } }
+            for (let i = lrcData.length - 1; i >= 0; i--) {
+              if (t >= lrcData[i].t) { idx = i; break; }
+            }
             if (idx === lrcIdx) return;
             lrcIdx = idx;
-            const inner = $('lrc-inner'), box = $('lrc-box');
-            if (!inner || !box) return;
-            inner.querySelectorAll('.pr-ln').forEach(el => el.classList.remove('cur'));
+            const inner = $('lrc-inner');
+            if (!inner) return;
+            const lines = inner.querySelectorAll('.pr-ln');
+            lines.forEach(el => el.classList.remove('cur'));
             if (idx < 0) return;
-            const el = inner.querySelector(`[data-i="${idx}"]`);
-            if (!el) return;
-            el.classList.add('cur');
+            const curLine = lines[idx];
+            if (!curLine) return;
+            curLine.classList.add('cur');
 
-            // offsetTop is layout-based (relative to offsetParent=box with position:relative),
-            // unaffected by CSS transforms — always returns correct absolute position.
-            // Formula matches the proven reference: lineTop - containerHeight/2 + lineHeight/2
-            const target = el.offsetTop - box.clientHeight / 2 + el.clientHeight / 2;
-            inner.style.transform = `translateY(${-Math.max(0, target)}px)`;
+            // 直接让当前歌词行滚动到容器中央（自动处理边界）
+            curLine.scrollIntoView({ block: 'center', behavior: 'auto' });
           };
 
           const updateProg = () => {
@@ -443,6 +444,9 @@ import { siteConfig } from '../data/site';
           $('lrc-inner').innerHTML = '<p class="pr-ln">点击播放查看歌词</p>';
           $('vol-fill').style.width = '70%';
           items[0]?.classList.add('on');
+          window.addEventListener('resize', () => {
+            if (audio && lrcData.length) updateLrc(audio.currentTime);
+          });
         };
 
         init().catch((e) => { console.error(e); $('title').textContent = '加载失败'; $('artist').textContent = e.message || '请刷新重试'; });
