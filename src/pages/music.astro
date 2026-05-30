@@ -288,16 +288,35 @@ import { siteConfig } from '../data/site';
           });
           const items = [...pl.querySelectorAll('.pl-item')];
 
-          // Lyrics
+          // Lyrics — matches proven reference pattern from lib.txt
           const renderLrc = () => {
-            const inner = $('lrc-inner'); inner.innerHTML = '';
-            if (!lrcData.length) { inner.innerHTML = '<p class="pr-ln">暂无歌词</p>'; return; }
+            const box = $('lrc-box');
+            // Remove old inner container to eliminate ALL stale transform/transition state
+            const old = $('lrc-inner');
+            if (old) old.remove();
+
+            // Create brand new inner container (fresh element, no history)
+            const inner = document.createElement('div');
+            inner.className = 'pr-lrc-inner';
+            inner.id = 'lrc-inner';
+
+            if (!lrcData.length) {
+              inner.innerHTML = '<p class="pr-ln">暂无歌词</p>';
+              box.appendChild(inner);
+              return;
+            }
             lrcData.forEach((l, i) => {
-              const p = document.createElement('p'); p.className = 'pr-ln'; p.textContent = l.txt; p.dataset.i = i; inner.appendChild(p);
+              const p = document.createElement('p');
+              p.className = 'pr-ln';
+              p.textContent = l.txt;
+              p.dataset.i = i;
+              inner.appendChild(p);
             });
-            // Force layout so offsetTop is correct
-            inner.style.transform = 'translateY(0px)';
-            void inner.offsetHeight;
+            box.appendChild(inner);
+
+            // Immediately scroll to the current lyric position
+            // (audio has already been playing while lyrics were fetched)
+            updateLrc(audio.currentTime || 0);
           };
 
           const updateLrc = (t) => {
@@ -307,16 +326,17 @@ import { siteConfig } from '../data/site';
             if (idx === lrcIdx) return;
             lrcIdx = idx;
             const inner = $('lrc-inner'), box = $('lrc-box');
+            if (!inner || !box) return;
             inner.querySelectorAll('.pr-ln').forEach(el => el.classList.remove('cur'));
             if (idx < 0) return;
             const el = inner.querySelector(`[data-i="${idx}"]`);
             if (!el) return;
             el.classList.add('cur');
-            // Center the line in the visible box
-            const innerTop = inner.getBoundingClientRect().top;
-            const elTop = el.getBoundingClientRect().top;
-            const lineY = elTop - innerTop;
-            const target = lineY - box.clientHeight/2 + el.clientHeight/2;
+
+            // offsetTop is layout-based (relative to offsetParent=box with position:relative),
+            // unaffected by CSS transforms — always returns correct absolute position.
+            // Formula matches the proven reference: lineTop - containerHeight/2 + lineHeight/2
+            const target = el.offsetTop - box.clientHeight / 2 + el.clientHeight / 2;
             inner.style.transform = `translateY(${-Math.max(0, target)}px)`;
           };
 
