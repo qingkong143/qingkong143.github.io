@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^5.0.0",
     "hexo-site": "file:..",
     "remark-gfm": "^4.0.1"
