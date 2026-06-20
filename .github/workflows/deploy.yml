@@ -26,6 +26,10 @@ jobs:
       - run: npm ci
       - run: chmod +x node_modules/.bin/astro   # 关键修复
       - run: npm run build
+      - name: Submit to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node scripts/indexnow.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
