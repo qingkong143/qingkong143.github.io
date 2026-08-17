@@ -1,5 +1,5 @@
 ---
-title: 图床?我选择Cloudflare_R2+PicGo
+title: 图床?我选择 Cloudflare R2 + PicGo
 cover: 'https://img.318670.xyz/20260817181506439.webp'
 date: 2026-08-17
 categories: 图床
@@ -10,28 +10,21 @@ abbrlink: mftc233
 ### 前言
 
 因为每次博客更新文章都需要一张封面（虽然我不经常更新），网上没有防盗链的图片又不太好找，就算有也有时不稳定。
+
 于是乎，我打算自己搭建一个图床。但是肯定是不能花太多在这上面的，然后就想到了这个方案（到底哪抄来的你别管）。
+
 搭建 Cloudflare R2 + PicGo 的免费图床！没错又是我们的赛博菩萨cloudflare！
 
 整个过程主要分为在 Cloudflare 端配置和在 PicGo 客户端配置两大步，顺利的话几分钟分钟就能搞定。
 
-### 🗺️ 流程图：搭建步骤概览
-
-flowchart TD
-    A[注册 Cloudflare 账号<br>并绑定支付方式] --> B[创建 R2 存储桶<br>建议区域选亚太]
-    B --> C[配置公开访问<br>r2.dev 子域名或自定义域名]
-    C --> D[生成 API 令牌<br>获取 Access Key 和 Secret Key]
-    D --> E[安装 PicGo 及<br>cloudflare-r2 插件]
-    E --> F[配置 PicGo 图床<br>填写账号ID、密钥、桶名等]
-    F --> G[完成! 开始上传图片]
-
----
-
 ### 🚀 第一步：开通 R2
 
 > 如果你还还没有cloudflare账号的话
-1.  **注册账号**：访问 [Cloudflare 官网](https://dash.cloudflare.com/sign-up) 注册一个账号。（
+
+1.  **注册账号**：访问 [Cloudflare 官网](https://dash.cloudflare.com/sign-up) 注册一个账号。
 2.  **开通 R2**：登录后，在左侧菜单栏找到 **“R2 对象存储”** 并点击进入。首次使用需要绑定一种支付方式（如信用卡或 PayPal），这**仅用于身份验证，不会扣费**。
+
+- 等等，你不会不知道cloudflare网页端右上角可以切换语言为中文吧！（疯狂嘲笑
 
 ### 🪣 第二步：创建存储桶 (Bucket)
 
