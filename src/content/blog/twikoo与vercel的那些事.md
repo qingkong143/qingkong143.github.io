@@ -2,7 +2,7 @@
 title: twikoo评论系统解系:Cloudfare通解+resend特解
 categories: Hexo
 tags: [域名,Hexo,resend,twikoo]
-cover: https://pic.netbian.com/uploads/allimg/251024/224648-17613172086329.jpg
+cover: https://img.318670.xyz/20260817175410746.webp
 abbrlink: 8ce6
 date: 2025-10-30 20:45:00
 brief: 简述 Twikoo 在 Vercel 上的部署与配置要点

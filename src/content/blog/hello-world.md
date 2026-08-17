@@ -1,6 +1,6 @@
 ---
 title: 主题样式示例全集
-cover: 'https://pic.netbian.com/uploads/allimg/251021/190826-176104490648d8.jpg'
+cover: 'https://img.318670.xyz/20260817175119383.webp'
 tags: 水文
 abbrlink: 3eeb
 ---

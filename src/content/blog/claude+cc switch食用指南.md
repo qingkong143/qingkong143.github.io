@@ -1,6 +1,6 @@
 ---
 title: " cc switch食用指南: agent配置管理的好帮手"
-cover: 'https://pic.netbian.com/uploads/allimg/250920/211106-17583738666924.jpg'
+cover: 'https://img.318670.xyz/20260817174437624.jpg'
 categories: 工具
 date: 2026-05-27 11:10:20
 abbrlink: aaa132
