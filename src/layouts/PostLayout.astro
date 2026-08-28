@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import Comments from '../components/Comments.astro';
 import type { CollectionEntry } from 'astro:content';
 import { siteConfig } from '../data/site';
+import { withBase } from '../utils/paths';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -11,21 +12,42 @@ interface Props {
 const { post } = Astro.props;
 const { Content } = await post.render();
 const date = post.data.date?.toLocaleDateString('zh-CN') ?? '';
+const tags = Array.isArray(post.data.tags) ? post.data.tags : post.data.tags ? [post.data.tags] : [];
+const categories = Array.isArray(post.data.categories) ? post.data.categories : post.data.categories ? [post.data.categories] : [];
+const author = post.data.author || siteConfig.author;
 ---
 <BaseLayout title={`${post.data.title} - ${siteConfig.title}`} description={post.data.description || post.data.brief || post.data.summary}>
   <article class="article">
     <div class="article-inner">
-      <div class="article-meta">
-        {date && <span class="article-date">{date}</span>}
-        {post.data.categories && <span>{Array.isArray(post.data.categories) ? post.data.categories.join(' / ') : post.data.categories}</span>}
-      </div>
       <header class="article-header">
+        {date && <div class="article-meta article-meta--header"><span class="article-date">{date}</span></div>}
         <h1 class="article-title">{post.data.title}</h1>
+        {post.data.subtitle && <p class="article-subtitle">{post.data.subtitle}</p>}
+        <div class="article-meta article-meta--sub">
+          {categories.length > 0 && <span>{categories.join(' / ')}</span>}
+          {categories.length > 0 && author && <span class="meta-sep">·</span>}
+          {author && <span>{author}</span>}
+          {author && tags.length > 0 && <span class="meta-sep">·</span>}
+          {tags.length > 0 && tags.map((tag, i) => (
+            <>
+              <a href={withBase(`/tags/${encodeURIComponent(tag)}/`)}>#{tag}</a>
+              {i < tags.length - 1 && <span class="meta-sep">·</span>}
+            </>
+          ))}
+        </div>
       </header>
-      <div class="hr-line"></div>
       <div class="article-entry">
         <Content />
       </div>
+      {tags.length > 0 && (
+        <>
+          <div class="hr-line" aria-hidden="true"></div>
+          <div class="tag-pills-label">TAGS</div>
+          <div class="tag-pills">
+            {tags.map((tag) => <a href={withBase(`/tags/${encodeURIComponent(tag)}/`)}>#{tag}</a>)}
+          </div>
+        </>
+      )}
     </div>
   </article>
   {post.data.comments !== false && <Comments />}

@@ -7,17 +7,37 @@ import { createPostPathMap, getPostPath } from '../utils/posts';
 
 const posts = (await getCollection('blog')).sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0));
 const postPathMap = createPostPathMap(posts);
+
+const postsByYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const year = post.data.date?.getFullYear();
+  if (!year) continue;
+  if (!postsByYear.has(year)) postsByYear.set(year, [] as typeof posts);
+  postsByYear.get(year)!.push(post);
+}
+const years = [...postsByYear.keys()].sort((a, b) => b - a);
 ---
 <BaseLayout title={`归档 - ${siteConfig.title}`} description="文章归档">
   <article class="article">
     <div class="article-inner">
       <header class="article-header"><h1 class="article-title">归档</h1></header>
       <div class="hr-line"></div>
-      <ul class="archive-list">
-        {posts.map((post) => (
-          <li><time>{post.data.date?.toLocaleDateString('zh-CN')}</time><a href={withBase(getPostPath(post, postPathMap))}>{post.data.title}</a></li>
-        ))}
-      </ul>
+      {years.map((year) => {
+        const list = postsByYear.get(year)!;
+        return (
+          <section class="archive-section">
+            <h2 class="archive-year-eyebrow">{year}<span class="archive-year-count">{list.length} POSTS</span></h2>
+            <ul class="archive-list">
+              {list.map((post) => (
+                <li>
+                  <time>{post.data.date?.toLocaleDateString('zh-CN')}</time>
+                  <a href={withBase(getPostPath(post, postPathMap))}>{post.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </div>
   </article>
 </BaseLayout>

@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
+import '../styles/typography.css';
 import Sidebar from '../components/Sidebar.astro';
 import { siteConfig } from '../data/site';
 import { withBase } from '../utils/paths';
@@ -31,7 +32,14 @@ const bodyStyle = globalBackground.enable
         <nav class="nav-inner" aria-label="站点导航">
           <a class="site-name" href={withBase('/')}>{siteConfig.title}</a>
           <div class="main-nav">
-            {siteConfig.nav.map((item) => <a class="main-nav-link" href={withBase(item.href)}>{item.label}</a>)}
+            {siteConfig.nav.map((item) => {
+              const resolved = item.href === '/' ? '/' : item.href.replace(/\/$/, '') + '/';
+              return (
+                <a class="main-nav-link" href={withBase(item.href)} aria-current={Astro.url.pathname === resolved ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              );
+            })}
           </div>
           <div class="nav-controls">
             {searchConfig.enable && (
@@ -245,13 +253,18 @@ const bodyStyle = globalBackground.enable
             const btn = document.createElement('button');
             btn.className = 'copy-btn';
             btn.textContent = '复制';
+            btn.setAttribute('aria-label', '复制代码');
+            btn.innerHTML = '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30 30h40v40M30 30V20h40v10M30 70h40v10H30z"/></svg>';
             btn.addEventListener('click', () => {
               const code = pre.querySelector('code');
               const text = code ? code.textContent : pre.textContent;
               navigator.clipboard.writeText(text).then(() => {
-                btn.textContent = '已复制';
                 btn.classList.add('copied');
-                setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+                btn.innerHTML = '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 52l18 18 38-44"/></svg>';
+                setTimeout(() => {
+                  btn.classList.remove('copied');
+                  btn.innerHTML = '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30 30h40v40M30 30V20h40v10M30 70h40v10H30z"/></svg>';
+                }, 2000);
               }).catch(() => {});
             });
             pre.appendChild(btn);
