@@ -26,6 +26,10 @@ const { posts, pageType, post, headings = [], showToc = false } = Astro.props;
 const recent = posts.slice(0, theme.aside?.card_recent_post?.limit || 5);
 const tocSimple = theme.toc?.style_simple;
 const isPost = pageType === "post";
+const authorCardBackground = theme.aside?.card_author?.background || "";
+const authorCardStyle = authorCardBackground
+  ? `--anheyu-author-card-bg-image: url("${String(authorCardBackground).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}")`
+  : undefined;
 ---
 
 <div id="aside-content" class="aside-content">
@@ -37,7 +41,7 @@ const isPost = pageType === "post";
     ) : (
       <>
         {theme.aside?.card_author?.enable && (
-          <div class="card-widget card-info">
+          <div class="card-widget card-info" style={authorCardStyle}>
             <div class="card-content">
               {theme.author_status?.enable && (
                 <div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()" />
