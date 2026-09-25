@@ -139,12 +139,14 @@ div#category,
   text-align: center;
 }
 
-div#bannerGroup {
-  width: calc(50% - 0.75rem);
-}
+@media screen and (min-width: {{layout.breakpoint_home_grid}}) {
+  div#bannerGroup {
+    width: calc(50% - 0.75rem);
+  }
 
-.topGroup {
-  width: calc(50% + 0.75rem);
+  .topGroup {
+    width: calc(50% + 0.75rem);
+  }
 }
 
 .topGroup .todayCard {
@@ -581,6 +583,15 @@ div#bannerGroup {
   border-collapse: collapse;
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--anzhiyu-card-border) 70%, transparent);
+}
+
+@media screen and (max-width: {{layout.breakpoint_mobile}}) {
+  #article-container table {
+    display: block !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
 }
 
 #article-container > table thead,
@@ -1125,7 +1136,9 @@ body.has-splash #page-header #nav {
   place-items: center;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 !important;
   padding: 0 1.5rem;
   box-sizing: border-box;
@@ -1217,6 +1230,12 @@ body.has-splash #page-header #nav {
   border: 1px solid color-mix(in srgb, var(--anzhiyu-card-border) 70%, transparent);
   backdrop-filter: blur({{background.card_blur}}) saturate({{background.card_saturate}});
   -webkit-backdrop-filter: blur({{background.card_blur}}) saturate({{background.card_saturate}});
+}
+
+@media screen and (max-width: {{layout.breakpoint_mobile}}) {
+  #post-comment {
+    padding: 1rem 0.9rem 0.75rem;
+  }
 }
 
 #post-comment .comment-head {
@@ -1788,6 +1807,10 @@ body.has-splash #page-header #nav {
   background-repeat: no-repeat;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+}
+
+#aside-content > .card-widget.card-info::before {
+  display: none !important;
 }
 
 #aside-content > .card-widget.card-info > .card-content {

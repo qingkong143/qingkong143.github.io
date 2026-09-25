@@ -755,6 +755,9 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
         const currentActive = $tocLink[currentIndex];
+        if (!currentActive) {
+          return;
+        }
         currentActive.classList.add("active");
 
         setTimeout(() => {

@@ -68,13 +68,29 @@ const lang = site.language || "zh-CN";
               document.head.appendChild(script);
             });
 
+          let initPromise;
           const initTwikoo = () => {
             const el = document.getElementById("twikoo");
             if (!el || el.dataset.initialized === "true") return;
-            loadTwikoo()
+            if (initPromise) return;
+            initPromise = loadTwikoo()
               .then(() => {
-                if (!window.twikoo || !document.body.contains(el)) return;
-                window.twikoo.init({
+                if (!window.twikoo || !document.body.contains(el)) {
+                  throw new Error("Twikoo 客户端脚本加载后未找到 window.twikoo");
+                }
+                const twikoo = window.twikoo;
+                const init =
+                  typeof twikoo === "function"
+                    ? twikoo
+                    : typeof twikoo.init === "function"
+                      ? twikoo.init.bind(twikoo)
+                      : typeof twikoo.default === "function"
+                        ? twikoo.default
+                        : undefined;
+                if (!init) {
+                  throw new Error("当前 Twikoo 客户端没有导出 init 方法");
+                }
+                init({
                   envId,
                   el: "#twikoo",
                   lang,
@@ -83,15 +99,22 @@ const lang = site.language || "zh-CN";
                 el.dataset.initialized = "true";
               })
               .catch((error) => {
+                initPromise = undefined;
                 console.error("Twikoo 初始化失败，请检查 comments.use、twikoo.envId 以及评论服务端配置。", error);
               });
           };
 
-          if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", initTwikoo, { once: true });
-          } else {
-            initTwikoo();
-          }
+          const initWhenReady = () => {
+            if (document.readyState === "loading") {
+              document.addEventListener("DOMContentLoaded", initTwikoo, { once: true });
+            } else {
+              initTwikoo();
+            }
+          };
+
+          initWhenReady();
+          window.addEventListener("pageshow", initTwikoo);
+          document.addEventListener("astro:page-load", initTwikoo);
         })();
       </script>
     </section>

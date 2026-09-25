@@ -28,7 +28,7 @@ const tocSimple = theme.toc?.style_simple;
 const isPost = pageType === "post";
 const authorCardBackground = theme.aside?.card_author?.background || "";
 const authorCardStyle = authorCardBackground
-  ? `--anheyu-author-card-bg-image: url("${String(authorCardBackground).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}")`
+  ? `--anheyu-author-card-bg-image: url('${String(authorCardBackground).replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`
   : undefined;
 ---
 
