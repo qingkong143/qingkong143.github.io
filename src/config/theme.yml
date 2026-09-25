@@ -315,6 +315,8 @@ aside:
   card_author:
     enable: true
     name_link: /
+    # 作者卡片背景图，支持本地路径或远程 URL；留空时使用 background.image 的第一张
+    background: https://img.318670.xyz/20260925120746383.png
   card_announcement:
     enable: false
     content: 欢迎来看我的博客鸭~

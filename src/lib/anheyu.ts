@@ -3,6 +3,7 @@ import { theme } from "./config";
 const layout = theme.layout ?? {};
 const home = theme.home_top ?? {};
 const bg = theme.background ?? {};
+const authorCard = theme.aside?.card_author ?? {};
 
 function num(value: unknown, fallback: number): number {
   const n = Number(value);
@@ -26,6 +27,7 @@ function cssUrl(src: string): string {
 export const anheyu = {
   bgImages: backgroundImages(),
   bgImage: backgroundImages()[0] || "",
+  authorCardBgImage: str(authorCard.background, backgroundImages()[0] || ""),
   cardOpacity: num(bg.card_opacity, 0.82),
   blur: str(bg.blur, "0px"),
   moreLink: str(home.more_link, "/archives/"),
@@ -39,10 +41,16 @@ export const anheyu = {
 };
 
 export function anheyuRootVars(): string | undefined {
-  if (!bg.enable || !anheyu.bgImage) return undefined;
-  return [
-    `--anheyu-bg-image: ${cssUrl(anheyu.bgImage)}`,
-    `--anheyu-card-opacity: ${anheyu.cardOpacity}`,
-    `--anheyu-bg-blur: ${anheyu.blur}`,
-  ].join("; ");
+  const vars: string[] = [];
+  if (bg.enable && anheyu.bgImage) {
+    vars.push(
+      `--anheyu-bg-image: ${cssUrl(anheyu.bgImage)}`,
+      `--anheyu-card-opacity: ${anheyu.cardOpacity}`,
+      `--anheyu-bg-blur: ${anheyu.blur}`,
+    );
+  }
+  if (anheyu.authorCardBgImage) {
+    vars.push(`--anheyu-author-card-bg-image: ${cssUrl(anheyu.authorCardBgImage)}`);
+  }
+  return vars.length ? vars.join("; ") : undefined;
 }
