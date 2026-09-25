@@ -1774,25 +1774,32 @@ body.has-splash #page-header #nav {
 
 #aside-content > .card-widget.card-info {
   position: relative;
+  isolation: isolate;
   padding: 0 !important;
   overflow: hidden;
+  background: transparent !important;
 }
 
 #aside-content > .card-widget.card-info::after {
   content: "";
   position: absolute;
   inset: -18px;
-  z-index: 0;
-  background-image: var(--anheyu-bg-image);
+  z-index: -1;
+  background-image: var(--anheyu-bg-image, url("/img/background.jpg"));
   background-position: center;
   background-size: cover;
   filter: blur(14px);
-  opacity: 0.62;
+  opacity: 0.82;
   transform: translateZ(0);
 }
 
 #aside-content > .card-widget.card-info::before {
-  display: none !important;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block !important;
+  background: color-mix(in srgb, var(--anzhiyu-card-bg) 28%, transparent);
 }
 
 #aside-content > .card-widget.card-info > .card-content {
