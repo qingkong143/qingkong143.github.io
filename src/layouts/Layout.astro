@@ -83,6 +83,7 @@ const splashOn = isHome && theme.splash?.enable;
     <div id="web_bg"></div>
     <div id="an_music_bg"></div>
     {theme.preloader?.enable && <Loading />}
+    {splashOn && <Splash />}
     {
       is404 ? (
         <slot />
@@ -97,7 +98,6 @@ const splashOn = isHome && theme.splash?.enable;
             html={html}
           />
           <main id="blog-container">
-            {splashOn && <Splash />}
             {isHome && <HomeTop posts={posts} />}
             <div id="content-inner" class={`layout ${hideAsideClass}`.trim()}>
               <slot />

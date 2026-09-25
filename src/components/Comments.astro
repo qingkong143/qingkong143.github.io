@@ -9,7 +9,7 @@ const use = String(theme.comments?.use || "")
   .filter(Boolean);
 const twikooOn = use.includes("Twikoo") && Boolean(theme.twikoo?.envId);
 const title = theme.comments?.title || t("comment");
-const envId = theme.twikoo?.envId || "";
+const envId = String(theme.twikoo?.envId || "").replace(/\/+$/, "");
 const region = theme.twikoo?.region || "";
 const src = theme.twikoo?.src || pluginUrl("twikoo");
 const integrity = theme.twikoo?.integrity || "";
@@ -82,7 +82,9 @@ const lang = site.language || "zh-CN";
                 });
                 el.dataset.initialized = "true";
               })
-              .catch(() => {});
+              .catch((error) => {
+                console.error("Twikoo 初始化失败，请检查 comments.use、twikoo.envId 以及评论服务端配置。", error);
+              });
           };
 
           if (document.readyState === "loading") {
