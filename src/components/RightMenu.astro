@@ -1,0 +1,126 @@
+---
+import { theme } from "../lib/config";
+---
+
+<div id="rightMenu">
+  <div class="rightMenu-group rightMenu-small">
+    <div class="rightMenu-item" id="menu-backward">
+      <i class="anzhiyufont anzhiyu-icon-arrow-left" />
+    </div>
+    <div class="rightMenu-item" id="menu-forward">
+      <i class="anzhiyufont anzhiyu-icon-arrow-right" />
+    </div>
+    <div class="rightMenu-item" id="menu-refresh">
+      <i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;" />
+    </div>
+    <div class="rightMenu-item" id="menu-top">
+      <i class="anzhiyufont anzhiyu-icon-arrow-up" />
+    </div>
+  </div>
+  <div class="rightMenu-group rightMenu-line rightMenuPlugin">
+    <div class="rightMenu-item" id="menu-copytext">
+      <i class="anzhiyufont anzhiyu-icon-copy" />
+      <span>复制选中文本</span>
+    </div>
+    <div class="rightMenu-item" id="menu-pastetext">
+      <i class="anzhiyufont anzhiyu-icon-paste" />
+      <span>粘贴文本</span>
+    </div>
+    <a class="rightMenu-item" id="menu-commenttext">
+      <i class="anzhiyufont anzhiyu-icon-comment-medical" />
+      <span>引用到评论</span>
+    </a>
+    <div class="rightMenu-item" id="menu-newwindow">
+      <i class="anzhiyufont anzhiyu-icon-window-restore" />
+      <span>新窗口打开</span>
+    </div>
+    <div class="rightMenu-item" id="menu-copylink">
+      <i class="anzhiyufont anzhiyu-icon-link" />
+      <span>复制链接地址</span>
+    </div>
+    <div class="rightMenu-item" id="menu-copyimg">
+      <i class="anzhiyufont anzhiyu-icon-images" />
+      <span>复制此图片</span>
+    </div>
+    <div class="rightMenu-item" id="menu-downloadimg">
+      <i class="anzhiyufont anzhiyu-icon-download" />
+      <span>下载此图片</span>
+    </div>
+    <div class="rightMenu-item" id="menu-newwindowimg">
+      <i class="anzhiyufont anzhiyu-icon-window-restore" />
+      <span>新窗口打开图片</span>
+    </div>
+    <div class="rightMenu-item" id="menu-search">
+      <i class="anzhiyufont anzhiyu-icon-magnifying-glass" />
+      <span>站内搜索</span>
+    </div>
+    <div class="rightMenu-item" id="menu-searchBaidu">
+      <i class="anzhiyufont anzhiyu-icon-magnifying-glass" />
+      <span>百度搜索</span>
+    </div>
+    {
+      theme.nav_music?.enable && (
+        <>
+          <div class="rightMenu-item" id="menu-music-toggle">
+            <i class="anzhiyufont anzhiyu-icon-play" />
+            <span>播放音乐</span>
+          </div>
+          <div class="rightMenu-item" id="menu-music-back">
+            <i class="anzhiyufont anzhiyu-icon-backward" />
+            <span>切换到上一首</span>
+          </div>
+          <div class="rightMenu-item" id="menu-music-forward">
+            <i class="anzhiyufont anzhiyu-icon-forward" />
+            <span>切换到下一首</span>
+          </div>
+          <div
+            class="rightMenu-item"
+            id="menu-music-playlist"
+            style="display:none"
+            onclick={theme.nav_music.all_playlist ? `window.open(${JSON.stringify(theme.nav_music.all_playlist)}, "_blank")` : undefined}
+          >
+            <i class="anzhiyufont anzhiyu-icon-radio" />
+            <span>查看所有歌曲</span>
+          </div>
+          <div class="rightMenu-item" id="menu-music-copyMusicName">
+            <i class="anzhiyufont anzhiyu-icon-copy" />
+            <span>复制歌名</span>
+          </div>
+        </>
+      )
+    }
+  </div>
+  <div class="rightMenu-group rightMenu-line rightMenuOther">
+    <a class="rightMenu-item menu-link" id="menu-randomPost">
+      <i class="anzhiyufont anzhiyu-icon-shuffle" />
+      <span>随便逛逛</span>
+    </a>
+    <a class="rightMenu-item menu-link" href="/categories/">
+      <i class="anzhiyufont anzhiyu-icon-cube" />
+      <span>博客分类</span>
+    </a>
+    <a class="rightMenu-item menu-link" href="/tags/">
+      <i class="anzhiyufont anzhiyu-icon-tags" />
+      <span>文章标签</span>
+    </a>
+  </div>
+  <div class="rightMenu-group rightMenu-line rightMenuOther">
+    <a class="rightMenu-item" id="menu-copy" href="javascript:void(0);">
+      <i class="anzhiyufont anzhiyu-icon-copy" />
+      <span>复制地址</span>
+    </a>
+    <a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);">
+      <i class="anzhiyufont anzhiyu-icon-circle-half-stroke" />
+      <span class="menu-darkmode-text">深色模式</span>
+    </a>
+    {
+      theme.translate?.enable && (
+        <a class="rightMenu-item" id="menu-translate" href="javascript:void(0);">
+          <i class="anzhiyufont anzhiyu-icon-language" />
+          <span>{theme.translate.rightMenuMsgDefault}</span>
+        </a>
+      )
+    }
+  </div>
+</div>
+<div id="rightmenu-mask"></div>

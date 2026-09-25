@@ -1,0 +1,45 @@
+---
+import { theme } from "../lib/config";
+import { assets } from "../lib/cdn";
+
+const avatar = theme.preloader?.avatar || theme.avatar?.img;
+const source = theme.preloader?.source ?? 3;
+---
+
+{
+  (source === 1 || source === 3) && (
+    <div id="loading-box" onclick='document.getElementById("loading-box").classList.add("loaded")'>
+      <div class="loading-bg">
+        <img class="loading-img nolazyload" alt="加载头像" src={avatar} />
+        <div class="loading-image-dot" />
+      </div>
+    </div>
+  )
+}
+{
+  (source === 2 || source === 3) && (
+    <>
+      <link rel="stylesheet" href={theme.preloader?.pace_css_url || assets.pace_default_css} />
+      <script is:inline async src={assets.pace_js} data-pace-options='{ "restartOnRequestAfter":false,"eventLag":false}' />
+    </>
+  )
+}
+
+<script is:inline>
+  const preloader = {
+    endLoading: () => {
+      const box = document.getElementById("loading-box");
+      if (box) box.classList.add("loaded");
+    },
+    initLoading: () => {
+      const box = document.getElementById("loading-box");
+      if (box) box.classList.remove("loaded");
+    },
+  };
+  window.addEventListener("load", () => {
+    preloader.endLoading();
+  });
+  setTimeout(function () {
+    preloader.endLoading();
+  }, 10000);
+</script>

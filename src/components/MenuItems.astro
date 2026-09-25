@@ -1,0 +1,45 @@
+---
+import { theme } from "../lib/config";
+import { parseMenu } from "../lib/menu";
+import Icon from "./Icon.astro";
+
+const items = parseMenu(theme.menu);
+---
+
+<div class="menus_items">
+  {
+    items.map((item) =>
+      item.type === "link" ? (
+        <div class="menus_item">
+          <a class="site-page faa-parent animated-hover" href={item.href}>
+            {item.icon && (
+              <Icon icon={item.icon} anima={item.anima} style="font-size: 0.9em;" />
+            )}
+            <span> {item.label}</span>
+          </a>
+        </div>
+      ) : (
+        <div class="menus_item">
+          <a class="site-page" href="javascript:void(0);">
+            {item.icon && (
+              <Icon icon={item.icon} anima={item.anima} style="font-size: 0.9em;" />
+            )}
+            <span> {item.label}</span>
+          </a>
+          <ul class="menus_item_child">
+            {item.children.map((child) => (
+              <li>
+                <a class="site-page child faa-parent animated-hover" href={child.href}>
+                  {child.icon && (
+                    <Icon icon={child.icon} anima={child.anima} style="font-size: 0.9em;" />
+                  )}
+                  <span> {child.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ),
+    )
+  }
+</div>

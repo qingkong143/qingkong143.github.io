@@ -1,0 +1,42 @@
+---
+import { archiveMonths, monthHref, monthLabel, type Post } from "../lib/posts";
+import { t } from "../lib/i18n";
+
+interface Props {
+  posts: Post[];
+  limit?: number;
+  headline?: boolean;
+}
+const { posts, limit = 8, headline = true } = Astro.props;
+const months = archiveMonths(posts, limit);
+const all = archiveMonths(posts, 0);
+---
+
+{
+  headline && (
+    <div class="item-headline">
+      <i class="anzhiyufont anzhiyu-icon-archive" />
+      <span>{t("aside.card_archives")}</span>
+      {all.length > months.length && (
+        <a class="card-more-btn" href="/archives/" title={t("aside.more_button")}>
+          <i class="anzhiyufont anzhiyu-icon-angle-right" />
+        </a>
+      )}
+    </div>
+  )
+}
+<ul class="card-archive-list">
+  {
+    months.map((item) => (
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href={monthHref(item.year, item.month)}>
+          <span class="card-archive-list-date">{monthLabel(item.year, item.month)}</span>
+          <div class="card-archive-list-count-group">
+            <span class="card-archive-list-count">{item.count}</span>
+            <span>篇</span>
+          </div>
+        </a>
+      </li>
+    ))
+  }
+</ul>

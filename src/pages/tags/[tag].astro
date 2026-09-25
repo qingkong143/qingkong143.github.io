@@ -1,0 +1,34 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ArticleSort from "../../components/ArticleSort.astro";
+import { getAllTags, getPosts, tagPath } from "../../lib/posts";
+import { t } from "../../lib/i18n";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getAllTags(posts).map(([tag]) => ({ params: { tag } }));
+}
+
+const posts = await getPosts();
+const tag = decodeURIComponent(Astro.params.tag as string);
+const tags = getAllTags(posts);
+const filtered = posts.filter((p) => p.data.tags.includes(tag));
+---
+
+<Layout pageType="page" pageTitle={`${t("page.tag")}: ${tag}`} posts={posts}>
+  <div id="tag">
+    <div id="tag-page-tags">
+      {
+        tags.map(([name, list]) => (
+          <a href={tagPath(name)} id={tagPath(name)} class={name === tag ? "select" : undefined}>
+            <span class="tags-punctuation">#</span>
+            {name}
+            <span class="tagsPageCount">{list.length}</span>
+          </a>
+        ))
+      }
+    </div>
+    <div class="article-sort-title">{tag}</div>
+    <ArticleSort posts={filtered} />
+  </div>
+</Layout>

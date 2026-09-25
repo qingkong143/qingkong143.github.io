@@ -1,0 +1,27 @@
+---
+interface Props {
+  icon?: string;
+  anima?: string;
+  class?: string;
+  style?: string;
+}
+const { icon, anima = "faa-tada", class: className = "", style } = Astro.props;
+---
+
+{
+  icon?.startsWith("fa") && (
+    <i class={`${icon} ${anima} ${className}`.trim()} style={style} />
+  )
+}
+{
+  icon?.startsWith("icon") && (
+    <svg class={`icon ${anima} ${className}`.trim()} aria-hidden="true" style={style}>
+      <use href={`#${icon}`} />
+    </svg>
+  )
+}
+{
+  icon?.startsWith("anzhiyu") && (
+    <i class={`anzhiyufont ${icon} ${anima} ${className}`.trim()} style={style} />
+  )
+}

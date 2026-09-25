@@ -1,0 +1,33 @@
+---
+import { getAllCategories, categoryPath, type Post } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+  current?: string;
+}
+const { posts, current } = Astro.props;
+const cats = getAllCategories(posts);
+---
+
+<div id="categoryBar">
+  <div id="category-bar" class="category-bar">
+    <div id="catalog-bar">
+      <div id="catalog-list">
+        <div class="catalog-list-item" id="首页">
+          <a href="/">首页</a>
+        </div>
+        {
+          cats.map(([name]) => (
+            <div class={`catalog-list-item ${current === name ? "on" : ""}`} id={categoryPath(name)}>
+              <a href={categoryPath(name)}>{name}</a>
+            </div>
+          ))
+        }
+      </div>
+      <div class="category-bar-next" id="category-bar-next" onclick="anzhiyu.scrollCategoryBarToRight()">
+        <i class="anzhiyufont anzhiyu-icon-angle-double-right" />
+      </div>
+      <a class="catalog-more" href="/categories/">更多</a>
+    </div>
+  </div>
+</div>

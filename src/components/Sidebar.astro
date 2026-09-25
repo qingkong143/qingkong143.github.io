@@ -1,0 +1,71 @@
+---
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import MenuItems from "./MenuItems.astro";
+import TagCloud from "./TagCloud.astro";
+import type { Post } from "../lib/posts";
+import { getAllCategories, getAllTags } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+const tags = getAllTags(posts);
+const cats = getAllCategories(posts);
+---
+
+<div id="sidebar">
+  <div id="menu-mask"></div>
+  <div id="sidebar-menus">
+    {
+      theme.sidebar?.site_data && (
+        <div class="sidebar-site-data site-data is-center">
+          {theme.sidebar.site_data.archive && (
+            <a href="/archives/" title="archive">
+              <div class="headline">{t("aside.articles")}</div>
+              <div class="length-num">{posts.length}</div>
+            </a>
+          )}
+          {theme.sidebar.site_data.tag && (
+            <a href="/tags/" title="tag">
+              <div class="headline">{t("aside.tags")}</div>
+              <div class="length-num">{tags.length}</div>
+            </a>
+          )}
+          {theme.sidebar.site_data.category && (
+            <a href="/categories/" title="category">
+              <div class="headline">{t("aside.categories")}</div>
+              <div class="length-num">{cats.length}</div>
+            </a>
+          )}
+        </div>
+      )
+    }
+    {
+      theme.sidebar?.display_mode && (
+        <>
+          <span class="sidebar-menu-item-title">{t("aside.function")}</span>
+          <div class="sidebar-menu-item">
+            <a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title={t("aside.display_mode")}>
+              <i class="anzhiyufont anzhiyu-icon-circle-half-stroke" />
+              <span>{t("aside.display_mode")}</span>
+            </a>
+          </div>
+        </>
+      )
+    }
+    {theme.sidebar?.menus_items && <MenuItems />}
+    {
+      theme.sidebar?.tags_cloud && theme.aside?.card_tags?.enable && tags.length > 0 && (
+        <>
+          <span class="sidebar-menu-item-title">标签</span>
+          <div class="card-tags">
+            <div class="item-headline" />
+            <TagCloud posts={posts} limit={theme.aside.card_tags.limit || 40} />
+          </div>
+          <hr />
+        </>
+      )
+    }
+  </div>
+</div>

@@ -1,0 +1,130 @@
+---
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Aside from "../components/Aside.astro";
+import Rightside from "../components/Rightside.astro";
+import RightMenu from "../components/RightMenu.astro";
+import LocalSearch from "../components/LocalSearch.astro";
+import Loading from "../components/Loading.astro";
+import AdditionalJS from "../components/AdditionalJS.astro";
+import HomeTop from "../components/HomeTop.astro";
+import Splash from "../components/Splash.astro";
+import Console from "../components/Console.astro";
+import NavMusic from "../components/NavMusic.astro";
+import { site, theme } from "../lib/config";
+import { anheyuRootVars } from "../lib/anheyu";
+import type { Post, Heading } from "../lib/posts";
+
+interface Props {
+  pageType?: "home" | "post" | "page" | "404";
+  pageTitle?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+  posts: Post[];
+  post?: Post;
+  headings?: Heading[];
+  html?: string;
+  showToc?: boolean;
+  hideAside?: boolean;
+  is404?: boolean;
+}
+
+const {
+  pageType = "page",
+  pageTitle = "",
+  description,
+  keywords,
+  image,
+  posts,
+  post,
+  headings = [],
+  html = "",
+  showToc = false,
+  hideAside = false,
+  is404 = false,
+} = Astro.props;
+
+const isPost = pageType === "post";
+const isHome = pageType === "home";
+const wrapClass = isPost ? "post" : "page";
+const asideOff = !theme.aside?.enable || hideAside;
+const hideAsideClass = asideOff || (theme.aside?.hide ? true : false) ? "hide-aside" : "";
+const htmlClass = theme.aside?.enable && theme.aside.hide ? "hide-aside" : "";
+const pageTypeValue = isPost ? "post" : pageType === "home" ? "anzhiyu" : pageType;
+const splashOn = isHome && theme.splash?.enable;
+---
+
+<!doctype html>
+<html
+  lang={site.language || "zh-CN"}
+  data-theme={theme.display_mode || "light"}
+  class={htmlClass}
+  style={anheyuRootVars()}
+>
+  <head>
+    <Head
+      title={pageTitle}
+      description={description}
+      keywords={keywords}
+      image={image}
+      isPost={isPost}
+      isHome={isHome}
+      html={html}
+      isToc={showToc}
+      postAI={post?.data.ai || ""}
+      postUpdate={post ? (post.data.updated || post.data.date).toISOString() : ""}
+      postMainColor={post?.data.main_color || ""}
+    />
+  </head>
+  <body data-type={pageTypeValue} class={splashOn ? "has-splash" : undefined}>
+    <div id="web_bg"></div>
+    <div id="an_music_bg"></div>
+    {theme.preloader?.enable && <Loading />}
+    {
+      is404 ? (
+        <slot />
+      ) : (
+        <div id="body-wrap" class={wrapClass}>
+          <Header
+            pageType={pageType}
+            pageTitle={pageTitle}
+            posts={posts}
+            post={post}
+            headings={headings}
+            html={html}
+          />
+          <main id="blog-container">
+            {splashOn && <Splash />}
+            {isHome && <HomeTop posts={posts} />}
+            <div id="content-inner" class={`layout ${hideAsideClass}`.trim()}>
+              <slot />
+              {theme.aside?.enable && !hideAside && (
+                <Aside
+                  posts={posts}
+                  pageType={pageType}
+                  post={post}
+                  headings={headings}
+                  showToc={showToc}
+                />
+              )}
+            </div>
+          </main>
+          <footer id="footer">
+            <Footer />
+          </footer>
+        </div>
+      )
+    }
+    {theme.centerConsole?.enable && <Console posts={posts} />}
+    {theme.nav_music?.enable && <NavMusic />}
+    {theme.greetingBox?.enable && <div id="greetingBox" />}
+    <Sidebar posts={posts} />
+    <Rightside isPost={isPost} showToc={showToc} />
+    {theme.local_search?.enable && <LocalSearch />}
+    <RightMenu />
+    <AdditionalJS isHome={isHome} pageType={pageTypeValue} />
+  </body>
+</html>

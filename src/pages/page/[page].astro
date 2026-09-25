@@ -1,0 +1,31 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+import Pagination from "../../components/Pagination.astro";
+import { getPosts, paginate } from "../../lib/posts";
+import { site } from "../../lib/config";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const totalPages = Math.max(1, Math.ceil(posts.length / site.per_page));
+  return Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+  })).filter((p) => p.params.page !== "1");
+}
+
+const posts = await getPosts();
+const current = Number(Astro.params.page);
+const { items, page, totalPages } = paginate(posts, current);
+const newestId = posts[0]?.id;
+---
+
+<Layout pageType="home" posts={posts}>
+  <div id="recent-posts" class="recent-posts">
+    {
+      items.map((post, index) => (
+        <PostCard post={post} index={index} html={post.body || ""} newest={post.id === newestId} />
+      ))
+    }
+    <Pagination page={page} totalPages={totalPages} base="/" hash="#content-inner" />
+  </div>
+</Layout>

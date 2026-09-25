@@ -1,0 +1,111 @@
+---
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import {
+  dateXml,
+  excerptFromHtml,
+  formatDate,
+  fullDate,
+  getCover,
+  postPermalink,
+  tagPath,
+  type Post,
+} from "../lib/posts";
+
+interface Props {
+  post: Post;
+  index: number;
+  html?: string;
+  newest?: boolean;
+}
+const { post, index, html = "", newest = false } = Astro.props;
+const href = postPermalink(post);
+const title = post.data.title || t("no_title");
+const position = theme.cover?.position || "left";
+const leftOrRight =
+  position === "both" ? (index % 2 === 0 ? "left" : "right") : position === "left" ? "left" : "right";
+const cover = getCover(post);
+const noCover = !theme.cover?.index_enable;
+const method = theme.index_post_content?.method ?? 3;
+const length = theme.index_post_content?.length ?? 500;
+let excerpt = "";
+if (method === 1) excerpt = post.data.description || "";
+else if (method === 2) excerpt = post.data.description || excerptFromHtml(html, length);
+else if (method !== false) excerpt = excerptFromHtml(html, length);
+---
+
+<div class={index === 0 ? "recent-post-item lastestpost-item" : "recent-post-item"}>
+  {
+    !noCover && (
+      <div class={`post_cover ${leftOrRight}`}>
+        <a href={href} title={title}>
+          <img
+            class="post_bg"
+            src={cover}
+            onerror={`this.onerror=null;this.src='${theme.error_img?.post_page || "/img/404.jpg"}'`}
+            alt={title}
+          />
+        </a>
+      </div>
+    )
+  }
+  <div class={`recent-post-info ${noCover ? "no-cover" : ""}`}>
+    <div class="recent-post-info-top">
+      <div class="recent-post-info-top-tips">
+        {
+          (post.data.sticky ?? 0) > 0 && (
+            <span class="article-meta sticky-warp">
+              <i class="anzhiyufont anzhiyu-icon-thumbtack sticky" />
+              <span class="sticky">{t("sticky")}</span>
+            </span>
+          )
+        }
+        {
+          theme.post_meta?.page?.categories &&
+            post.data.categories.map((name) => (
+              <div class="article-categories-original">{name}</div>
+            ))
+        }
+        {newest && <span class="newPost">{t("post.new")}</span>}
+      </div>
+      <a class="article-title" href={href} title={title}>
+        {title}
+      </a>
+    </div>
+    <div class="article-meta-wrap">
+      {
+        theme.post_meta?.page?.date_type && (
+          <span class="post-meta-date">
+            <i
+              class="anzhiyufont anzhiyu-icon-calendar-alt"
+              style={theme.post_meta.page.date_format === "simple" ? "display:none" : undefined}
+            />
+            <span class="article-meta-label">{t("post.created")}</span>
+            <time
+              class="post-meta-date-created"
+              datetime={dateXml(post.data.date)}
+              title={`${t("post.created")} ${fullDate(post.data.date)}`}
+            >
+              {formatDate(post.data.date)}
+            </time>
+          </span>
+        )
+      }
+      {
+        theme.post_meta?.page?.tags && post.data.tags.length > 0 && (
+          <span class="article-meta tags">
+            {post.data.tags.map((name) => (
+              <a href={tagPath(name)} class="article-meta__tags">
+                <span>
+                  <i class="anzhiyufont anzhiyu-icon-hashtag" />
+                  {name}
+                </span>
+              </a>
+            ))}
+          </span>
+        )
+      }
+    </div>
+    {excerpt && <div class="content">{excerpt}</div>}
+  </div>
+</div>

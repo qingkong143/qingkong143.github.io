@@ -1,0 +1,173 @@
+---
+import { site, theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import Social from "./Social.astro";
+import TagCloud from "./TagCloud.astro";
+import ArchiveList from "./ArchiveList.astro";
+import Toc from "./Toc.astro";
+import {
+  dateXml,
+  formatDate,
+  fullDate,
+  getCover,
+  postPermalink,
+  type Post,
+  type Heading,
+} from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+  pageType: "home" | "post" | "page" | "404";
+  post?: Post;
+  headings?: Heading[];
+  showToc?: boolean;
+}
+const { posts, pageType, post, headings = [], showToc = false } = Astro.props;
+const recent = posts.slice(0, theme.aside?.card_recent_post?.limit || 5);
+const tocSimple = theme.toc?.style_simple;
+const isPost = pageType === "post";
+---
+
+<div id="aside-content" class="aside-content">
+  {
+    isPost && showToc && tocSimple ? (
+      <div class="sticky_layout">
+        <Toc headings={headings} />
+      </div>
+    ) : (
+      <>
+        {theme.aside?.card_author?.enable && (
+          <div class="card-widget card-info">
+            <div class="card-content">
+              {theme.author_status?.enable && (
+                <div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()" />
+              )}
+              <div class="author-info-stage">
+                <div class="author-info-avatar">
+                  <img
+                    class="avatar-img"
+                    src={theme.avatar?.img || site.avatar}
+                    onerror={`this.onerror=null;this.src='${theme.error_img?.flink || "/img/friend_404.gif"}'`}
+                    alt="avatar"
+                  />
+                  {theme.author_status?.enable && theme.author_status.statusImg && (
+                    <div class="author-status">
+                      <img class="g-status" src={theme.author_status.statusImg} alt="status" />
+                    </div>
+                  )}
+                </div>
+                {site.subtitle && <div class="author-info__desc">{site.subtitle}</div>}
+              </div>
+              <div class="author-info__identity">
+                <a class="author-info__bottom-group-left" href={theme.aside.card_author.name_link || "/"}>
+                  <h1 class="author-info__name">{site.author}</h1>
+                </a>
+                <div class="card-info-social-icons">
+                  <Social />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {theme.aside?.card_announcement?.enable && (
+          <div class="card-widget card-announcement">
+            <div class="item-headline">
+              <i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake" />
+              <span>{t("aside.card_announcement")}</span>
+            </div>
+            <div class="announcement_content" set:html={theme.aside.card_announcement.content} />
+          </div>
+        )}
+        <div class="sticky_layout">
+          {showToc && <Toc headings={headings} />}
+          {isPost && theme.aside?.card_recent_post?.enable && (
+            <div class="card-widget card-recent-post">
+              <div class="item-headline">
+                <i class="anzhiyufont anzhiyu-icon-history" />
+                <span>{t("aside.card_recent_post")}</span>
+              </div>
+              <div class="aside-list">
+                {recent.map((article) => {
+                  const cover = getCover(article);
+                  const href = postPermalink(article);
+                  return (
+                    <div class="aside-list-item">
+                      {theme.cover?.aside_enable && (
+                        <a class="thumbnail" href={href} title={article.data.title}>
+                          <img
+                            src={cover}
+                            alt={article.data.title}
+                            onerror={`this.onerror=null;this.src='/img/loading.gif'`}
+                          />
+                        </a>
+                      )}
+                      <div class="content">
+                        <a class="title" href={href} title={article.data.title}>
+                          {article.data.title}
+                        </a>
+                        <time
+                          datetime={dateXml(article.data.date)}
+                          title={`${t("post.created")} ${fullDate(article.data.date)}`}
+                        >
+                          {formatDate(article.data.date)}
+                        </time>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {!isPost && (
+            <div class="card-widget">
+              {theme.aside?.card_tags?.enable && (
+                <div class="card-tags">
+                  <div class="item-headline">
+                    <i class="anzhiyufont anzhiyu-icon-tags" />
+                    <span>{t("aside.card_tags")}</span>
+                  </div>
+                  <TagCloud posts={posts} limit={theme.aside.card_tags.limit || 40} highlight={theme.aside.card_tags.highlightTags || []} />
+                </div>
+              )}
+              {theme.aside?.card_archives?.enable && (
+                <div class="card-archives">
+                  <ArchiveList posts={posts} limit={theme.aside.card_archives.limit || 8} />
+                </div>
+              )}
+              {theme.aside?.card_webinfo?.enable && (
+                <div class="card-webinfo">
+                  <div class="item-headline">
+                    <i class="anzhiyufont anzhiyu-icon-chart-line" />
+                    <span>{t("aside.card_webinfo.headline")}</span>
+                  </div>
+                  <div class="webinfo">
+                    {theme.aside.card_webinfo.post_count && (
+                      <div class="webinfo-item">
+                        <div class="webinfo-item-title">
+                          <i class="anzhiyufont anzhiyu-icon-file-lines" />
+                          <div class="item-name">{t("aside.card_webinfo.article_name")} :</div>
+                        </div>
+                        <div class="item-count">{posts.length}</div>
+                      </div>
+                    )}
+                    {theme.runtimeshow?.enable && (
+                      <div class="webinfo-item">
+                        <div class="webinfo-item-title">
+                          <i class="anzhiyufont anzhiyu-icon-stopwatch" />
+                          <div class="item-name">{t("aside.card_webinfo.runtime.name")} :</div>
+                        </div>
+                        <div class="item-count" id="runtimeshow" data-publishdate={new Date(theme.runtimeshow.publish_date).toISOString()}>
+                          <i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </>
+    )
+  }
+</div>

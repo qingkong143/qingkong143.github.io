@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PostCard from "../components/PostCard.astro";
+import Pagination from "../components/Pagination.astro";
+import { getPosts, paginate } from "../lib/posts";
+
+const posts = await getPosts();
+const { items, page, totalPages } = paginate(posts, 1);
+const newestId = posts[0]?.id;
+const htmlMap: Record<string, string> = {};
+for (const p of items) {
+  htmlMap[p.id] = (p.body || "").slice(0, 800);
+}
+---
+
+<Layout pageType="home" posts={posts}>
+  <div id="recent-posts" class="recent-posts">
+    {
+      items.map((post, index) => (
+        <PostCard post={post} index={index} html={htmlMap[post.id]} newest={post.id === newestId} />
+      ))
+    }
+    <Pagination page={page} totalPages={totalPages} base="/" hash="#content-inner" />
+  </div>
+</Layout>

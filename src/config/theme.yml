@@ -1,0 +1,520 @@
+# 顶部导航。格式：文案: 路径 || 图标 class
+# 子项会收进下拉。未实现的页面先注释。
+menu:
+  文章:
+    隧道: /archives/ || anzhiyu-icon-box-archive
+    分类: /categories/ || anzhiyu-icon-shapes
+    标签: /tags/ || anzhiyu-icon-tags
+  关于:
+    关于本人: /about/ || anzhiyu-icon-paper-plane
+    任务清单: /todo/ || anzhiyu-icon-lightbulb
+    追番: /bangumi/ || anzhiyu-icon-bilibili
+
+# 顶栏右侧「网页 / 项目」下拉。enable 关掉后只留搜索、随机文章等按钮。
+nav:
+  enable: false
+  travelling: false
+  menu:
+    - title: 网页
+      item:
+        - name: 博客
+          link: https://hexo.anheyu.com/
+          icon: /img/favicon.ico
+    - title: 项目
+      item:
+        - name: 安知鱼图床
+          link: https://image.anheyu.com/
+          icon: https://image.anheyu.com/favicon.ico
+
+# 代码块。highlight_theme 会进 Stylus：darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: light
+highlight_copy: true
+highlight_lang: true
+highlight_shrink: false
+highlight_height_limit: 330
+code_word_wrap: false
+
+# 复制选中文本后的版权提示
+copy:
+  enable: true
+  copyright:
+    enable: false
+    limit_count: 50
+
+# 作者卡社交图标。格式：名称: 链接 || 图标 class
+social:
+  Github: https://github.com/qingkong143 || anzhiyu-icon-github
+  Bilibili: https://space.bilibili.com/1983066952 || anzhiyu-icon-bilibili
+  Email: mailto:torch@318670.xyz || anzhiyu-icon-envelope
+
+# 作者卡问候条。点一下会在 skills 里轮换；statusImg 是头像右下角小图。
+author_status:
+  enable: true
+  statusImg: https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png
+  skills:
+    - 你好哇!
+    - 要开心呀~
+
+# 站内搜索。目前只接了本地搜索；另外两个开关只用来判断顶栏是否显示搜索按钮。
+algolia_search:
+  enable: false
+docsearch:
+  enable: false
+local_search:
+  enable: true
+  preload: true
+  CDN: /anzhiyu/local-search.json
+
+favicon: /favicon.ico
+
+avatar:
+  img: /img/avatar.webp
+  effect: false
+
+# 关掉后首页不再铺顶图
+disable_top_img: false
+# 首页顶图。false 表示不用单独的 index banner。
+index_img: false
+
+# 一图流：全站壁纸，卡片半透明透出背景。
+# image 可以是本地路径、远程 URL，或多条列表（每次打开随机一张）。
+# 尺寸和透明度由 scripts/generate-anheyu-css.mjs 写入 public/css/one-graph-flow.css
+background:
+  enable: true
+  image: 
+    - /img/background.jpg
+    - https://img.318670.xyz/20260924234456927.jpg
+    - https://img.318670.xyz/20260924234539993.png
+    - https://img.318670.xyz/20260924234619696.jpg
+    - https://img.318670.xyz/20260924234638989.jpg
+    - https://img.318670.xyz/20260924234702276.jpg
+    - https://img.318670.xyz/20260924234748387.jpg
+  # image:
+  #   - /img/background.jpg
+  #   - https://example.com/wall.jpg
+  card_opacity: 0.82
+  blur: 0px
+  card_blur: 18px
+  card_saturate: 1.2
+  dark_card_opacity: 0.78
+  nav_opacity: 0.86
+
+# 版心、顶栏、断点。改完跑 npm run css。
+layout:
+  main_width: 1000px
+  aside_width: 240px
+  chrome_inset: 14px
+  chrome_inset_mobile: 8px
+  nav_height: 46px
+  nav_height_mobile: 42px
+  nav_radius: 14px
+  nav_radius_mobile: 12px
+  content_padding_top: 1rem
+  breakpoint_aside: 1200px
+  breakpoint_home_grid: 1201px
+  breakpoint_mobile: 768px
+  post_cover_height: 176px
+  post_title_size: 1.05rem
+  post_gap: 1rem
+  aside_card_padding: 16px 18px
+  tag_size_min: 0.78
+  tag_size_span: 0.12
+  console_width: 1080px
+  console_height: 640px
+  console_max_height: 70vh
+  console_left: 38%
+  console_right: 62%
+  console_z: 999
+
+# 首页进入时的全屏开场
+splash:
+  enable: true
+  quote: 朝花夕拾，多愁善感
+  scroll_hint: SCROLL
+
+default_top_img: false
+
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  # left / right / both
+  position: left
+  default_cover:
+    - /img/default_cover.jpg
+
+error_img:
+  flink: /img/friend_404.gif
+  post_page: /img/404.jpg
+
+error_404:
+  enable: true
+  subtitle: "请尝试站内搜索寻找文章"
+  background: https://bu.dusays.com/2023/05/08/645907596997d.gif
+
+# date_type: created / updated / both
+# date_format: date / relative / simple
+post_meta:
+  page:
+    date_type: created
+    date_format: simple
+    categories: true
+    tags: true
+    label: false
+  post:
+    date_type: both
+    date_format: date
+    categories: true
+    tags: true
+    label: true
+
+# 文章主色。关掉后不请求图片取色。
+mainTone:
+  enable: false
+
+# 首页摘要：1 用 description，2 有 description 用它否则截正文，3 只截正文，false 不显示
+index_post_content:
+  method: 2
+  length: 500
+
+# 滚动时把标题 id 写进 URL
+anchor: false
+
+toc:
+  post: true
+  number: true
+  expand: false
+  style_simple: false
+
+post_copyright:
+  enable: true
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  avatarSinks: false
+  copyright_author_img_front:
+  copyright_author_link: /
+
+# 中控台里的赞赏码。关掉后不显示。
+reward:
+  enable: false
+  QR_code:
+    - img: https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png
+      text: 微信
+    - img: https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png
+      text: 支付宝
+
+related_post:
+  enable: true
+  limit: 6
+
+photofigcaption: false
+
+# 1 下一篇指向更旧，2 指向更新，false 关掉
+post_pagination: 2
+
+# 文章过期提示
+noticeOutdate:
+  enable: false
+  style: flat
+  limit_day: 365
+  position: top
+  message_prev: It has been
+  message_next: days since the last update, the content of the article may be outdated.
+
+comments:
+  # 目前只接了 Twikoo
+  use: Twikoo
+  text: true
+  title: 说些什么吧！
+
+twikoo:
+  envId: https://twikoo.318670.xyz/
+  region:
+  src: https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.all.min.js
+  integrity: sha384-kwWLC0HjeZZnVPqCJ1AncI8tsk+kQqF9TbAmCclcc9Z0hGkfgHRzeQZxmdmZhE0K
+
+footer:
+  owner:
+    enable: true
+    since: 2021
+  custom_text:
+  runtime:
+    launch_time: 04/01/2021 00:00:00
+  footerBar:
+    enable: true
+    authorLink: /
+
+theme_color:
+  enable: true
+  main: "#425AEF"
+  dark_main: "#f2b94b"
+  paginator: "#425AEF"
+  text_selection: "#2128bd"
+  link_color: "var(--anzhiyu-fontcolor)"
+  meta_color: "var(--anzhiyu-fontcolor)"
+  hr_color: "#4259ef23"
+  code_foreground: "#fff"
+  code_background: "var(--anzhiyu-code-stress)"
+  toc_color: "#425AEF"
+  scrollbar_color: "var(--anzhiyu-scrollbar)"
+  meta_theme_color_light: "#f7f9fe"
+  meta_theme_color_dark: "#18171d"
+
+# 移动端侧栏要显示的块
+sidebar:
+  site_data:
+    archive: true
+    tag: true
+    category: true
+  menus_items: true
+  tags_cloud: true
+  display_mode: true
+
+table_interlaced_discoloration: false
+article_double_row: true
+footer_bg: false
+# 右下角按钮距底边，单位 px
+rightside-bottom: 100px
+
+# light / dark
+display_mode: light
+
+beautify:
+  enable: true
+  field: post
+  title-prefix-icon: '\f0c1'
+  title-prefix-icon-color: "#F47466"
+
+font:
+  global-font-size: 16px
+  code-font-size:
+  font-family:
+  code-font-family: consolas, Menlo, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif
+
+blog_title_font:
+  font-family: PingFang SC, 'Hiragino Sans GB', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif
+
+hr_icon:
+  enable: true
+  icon: \f0c4
+  icon-top:
+
+# source: 1 全屏头像，2 顶栏进度条，3 两者都要
+preloader:
+  enable: true
+  source: 3
+  pace_css_url:
+  avatar: /img/avatar.webp
+
+aside:
+  enable: true
+  hide: false
+  button: true
+  mobile: true
+  position: right
+  card_author:
+    enable: true
+    name_link: /
+  card_announcement:
+    enable: false
+    content: 欢迎来看我的博客鸭~
+  card_recent_post:
+    enable: true
+    limit: 5
+    sort_order:
+  card_categories:
+    enable: false
+    expand: none
+    sort_order:
+  card_tags:
+    enable: true
+    limit: 40
+    sort_order:
+    highlightTags: []
+  card_archives:
+    enable: true
+    limit: 8
+    sort_order:
+  card_webinfo:
+    enable: true
+    post_count: true
+    sort_order:
+
+# 侧栏「建站天数」的起点
+runtimeshow:
+  enable: true
+  publish_date: 4/1/2021 00:00:00
+
+# 中控台最新评论，走 Twikoo。storage 单位分钟。
+newest_comments:
+  enable: true
+  limit: 6
+  storage: 10
+  avatar: true
+
+translate:
+  enable: true
+  default: 繁
+  rightMenuMsgDefault: "轉為繁體"
+  defaultEncoding: 2
+  translateDelay: 0
+  msgToTraditionalChinese: "繁"
+  msgToSimplifiedChinese: "简"
+  rightMenuMsgToTraditionalChinese: "转为繁体"
+  rightMenuMsgToSimplifiedChinese: "转为简体"
+
+readmode: true
+
+centerConsole:
+  enable: true
+  card_tags:
+    enable: true
+    limit: 40
+    highlightTags: []
+  card_archives:
+    enable: true
+    limit: 8
+
+darkmode:
+  enable: true
+  button: true
+  # 1 跟随系统（系统不支持时按 start/end 小时切换），2 只按小时，false 手动
+  autoChangeMode: 1
+  start: 6
+  end: 18
+
+# 图片灯箱只能开一个
+medium_zoom: false
+fancybox: true
+
+# Markdown note 标签样式：simple / modern / flat / disabled
+note:
+  style: flat
+  icons: true
+  border_radius: 3
+  light_bg_offset: 0
+
+icons:
+  fontawesome: false
+
+snackbar:
+  enable: true
+  position: top-center
+  bg_light: "#425AEF"
+  bg_dark: "#1f1f1f"
+
+instantpage: true
+
+lazyload:
+  enable: true
+  blur: true
+  placeholder:
+  progressive: true
+
+Open_Graph_meta: true
+# compile-stylus.mjs 会强制关掉 nib 前缀
+css_prefix: false
+
+home_top:
+  enable: true
+  title: 朝花夕拾
+  subTitle: 多愁善感
+  siteText: 语焉
+  more_link: /archives/
+  more_text: 更多推荐
+  excerpt_length: 60
+  group_count: 6
+  random_text: 随便逛逛
+  recommend_badge: 荐
+  category:
+    - name: 诗
+      path: /categories/诗/
+      shadow: var(--anzhiyu-shadow-blue)
+      class: blue
+      icon: anzhiyu-icon-dove
+    - name: 转载
+      path: /categories/转载/
+      shadow: var(--anzhiyu-shadow-green)
+      class: green
+      icon: anzhiyu-icon-book
+    - name: 工具
+      path: /categories/工具/
+      shadow: var(--anzhiyu-shadow-red)
+      class: red
+      icon: anzhiyu-icon-fire
+  swiper:
+    enable: false
+
+universe:
+  enable: true
+
+# 控制台欢迎信息
+console:
+  enable: true
+
+diytitle:
+  enable: true
+  leaveTitle: w(ﾟДﾟ)w 不要走！再看看嘛！
+  backTitle: ♪(^∇^*)欢迎肥来！
+
+# 左下角播放器。id 是歌单号，server 常用 netease / tencent。
+nav_music:
+  enable: true
+  console_widescreen_music: false
+  id: 8152976493
+  server: netease
+  volume: 0.7
+  all_playlist: https://music.163.com/#/playlist?id=8152976493
+
+# 文章底栏：打赏、手机二维码、微博、复制链接。mode 有值才显示「运营模式」按钮。
+ptool:
+  enable: true
+  share_mobile: true
+  share_weibo: true
+  share_copyurl: true
+  categories: false
+  mode:
+
+# 进站时左上角时段问候，3 秒后消失。list 按时段匹配，没命中用 default。
+greetingBox:
+  enable: true
+  default: 晚上好👋
+  list:
+    - greeting: 晚安😴
+      startTime: 0
+      endTime: 5
+    - greeting: 早上好鸭👋, 祝你一天好心情！
+      startTime: 6
+      endTime: 9
+    - greeting: 上午好👋, 状态很好，鼓励一下～
+      startTime: 10
+      endTime: 10
+    - greeting: 11点多啦, 在坚持一下就吃饭啦～
+      startTime: 11
+      endTime: 11
+    - greeting: 午安👋, 宝贝
+      startTime: 12
+      endTime: 14
+    - greeting: 🌈充实的一天辛苦啦！
+      startTime: 14
+      endTime: 18
+    - greeting: 19点喽, 奖励一顿丰盛的大餐吧🍔。
+      startTime: 19
+      endTime: 19
+    - greeting: 晚上好👋, 在属于自己的时间好好放松😌~
+      startTime: 20
+      endTime: 24
+
+shortcutKey:
+  enable: false
+
+rightClickMenu:
+  enable: false
+
+peoplecanvas:
+  enable: false
+
+dynamicEffect:
+  postTopWave: true
+  postTopRollZoomInfo: false
+  pageCommentsRollZoom: false

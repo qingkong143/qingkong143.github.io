@@ -1,0 +1,162 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getPosts } from "../lib/posts";
+import bangumis from "../data/bangumis.json";
+
+interface BangumiItem {
+  title: string;
+  type?: string;
+  area?: string;
+  cover?: string;
+  totalCount?: string;
+  id?: number;
+  score?: number;
+  des?: string;
+}
+
+const statusMap = {
+  watching: "在看",
+  wantWatch: "想看",
+  watched: "看过",
+} as const;
+
+type StatusKey = keyof typeof statusMap;
+
+const posts = await getPosts();
+const data = bangumis as Record<StatusKey, BangumiItem[]>;
+const groups = (Object.keys(statusMap) as StatusKey[])
+  .map((key) => ({
+    key,
+    label: statusMap[key],
+    items: data[key] || [],
+  }))
+  .filter((group) => group.items.length > 0);
+const total = groups.reduce((sum, group) => sum + group.items.length, 0);
+
+function bangumiUrl(id?: number) {
+  return id ? `https://www.bilibili.com/bangumi/media/md${id}/` : undefined;
+}
+---
+
+<Layout pageType="page" pageTitle="追番" posts={posts}>
+  <div id="page" class="bangumi-page">
+    <h1 class="page-title">追番</h1>
+    <p class="bangumi-lead">生命不息，追番不止。</p>
+
+    <div class="bangumi-stats" aria-label="追番统计">
+      <div class="bangumi-stat">
+        <span class="bangumi-stat-value">{total}</span>
+        <span class="bangumi-stat-label">收藏</span>
+      </div>
+      {
+        groups.map((group) => (
+          <div class="bangumi-stat">
+            <span class="bangumi-stat-value">{group.items.length}</span>
+            <span class="bangumi-stat-label">{group.label}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="bangumi-tabs" role="tablist">
+      <button class="bangumi-tab is-active" type="button" data-filter="all">全部</button>
+      {
+        groups.map((group) => (
+          <button class="bangumi-tab" type="button" data-filter={group.key}>
+            {group.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="bangumi-grid">
+      {
+        groups.flatMap((group) =>
+          group.items.map((item) => {
+            const href = bangumiUrl(item.id);
+            return (
+              <article class="bangumi-card" data-status={group.key}>
+                {item.cover && (
+                  href ? (
+                    <a class="bangumi-cover-wrap" href={href} target="_blank" rel="noopener noreferrer" title={item.title}>
+                      <img
+                        class="bangumi-cover"
+                        src={item.cover}
+                        alt={item.title}
+                        loading="lazy"
+                        decoding="async"
+                        referrerpolicy="no-referrer"
+                        onerror="this.onerror=null;this.src='/img/loading.gif'"
+                      />
+                    </a>
+                  ) : (
+                    <div class="bangumi-cover-wrap">
+                      <img
+                        class="bangumi-cover"
+                        src={item.cover}
+                        alt={item.title}
+                        loading="lazy"
+                        decoding="async"
+                        referrerpolicy="no-referrer"
+                        onerror="this.onerror=null;this.src='/img/loading.gif'"
+                      />
+                    </div>
+                  )
+                )}
+                <div class="bangumi-card-body">
+                  <div class="bangumi-card-head">
+                    <h2 class="bangumi-card-title">
+                      {href ? (
+                        <a href={href} target="_blank" rel="noopener noreferrer">{item.title}</a>
+                      ) : (
+                        item.title
+                      )}
+                    </h2>
+                    <span class={`bangumi-status is-${group.key}`}>{group.label}</span>
+                  </div>
+                  <div class="bangumi-meta">
+                    {item.score != null && <span>评分 {item.score}</span>}
+                    {item.totalCount && <span>{item.totalCount}</span>}
+                  </div>
+                  <div class="bangumi-tags">
+                    {item.type && <span>{item.type}</span>}
+                    {item.area && <span>{item.area}</span>}
+                  </div>
+                  {item.des && <p class="bangumi-summary">{item.des}</p>}
+                </div>
+              </article>
+            );
+          }),
+        )
+      }
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const enhanceBangumiTabs = () => {
+    const page = document.querySelector(".bangumi-page");
+    if (!(page instanceof HTMLElement) || page.dataset.bound === "true") return;
+    page.dataset.bound = "true";
+
+    const tabs = [...page.querySelectorAll(".bangumi-tab")];
+    const cards = [...page.querySelectorAll(".bangumi-card")];
+
+    const apply = (filter: string) => {
+      tabs.forEach((tab) => {
+        tab.classList.toggle("is-active", tab.getAttribute("data-filter") === filter);
+      });
+      cards.forEach((card) => {
+        const show = filter === "all" || card.getAttribute("data-status") === filter;
+        card.classList.toggle("is-hidden", !show);
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => apply(tab.getAttribute("data-filter") || "all"));
+    });
+  };
+
+  enhanceBangumiTabs();
+  document.addEventListener("astro:page-load", enhanceBangumiTabs);
+</script>

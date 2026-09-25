@@ -1,0 +1,53 @@
+---
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import { getCover, postPermalink, type Post } from "../lib/posts";
+
+interface Props {
+  prev?: Post;
+  next?: Post;
+}
+const { prev, next } = Astro.props;
+const mode = theme.post_pagination;
+const older = mode === 1 || mode === 3 || mode === 4 ? prev : next;
+const newer = mode === 1 || mode === 3 || mode === 4 ? next : prev;
+---
+
+{
+  (older || newer) && (
+    <nav id="pagination" class="pagination-post">
+      {older && (
+        <div class={`prev-post ${newer ? "pull-left" : "pull-full"}`}>
+          <a href={postPermalink(older)}>
+            <img
+              class="prev-cover"
+              src={getCover(older)}
+              onerror={`onerror=null;src='${theme.error_img?.post_page || "/img/404.jpg"}'`}
+              alt="cover of previous post"
+            />
+            <div class="pagination-info">
+              <div class="label">{t("pagination.prev")}</div>
+              <div class="prev_info">{older.data.title}</div>
+            </div>
+          </a>
+        </div>
+      )}
+      {newer && (
+        <div class={`next-post ${older ? "pull-right" : "pull-full"}`}>
+          <a href={postPermalink(newer)}>
+            <img
+              class="next-cover"
+              src={getCover(newer)}
+              onerror={`onerror=null;src='${theme.error_img?.post_page || "/img/404.jpg"}'`}
+              alt="cover of next post"
+            />
+            <div class="pagination-info">
+              <div class="label">{t("pagination.next")}</div>
+              <div class="next_info">{newer.data.title}</div>
+            </div>
+          </a>
+        </div>
+      )}
+    </nav>
+  )
+}

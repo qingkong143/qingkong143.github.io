@@ -1,0 +1,119 @@
+---
+import { theme } from "../lib/config";
+import { anheyu } from "../lib/anheyu";
+import Icon from "./Icon.astro";
+import { getCover, postPermalink, topGroupPosts, type Post } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+const cfg = theme.home_top || {};
+const group = topGroupPosts(posts, anheyu.groupCount);
+
+const stickyPost =
+  [...posts]
+    .filter((p) => (p.data.sticky ?? 0) > 0)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0] || posts[0];
+
+function excerptOf(text: string, len = anheyu.excerptLength): string {
+  const plain = text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/[>*_~\-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return plain.length > len ? plain.slice(0, len) + "…" : plain;
+}
+---
+
+{
+  cfg.enable && (
+    <div id="home_top">
+      <div class="swiper_container_card" style="height: auto;width: 100%">
+        <div id="bannerGroup">
+          <div id="random-banner">
+            <div class="banners-title">
+              <div class="banners-title-big">{cfg.title}</div>
+              <div class="banners-title-big">{cfg.subTitle}</div>
+              <div class="banners-title-small">{cfg.siteText}</div>
+            </div>
+            <a id="random-hover" href="javascript:toRandomPost()">
+              <i class="anzhiyufont anzhiyu-icon-paper-plane" />
+              <div class="bannerText">
+                {anheyu.randomText}
+                <i class="anzhiyufont anzhiyu-icon-arrow-right" />
+              </div>
+            </a>
+          </div>
+          <div class="categoryGroup">
+            {(cfg.category || []).map((item: any) => (
+              <div class="categoryItem" style={`box-shadow:${item.shadow}`}>
+                <a class={`categoryButton ${item.class}`} href={item.path}>
+                  <span class="categoryButtonText">{item.name}</span>
+                  <Icon icon={item.icon} anima="" />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="topGroup">
+          {group.map((item) => {
+            const href = postPermalink(item);
+            const cover = getCover(item);
+            return (
+              <div class="recent-post-item">
+                <div class="post_cover left_radius">
+                  <a href={href} title={item.data.title}>
+                    <span class="recent-post-top-text">{anheyu.recommendBadge}</span>
+                    <img
+                      class="post_bg"
+                      onerror={`this.onerror=null;this.src='${theme.error_img?.post_page || "/img/404.jpg"}'`}
+                      alt="cover"
+                      src={cover}
+                    />
+                  </a>
+                </div>
+                <div class="recent-post-info">
+                  <a class="article-title" href={href} title={item.data.title}>
+                    {item.data.title}
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+          {stickyPost && (
+            <div id="todayCard" class="todayCard" style="z-index: 1;">
+              <a
+                class="todayCard-link"
+                href={postPermalink(stickyPost)}
+                title={stickyPost.data.title}
+              />
+              <div class="todayCard-info">
+                <div class="todayCard-heading">{stickyPost.data.title}</div>
+                <div class="todayCard-excerpt">
+                  {stickyPost.data.description || excerptOf(stickyPost.body || "")}
+                </div>
+              </div>
+              <img
+                class="todayCard-cover"
+                src={getCover(stickyPost)}
+                onerror={`this.onerror=null;this.src='${theme.error_img?.post_page || "/img/404.jpg"}'`}
+                alt={stickyPost.data.title}
+              />
+              <div class="banner-button-group">
+                <a class="banner-button" href={anheyu.moreLink} title={anheyu.moreText}>
+                  <i class="anzhiyufont anzhiyu-icon-arrow-circle-right" />
+                  <span class="banner-button-text">{anheyu.moreText}</span>
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

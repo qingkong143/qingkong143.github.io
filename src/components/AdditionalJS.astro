@@ -1,0 +1,74 @@
+---
+import { theme, site, THEME_VERSION } from "../lib/config";
+import { assets } from "../lib/cdn";
+
+interface Props {
+  isHome?: boolean;
+  pageType?: string;
+}
+const { isHome = false, pageType = "anzhiyu" } = Astro.props;
+const launch = theme.footer?.runtime?.launch_time || "04/01/2021 00:00:00";
+const since = theme.footer?.owner?.since || 2020;
+---
+
+<script is:inline src={assets.utils}></script>
+<script is:inline src={assets.main}></script>
+{theme.translate?.enable && <script is:inline src={assets.translate}></script>}
+{theme.fancybox && <script is:inline src={assets.fancybox}></script>}
+{theme.instantpage && <script is:inline src={assets.instantpage} type="module"></script>}
+{theme.lazyload?.enable && <script is:inline src={assets.lazyload}></script>}
+{theme.snackbar?.enable && <script is:inline src={assets.snackbar}></script>}
+{theme.nav_music?.enable && (
+  <>
+    <script is:inline src={assets.aplayer_js}></script>
+    <script is:inline src={assets.meting_js}></script>
+  </>
+)}
+{
+  theme.universe?.enable && (
+    <>
+      <canvas id="universe" />
+      <script is:inline async src={assets.universe}></script>
+    </>
+  )
+}
+{
+  theme.console?.enable && (
+    <script is:inline define:vars={{ title: site.title, subtitle: site.subtitle, author: site.author, url: site.url, launch, since, version: THEME_VERSION }}>
+      var HoldLog = console.log;
+      console.log = function () {};
+      let now1 = new Date();
+      queueMicrotask(() => {
+        const Log = function () {
+          HoldLog.apply(console, arguments);
+        };
+        const grt = new Date(launch);
+        now1.setTime(now1.getTime() + 250);
+        const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+        const dnum = Math.floor(days);
+        setTimeout(
+          Log.bind(
+            console,
+            `\n%c${title} %c ${subtitle}\n`,
+            "color:#425AEF",
+            "",
+          ),
+        );
+        setTimeout(
+          console.warn.bind(
+            console,
+            "%c " + url + " %c " + author + " · ©" + since + " · " + dnum + " 天",
+            "color:white; background-color:#f0ad4e",
+            "",
+          ),
+        );
+      });
+    </script>
+  )
+}
+<script is:inline src="/anzhiyu/random.js" async></script>
+{theme.local_search?.enable && <script is:inline src={assets.local_search}></script>}
+<script is:inline src={assets.waterfall} async></script>
+<script is:inline src={assets.qrcode}></script>
+{theme.rightClickMenu?.enable && <script is:inline src="/js/anzhiyu/right_click_menu.js"></script>}
+<input type="hidden" name="page-type" id="page-type" value={pageType} />

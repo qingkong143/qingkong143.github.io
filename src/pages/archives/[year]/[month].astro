@@ -1,0 +1,28 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ArticleSort from "../../../components/ArticleSort.astro";
+import { archiveMonths, getPosts, monthLabel } from "../../../lib/posts";
+import { t } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return archiveMonths(posts, 0).map((m) => ({
+    params: { year: String(m.year), month: String(m.month).padStart(2, "0") },
+  }));
+}
+
+const posts = await getPosts();
+const year = Number(Astro.params.year);
+const month = Number(Astro.params.month);
+const filtered = posts.filter(
+  (p) => p.data.date.getFullYear() === year && p.data.date.getMonth() + 1 === month,
+);
+const title = monthLabel(year, month);
+---
+
+<Layout pageType="page" pageTitle={title} posts={posts}>
+  <div id="archive">
+    <div class="article-sort-title">{t("page.articles")} - {filtered.length}</div>
+    <ArticleSort posts={filtered} />
+  </div>
+</Layout>

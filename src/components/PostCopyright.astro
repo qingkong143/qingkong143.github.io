@@ -1,0 +1,61 @@
+---
+import { site, theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import { isReprint, postPermalink, type Post } from "../lib/posts";
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const href = new URL(postPermalink(post), site.url).href;
+const license = theme.post_copyright?.license || "CC BY-NC-SA 4.0";
+const licenseUrl = theme.post_copyright?.license_url || "https://creativecommons.org/licenses/by-nc-sa/4.0/";
+const info = t("post.copyright.copyright_content", licenseUrl, license, site.url, site.title);
+const authorImg = theme.post_copyright?.copyright_author_img_front || theme.avatar?.img;
+const authorLink = theme.post_copyright?.copyright_author_link || "/";
+const canCopy = Boolean(theme.ptool?.enable && theme.ptool?.share_copyurl);
+const hrefJs = JSON.stringify(href);
+const show = theme.post_copyright?.enable && post.data.copyright !== false && !isReprint(post);
+---
+
+{
+  show && (
+    <div class="post-copyright">
+      <a class="post-copyright__avatar" href={authorLink} title={site.author}>
+        <img src={authorImg} alt={site.author} />
+      </a>
+      <div class="post-copyright__body">
+        <div class="post-copyright__head">
+          <div class="post-copyright__who">
+            <span class="post-copyright__name">{site.author}</span>
+          </div>
+          <div class="post-copyright__actions">
+            <a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href={href}>
+              原创
+            </a>
+            {canCopy && (
+              <button
+                type="button"
+                class="post-copyright__copy"
+                title="复制链接"
+                onclick={`rm && rm.copyPageUrl && rm.copyPageUrl(${hrefJs})`}
+              >
+                <i class="anzhiyufont anzhiyu-icon-link" />
+              </button>
+            )}
+          </div>
+        </div>
+        <div
+          class:list={["post-copyright-title", { "is-copyable": canCopy }]}
+          title={canCopy ? "点击复制文章链接" : post.data.title}
+          onclick={canCopy ? `rm && rm.copyPageUrl && rm.copyPageUrl(${hrefJs})` : undefined}
+        >
+          {post.data.title}
+        </div>
+        <div class="post-copyright__notice">
+          <span class="post-copyright-info" set:html={info} />
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getAllTags, getPosts, tagPath } from "../../lib/posts";
+import { t } from "../../lib/i18n";
+
+const posts = await getPosts();
+const tags = getAllTags(posts);
+---
+
+<Layout pageType="page" pageTitle={t("page.tag")} posts={posts}>
+  <div id="page">
+    <div class="tag-cloud-list is-center">
+      <div id="tag">
+        <div id="tag-page-tags">
+          {
+            tags.map(([name, list]) => (
+              <a href={tagPath(name)} id={tagPath(name)}>
+                <span class="tags-punctuation">#</span>
+                {name}
+                <span class="tagsPageCount">{list.length}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,110 @@
+---
+import { site, theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import { getCover, postPermalink, type Post } from "../lib/posts";
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const ptool = theme.ptool;
+const rewards = theme.reward?.QR_code || [];
+const rewardOn = Boolean(theme.reward?.enable && rewards.length);
+const shareMobile = Boolean(ptool?.share_mobile);
+const shareWeibo = Boolean(ptool?.share_weibo);
+const shareCopy = Boolean(ptool?.share_copyurl);
+const modeHref = ptool?.mode;
+const show = Boolean(ptool?.enable && (rewardOn || shareMobile || shareWeibo || shareCopy || modeHref));
+const href = new URL(postPermalink(post), site.url).href;
+const weiboTitle = encodeURIComponent(post.data.title || "");
+const weiboUrl = encodeURIComponent(href);
+const weiboPic = encodeURIComponent(new URL(getCover(post), site.url).href);
+---
+
+{
+  show && (
+    <div id="post-tools" class="post-tools">
+      <div class="post-tools-left">
+        <div class="rewardLeftButton">
+          {rewardOn && (
+            <div class="post-reward" onclick="anzhiyu.addRewardMask()">
+              <div class="reward-button button--animated" title={t("reward.title")}>
+                <i class="anzhiyufont anzhiyu-icon-hand-heart-fill" />
+                {t("reward.button")}
+              </div>
+              <div class="reward-main">
+                <div class="reward-all">
+                  <span class="reward-title">{t("reward.thanks")}</span>
+                  <ul class="reward-group">
+                    {rewards.map((item: any) => (
+                      <li class="reward-item">
+                        <a href={item.link || item.img} target="_blank" rel="noopener noreferrer">
+                          <img class="post-qr-code-img" src={item.img} alt={item.text} />
+                        </a>
+                        <div class="post-qr-code-desc">{item.text}</div>
+                      </li>
+                    ))}
+                  </ul>
+                  <a class="reward-main-btn" href="/about/" target="_blank" rel="noopener noreferrer">
+                    <div class="reward-text">{t("reward.list")}</div>
+                    <div class="reward-dec">{t("reward.list_desc")}</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+          {modeHref && (
+            <div class="reward-link mode">
+              <a class="reward-link-button" href={modeHref}>
+                <i class="anzhiyufont anzhiyu-icon-plant-fill" />
+                运营模式与责任
+              </a>
+            </div>
+          )}
+        </div>
+        <div class="shareRight">
+          {shareMobile && (
+            <div class="share-link mobile">
+              <div class="share-qrcode">
+                <div class="share-button" title="使用手机访问这篇文章">
+                  <i class="anzhiyufont anzhiyu-icon-qrcode" />
+                </div>
+                <div class="share-main">
+                  <div class="share-main-all">
+                    <div id="qrcode" title={href} />
+                    <div class="reward-dec">使用手机访问这篇文章</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {shareWeibo && (
+            <div class="share-link weibo">
+              <a
+                class="share-button"
+                target="_blank"
+                rel="external nofollow noreferrer noopener"
+                href={`https://service.weibo.com/share/share.php?title=${weiboTitle}&url=${weiboUrl}&pic=${weiboPic}`}
+              >
+                <i class="anzhiyufont anzhiyu-icon-weibo" />
+              </a>
+            </div>
+          )}
+          {shareCopy && (
+            <div class="share-link copyurl">
+              <div
+                id="post-share-url"
+                class="share-button"
+                title="复制链接"
+                onclick="navigator.clipboard.writeText(location.href)"
+              >
+                <i class="anzhiyufont anzhiyu-icon-link" />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      {rewardOn && <div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display:none" />}
+    </div>
+  )
+}

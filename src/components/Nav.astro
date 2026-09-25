@@ -1,0 +1,122 @@
+---
+import { theme, site } from "../lib/config";
+import { t } from "../lib/i18n";
+import MenuItems from "./MenuItems.astro";
+import type { Post } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+  pageTitle: string;
+}
+const { posts, pageTitle } = Astro.props;
+const searchEnabled =
+  theme.algolia_search?.enable || theme.local_search?.enable || theme.docsearch?.enable;
+---
+
+<nav id="nav">
+  <div id="nav-group">
+    <span id="blog_name">
+      {
+        theme.nav?.enable && (
+          <div class="back-home-button">
+            <i class="anzhiyufont anzhiyu-icon-grip-vertical" />
+            <div class="back-menu-list-groups">
+              {(theme.nav.menu || []).map((group: any) => (
+                <div class="back-menu-list-group">
+                  <div class="back-menu-list-title">{group.title}</div>
+                  <div class="back-menu-list">
+                    {(group.item || []).map((item: any) => (
+                      <a class="back-menu-item" href={item.link} title={item.name}>
+                        <img class="back-menu-item-icon" src={item.icon} alt={item.name} />
+                        <span class="back-menu-item-text">{item.name}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      }
+      <a id="site-name" href="/" accesskey="h">
+        <div class="title">{site.title}</div>
+        <i class="anzhiyufont anzhiyu-icon-house-chimney" />
+      </a>
+    </span>
+
+    <div class="mask-name-container">
+      <div id="name-container">
+        <a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">{pageTitle}</a>
+      </div>
+    </div>
+
+    <div id="menus">
+      <MenuItems />
+    </div>
+    <div id="nav-right">
+      {
+        theme.nav?.travelling && (
+          <div class="nav-button only-home" id="travellings_button" title={t("nav.travelling")}>
+            <a
+              class="site-page"
+              onclick="anzhiyu.totraveling()"
+              title={t("nav.travelling")}
+              href="javascript:void(0);"
+              rel="external nofollow"
+            >
+              <i class="anzhiyufont anzhiyu-icon-train" />
+            </a>
+          </div>
+        )
+      }
+      <div class="nav-button" id="randomPost_button">
+        <a
+          class="site-page"
+          onclick="toRandomPost()"
+          title={t("nav.random_post")}
+          href="javascript:void(0);"
+        >
+          <i class="anzhiyufont anzhiyu-icon-dice" />
+        </a>
+      </div>
+      {
+        searchEnabled && (
+          <div class="nav-button" id="search-button">
+            <a class="site-page social-icon search" href="javascript:void(0);" title={t("nav.search")} accesskey="s">
+              <i class="anzhiyufont anzhiyu-icon-magnifying-glass" />
+              <span> {t("search.title")}</span>
+            </a>
+          </div>
+        )
+      }
+      {
+        theme.centerConsole?.enable && (
+          <>
+            <input id="center-console" type="checkbox" />
+            <label
+              class="widget"
+              for="center-console"
+              title={t("console.title")}
+              onclick="anzhiyu.switchConsole();"
+            >
+              <i class="left" />
+              <i class="widget center" />
+              <i class="widget right" />
+            </label>
+          </>
+        )
+      }
+      <div class="nav-button" id="nav-totop">
+        <a class="totopbtn" href="javascript:void(0);">
+          <i class="anzhiyufont anzhiyu-icon-arrow-up" />
+          <span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span>
+        </a>
+      </div>
+      <div id="toggle-menu">
+        <a class="site-page" href="javascript:void(0);" title={t("nav.toggle_menu")}>
+          <i class="anzhiyufont anzhiyu-icon-bars" />
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

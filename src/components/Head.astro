@@ -1,0 +1,291 @@
+---
+import { site, theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import { assets } from "../lib/cdn";
+import { anheyu } from "../lib/anheyu";
+import { pageDescription } from "../lib/posts";
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+  isPost?: boolean;
+  isHome?: boolean;
+  canonical?: string;
+  html?: string;
+  postAI?: string;
+  postUpdate?: string;
+  postMainColor?: string;
+  isToc?: boolean;
+  pageType?: string;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  image,
+  isPost = false,
+  isHome = false,
+  canonical,
+  html = "",
+  postAI = "",
+  postUpdate = "",
+  postMainColor = "",
+  isToc = false,
+} = Astro.props;
+
+const tabTitle = isHome || !title ? `${site.title}${site.subtitle ? " - " + site.subtitle : ""}` : `${title} | ${site.title}`;
+const desc = pageDescription(html, description || site.description);
+const pageKeywords =
+  keywords || (Array.isArray(site.keywords) ? site.keywords.join(",") : site.keywords);
+const themeColorLight = theme.theme_color?.meta_theme_color_light || "#ffffff";
+const themeColorDark = theme.theme_color?.meta_theme_color_dark || "#0d0d0d";
+const themeColor = theme.display_mode === "dark" ? themeColorDark : themeColorLight;
+const ogImage = image || theme.avatar?.img || "";
+const url = canonical || new URL(Astro.url.pathname, site.url).href;
+const start = theme.darkmode?.start || 6;
+const end = theme.darkmode?.end || 18;
+
+const GLOBAL_CONFIG = {
+  root: "/",
+  preloader: theme.preloader?.enable ? { source: theme.preloader.source } : undefined,
+  navMusic: !!theme.nav_music?.enable,
+  mainTone: theme.mainTone?.enable ? theme.mainTone : undefined,
+  authorStatus: theme.author_status?.enable
+    ? { skills: Array.isArray(theme.author_status.skills) ? theme.author_status.skills.filter(Boolean) : [] }
+    : undefined,
+  algolia: undefined,
+  localSearch: theme.local_search?.enable
+    ? {
+        path: theme.local_search.CDN || "/anzhiyu/local-search.json",
+        preload: theme.local_search.preload,
+        languages: { hits_empty: t("search.local_search.hits_empty") },
+      }
+    : undefined,
+  translate: theme.translate?.enable
+    ? {
+        defaultEncoding: theme.translate.defaultEncoding,
+        translateDelay: theme.translate.translateDelay,
+        msgToTraditionalChinese: theme.translate.msgToTraditionalChinese,
+        msgToSimplifiedChinese: theme.translate.msgToSimplifiedChinese,
+        rightMenuMsgToTraditionalChinese: theme.translate.rightMenuMsgToTraditionalChinese,
+        rightMenuMsgToSimplifiedChinese: theme.translate.rightMenuMsgToSimplifiedChinese,
+      }
+    : undefined,
+  noticeOutdate: theme.noticeOutdate?.enable
+    ? {
+        limitDay: theme.noticeOutdate.limit_day,
+        position: theme.noticeOutdate.position,
+        messagePrev: theme.noticeOutdate.message_prev,
+        messageNext: theme.noticeOutdate.message_next,
+      }
+    : undefined,
+  highlight: {
+    plugin: "highlight.js",
+    highlightCopy: theme.highlight_copy,
+    highlightLang: theme.highlight_lang,
+    highlightHeightLimit: theme.highlight_height_limit,
+  },
+  copy: {
+    success: t("copy.success"),
+    error: t("copy.error"),
+    noSupport: t("copy.noSupport"),
+  },
+  relativeDate: {
+    homepage: theme.post_meta?.page?.date_format === "relative",
+    simplehomepage: theme.post_meta?.page?.date_format === "simple",
+    post: theme.post_meta?.post?.date_format === "relative",
+  },
+  runtime: theme.runtimeshow?.enable ? t("aside.card_webinfo.runtime.unit") : "",
+  date_suffix: {
+    just: t("date_suffix.just"),
+    min: t("date_suffix.min"),
+    hour: t("date_suffix.hour"),
+    day: t("date_suffix.day"),
+    month: t("date_suffix.month"),
+  },
+  copyright: theme.copy?.enable
+    ? {
+        copy: theme.copy.enable,
+        copyrightEbable: theme.copy.copyright?.enable,
+        limitCount: theme.copy.copyright?.limit_count,
+        languages: {
+          author: `${t("copy_copyright.author")}: ${site.author}`,
+          link: `${t("copy_copyright.link")}: `,
+          source: `${t("copy_copyright.source")}: ${site.title}`,
+          info: t("copy_copyright.info"),
+          copySuccess: t("copy_copyright.copySuccess"),
+        },
+      }
+    : undefined,
+  lightbox: theme.medium_zoom ? "mediumZoom" : theme.fancybox ? "fancybox" : "null",
+  Snackbar: theme.snackbar?.enable
+    ? {
+        chs_to_cht: t("Snackbar.chs_to_cht"),
+        cht_to_chs: t("Snackbar.cht_to_chs"),
+        day_to_night: t("Snackbar.day_to_night"),
+        night_to_day: t("Snackbar.night_to_day"),
+        bgLight: theme.snackbar.bg_light,
+        bgDark: theme.snackbar.bg_dark,
+        position: theme.snackbar.position,
+      }
+    : undefined,
+  source: { justifiedGallery: { js: "", css: "" } },
+  isPhotoFigcaption: !!theme.photofigcaption,
+  islazyload: !!theme.lazyload?.enable,
+  isAnchor: !!theme.anchor,
+  shortcutKey: theme.shortcutKey?.enable ? theme.shortcutKey : undefined,
+  autoDarkmode: !!(theme.darkmode?.enable && theme.darkmode.autoChangeMode === 1),
+  diytitle: theme.diytitle?.enable ? theme.diytitle : undefined,
+  peoplecanvas: theme.peoplecanvas?.enable ? theme.peoplecanvas : undefined,
+  greetingBox: theme.greetingBox?.enable ? theme.greetingBox : undefined,
+};
+
+const GLOBAL_CONFIG_SITE = {
+  configTitle: site.title,
+  title: title || site.title,
+  postAI,
+  pageFillDescription: desc,
+  isPost,
+  isHome,
+  isHighlightShrink: theme.highlight_shrink === "none" ? undefined : theme.highlight_shrink,
+  isToc,
+  postUpdate,
+  postMainColor,
+};
+---
+
+{
+  theme.background?.enable && anheyu.bgImages.length > 1 && (
+    <script is:inline define:vars={{ images: anheyu.bgImages }}>
+      document.documentElement.style.setProperty(
+        "--anheyu-bg-image",
+        'url("' + String(images[Math.floor(Math.random() * images.length)]).replace(/"/g, '\\"') + '")',
+      );
+    </script>
+  )
+}
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>{tabTitle}</title>
+{pageKeywords && <meta name="keywords" content={pageKeywords} />}
+<meta name="author" content={site.author} />
+<meta name="copyright" content={site.author} />
+<meta name="format-detection" content="telephone=no" />
+<meta name="theme-color" content={themeColor} />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content={title || site.title} />
+<meta name="description" content={desc} />
+{theme.Open_Graph_meta && (
+  <>
+    <meta property="og:type" content={isPost ? "article" : "website"} />
+    <meta property="og:title" content={title || site.title} />
+    <meta property="og:url" content={url} />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:locale" content={site.language} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="article:author" content={site.author} />
+    <meta name="twitter:card" content="summary" />
+  </>
+)}
+<link rel="icon" href={theme.favicon || "/favicon.ico"} />
+<link rel="canonical" href={url} />
+<link rel="stylesheet" href={assets.main_css} />
+{
+  theme.background?.enable && anheyu.bgImages.length > 0 && (
+    <link rel="stylesheet" href="/css/one-graph-flow.css" />
+  )
+}
+{theme.snackbar?.enable && <link rel="stylesheet" href={assets.snackbar_css} media="print" onload="this.media='all'" />}
+{theme.fancybox && <link rel="stylesheet" href={assets.fancybox_css} media="print" onload="this.media='all'" />}
+{theme.nav_music?.enable && <link rel="stylesheet" href={assets.aplayer_css} media="print" onload="this.media='all'" />}
+<link rel="stylesheet" href={assets.ali_iconfont_css} />
+<noscript>
+  <style type="text/css">
+    #nav { opacity: 1 }
+    #recent-posts time, #post-meta time { display: inline !important }
+  </style>
+</noscript>
+<script is:inline define:vars={{ GLOBAL_CONFIG, GLOBAL_CONFIG_SITE }}>
+  window.GLOBAL_CONFIG = GLOBAL_CONFIG;
+  window.GLOBAL_CONFIG_SITE = GLOBAL_CONFIG_SITE;
+</script>
+<script is:inline define:vars={{ themeColorLight, themeColorDark, start, end, auto: theme.darkmode?.autoChangeMode, darkEnable: theme.darkmode?.enable, asideEnable: theme.aside?.enable && theme.aside?.button }}>
+  (win => {
+    win.saveToLocal = {
+      set: (key, value, ttl) => {
+        if (ttl === 0) return;
+        const now = Date.now();
+        localStorage.setItem(key, JSON.stringify({ value, expiry: now + ttl * 86400000 }));
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key);
+        if (!itemStr) return undefined;
+        const item = JSON.parse(itemStr);
+        if (Date.now() > item.expiry) {
+          localStorage.removeItem(key);
+          return undefined;
+        }
+        return item.value;
+      }
+    };
+    win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = url;
+      script.async = true;
+      script.onerror = reject;
+      script.onload = function () { resolve(); };
+      Object.keys(attr).forEach(k => script.setAttribute(k, attr[k]));
+      document.head.appendChild(script);
+    });
+    win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = url;
+      if (id) link.id = id;
+      link.onerror = reject;
+      link.onload = function () { resolve(); };
+      document.head.appendChild(link);
+    });
+    if (darkEnable) {
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute("data-theme", "dark");
+        const m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", themeColorDark);
+      };
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute("data-theme", "light");
+        const m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", themeColorLight);
+      };
+      const t = saveToLocal.get("theme");
+      if (auto === 1) {
+        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (t === undefined) {
+          if (isLightMode) activateLightMode();
+          else if (isDarkMode) activateDarkMode();
+          else {
+            const hour = new Date().getHours();
+            hour <= start || hour >= end ? activateDarkMode() : activateLightMode();
+          }
+          window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+            if (saveToLocal.get("theme") === undefined) e.matches ? activateDarkMode() : activateLightMode();
+          });
+        } else if (t === "light") activateLightMode();
+        else activateDarkMode();
+      } else if (t === "dark") activateDarkMode();
+      else if (t === "light") activateLightMode();
+    }
+    if (asideEnable) {
+      const asideStatus = saveToLocal.get("aside-status");
+      if (asideStatus === "hide") document.documentElement.classList.add("hide-aside");
+      else if (asideStatus === "show") document.documentElement.classList.remove("hide-aside");
+    }
+    if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) document.documentElement.classList.add("apple");
+  })(window);
+</script>

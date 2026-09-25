@@ -1,0 +1,106 @@
+---
+import { site, theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import {
+  categoryPath,
+  dateXml,
+  formatDate,
+  fullDate,
+  isReprint,
+  tagPath,
+  type Post,
+} from "../lib/posts";
+
+interface Props {
+  post: Post;
+  headings?: Array<{ depth: number; slug: string; text: string }>;
+  html?: string;
+}
+const { post } = Astro.props;
+const cats = post.data.categories || [];
+const tags = post.data.tags || [];
+const updated = post.data.updated || post.data.date;
+const reprint = isReprint(post);
+---
+
+<div id="post-info">
+  <div id="post-firstinfo">
+    <div class="meta-firstline">
+      {reprint ? <a class="post-meta-original">转载</a> : <a class="post-meta-original">原创</a>}
+      {
+        theme.post_meta?.post?.categories && cats.filter((name) => !String(name).includes("转载")).length > 0 && (
+          <span class="post-meta-categories">
+            {cats
+              .filter((name) => !String(name).includes("转载"))
+              .map((name, index, list) => (
+              <>
+                <i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon" />
+                <a href={categoryPath(name)} itemprop="url" class="post-meta-categories">
+                  {name}
+                </a>
+                {index < list.length - 1 && (
+                  <i class="anzhiyufont anzhiyu-icon-angle-right post-meta-separator" />
+                )}
+              </>
+            ))}
+          </span>
+        )
+      }
+      {
+        theme.post_meta?.post?.tags && tags.length > 0 && (
+          <div class="post-meta__box__tag-list">
+            {tags.map((name) => (
+              <a href={tagPath(name)} class="post-meta__box__tags">
+                <span class="tags-punctuation">
+                  <i class="anzhiyufont anzhiyu-icon-tag" />
+                </span>
+                {name}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+  <h1 class="post-title" itemprop="name headline">{post.data.title}</h1>
+  <div id="post-meta">
+    <div class="meta-firstline">
+      {
+        theme.post_meta?.post?.date_type && (
+          <span class="post-meta-date">
+            {theme.post_meta.post.date_type === "both" ? (
+              <>
+                <i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon" />
+                <span class="post-meta-label">{t("post.created")}</span>
+                <time
+                  class="post-meta-date-created"
+                  itemprop="dateCreated datePublished"
+                  datetime={dateXml(post.data.date)}
+                  title={`${t("post.created")} ${fullDate(post.data.date)}`}
+                >
+                  {formatDate(post.data.date)}
+                </time>
+                <span class="post-meta-separator" />
+                <i class="anzhiyufont anzhiyu-icon-history post-meta-icon" />
+                <span class="post-meta-label">{t("post.updated")}</span>
+                <time
+                  class="post-meta-date-updated"
+                  datetime={dateXml(updated)}
+                  title={`${t("post.updated")} ${fullDate(updated)}`}
+                >
+                  {formatDate(updated)}
+                </time>
+              </>
+            ) : (
+              <>
+                <i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon" />
+                <span class="post-meta-label">{t("post.created")}</span>
+                <time datetime={dateXml(post.data.date)}>{formatDate(post.data.date)}</time>
+              </>
+            )}
+          </span>
+        )
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+---
+interface Props {
+  page: number;
+  totalPages: number;
+  base: string;
+  hash?: string;
+}
+const { page, totalPages, base, hash = "" } = Astro.props;
+
+function href(n: number) {
+  if (n <= 1) return `${base}${hash}`;
+  const prefix = base.endsWith("/") ? base : `${base}/`;
+  return `${prefix}page/${n}/${hash}`;
+}
+
+const pages: Array<number | "…"> = [];
+if (totalPages <= 7) {
+  for (let i = 1; i <= totalPages; i++) pages.push(i);
+} else {
+  pages.push(1);
+  if (page > 3) pages.push("…");
+  for (let i = Math.max(2, page - 1); i <= Math.min(totalPages - 1, page + 1); i++) pages.push(i);
+  if (page < totalPages - 2) pages.push("…");
+  pages.push(totalPages);
+}
+---
+
+{
+  totalPages > 1 && (
+    <nav id="pagination">
+      <div class="pagination">
+        {page > 1 && (
+          <a class="extend prev" rel="prev" href={href(page - 1)}>
+            <i class="anzhiyufont anzhiyu-icon-chevron-left fa-fw" style="font-weight: inherit; font-size: 1rem;" />
+            <div class="pagination_tips_prev">上页</div>
+          </a>
+        )}
+        {pages.map((p) =>
+          p === "…" ? (
+            <span class="space">…</span>
+          ) : p === page ? (
+            <span class="page-number current">{p}</span>
+          ) : (
+            <a class="page-number" href={href(p)}>
+              {p}
+            </a>
+          ),
+        )}
+        {page < totalPages && (
+          <a class="extend next" rel="next" href={href(page + 1)}>
+            <div class="pagination_tips_next">下页</div>
+            <i class="anzhiyufont anzhiyu-icon-chevron-right fa-fw" style="font-weight: inherit; font-size: 1rem;" />
+          </a>
+        )}
+        <div class="toPageGroup">
+          <input id="toPageText" maxlength="3" aria-label="toPage" />
+          <a id="toPageButton" onclick="anzhiyu.toPage()">
+            <i class="anzhiyufont anzhiyu-icon-angles-right" style="font-weight: inherit; font-size: 1rem;" />
+          </a>
+        </div>
+      </div>
+    </nav>
+  )
+}

@@ -1,0 +1,22 @@
+---
+import { site, theme } from "../lib/config";
+
+const cfg = theme.splash || {};
+const title = cfg.title || site.title;
+const quote = cfg.quote || site.subtitle;
+const hint = cfg.scroll_hint || "SCROLL";
+---
+
+{
+  cfg.enable && (
+    <section id="anheyu-splash" aria-label={title}>
+      <div class="anheyu-splash-content">
+        <h1 class="anheyu-splash-title">{title}</h1>
+        {quote && <p class="anheyu-splash-quote">{quote}</p>}
+      </div>
+      <a class="anheyu-splash-hint" href="#home_top" aria-label={hint}>
+        <span>{hint}</span>
+      </a>
+    </section>
+  )
+}

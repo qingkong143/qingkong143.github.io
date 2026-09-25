@@ -1,0 +1,228 @@
+---
+import { theme } from "../lib/config";
+import { pluginUrl } from "../lib/cdn";
+import { t } from "../lib/i18n";
+import TagCloud from "./TagCloud.astro";
+import ArchiveList from "./ArchiveList.astro";
+import type { Post } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+const rewards = theme.reward?.QR_code || [];
+const newestOn = Boolean(theme.newest_comments?.enable && theme.twikoo?.envId);
+const newest = {
+  envId: theme.twikoo?.envId || "",
+  region: theme.twikoo?.region || "",
+  src: theme.twikoo?.src || pluginUrl("twikoo"),
+  integrity: theme.twikoo?.integrity || "",
+  limit: theme.newest_comments?.limit || 6,
+  storageDays: (theme.newest_comments?.storage || 10) / (60 * 24),
+  avatar: theme.newest_comments?.avatar !== false,
+  lazy: Boolean(theme.lazyload?.enable),
+  labels: {
+    image: t("aside.card_newest_comments.image"),
+    link: t("aside.card_newest_comments.link"),
+    code: t("aside.card_newest_comments.code"),
+    error: t("aside.card_newest_comments.error"),
+    zero: t("aside.card_newest_comments.zero"),
+  },
+};
+---
+
+<div id="console">
+  {
+    theme.reward?.enable && rewards.length > 0 && (
+      <div class="console-card-group-reward">
+        <ul class="reward-all console-card">
+          {rewards.map((item: any) => (
+            <li class="reward-item">
+              <a href={item.link || item.img} target="_blank" rel="noopener noreferrer">
+                <img class="post-qr-code-img" alt={item.text} src={item.img} />
+              </a>
+              <div class="post-qr-code-desc">{item.text}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  <div class="console-card-group">
+    <div class="console-card-group-left">
+      {
+        theme.newest_comments?.enable && (
+          <div class="console-card" id="card-newest-comments">
+            <div class="card-content">
+              <div class="author-content-item-tips">{t("console.interaction")}</div>
+              <span class="author-content-item-title">{t("aside.card_newest_comments.headline")}</span>
+            </div>
+            <div class="aside-list">
+              <span>{t("aside.card_newest_comments.loading_text")}</span>
+            </div>
+          </div>
+        )
+      }
+    </div>
+    <div class="console-card-group-right">
+      <div class="console-card tags">
+        <div class="card-content">
+          <div class="author-content-item-tips">{t("console.interests")}</div>
+          <span class="author-content-item-title">{t("console.interests_desc")}</span>
+          {
+            theme.centerConsole?.card_tags?.enable && (
+              <div class="card-tags">
+                <div class="item-headline" />
+                <TagCloud
+                  posts={posts}
+                  limit={theme.centerConsole.card_tags.limit || 40}
+                  highlight={theme.centerConsole.card_tags.highlightTags || []}
+                />
+              </div>
+            )
+          }
+        </div>
+      </div>
+      <div class="console-card history">
+        <div class="item-headline">
+          <i class="anzhiyufont anzhiyu-icon-box-archiv" />
+          <span>{t("console.articles")}</span>
+        </div>
+        {
+          theme.centerConsole?.card_archives?.enable && (
+            <div class="card-archives">
+              <ArchiveList
+                posts={posts}
+                limit={theme.centerConsole.card_archives.limit || 8}
+                headline={false}
+              />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+  <div class="button-group">
+    {
+      theme.darkmode?.enable && (
+        <div class="console-btn-item">
+          <a class="darkmode_switchbutton" title={t("console.toggle_mode")} href="javascript:void(0);">
+            <i class="anzhiyufont anzhiyu-icon-moon" />
+          </a>
+        </div>
+      )
+    }
+    {
+      theme.nav_music?.enable && (
+        <div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title={t("console.toggle_music")}>
+          <a class="music-switch" href="javascript:void(0);">
+            <i class="anzhiyufont anzhiyu-icon-music" />
+          </a>
+        </div>
+      )
+    }
+    <div
+      class="console-btn-item"
+      id="consoleHideAside"
+      onclick="anzhiyu.hideAsideBtn()"
+      title={t("console.toggle_aside")}
+    >
+      <a class="asideSwitch">
+        <i class="anzhiyufont anzhiyu-icon-arrows-left-right" />
+      </a>
+    </div>
+  </div>
+  <div class="console-mask" onclick="anzhiyu.hideConsole()" />
+</div>
+{
+  newestOn && (
+    <script is:inline define:vars={{ newest }}>
+      window.addEventListener("load", () => {
+        const changeContent = (content) => {
+          if (!content) return "";
+          content = content.replace(/<img.*?src="(.*?)"?[^>]+>/gi, `[${newest.labels.image}]`);
+          content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, `[${newest.labels.link}]`);
+          content = content.replace(/<pre><code>.*?<\/pre>/gi, `[${newest.labels.code}]`);
+          content = content.replace(/<[^>]+>/g, "");
+          if (content.length > 150) content = content.substring(0, 150) + "...";
+          return content;
+        };
+
+        const generateHtml = (array) => {
+          const $dom = document.querySelector("#card-newest-comments .aside-list");
+          if (!$dom) return;
+          if (!array.length) {
+            $dom.innerHTML = newest.labels.zero;
+            return;
+          }
+          $dom.innerHTML = array
+            .map((item) => {
+              const imgAttr = newest.lazy ? "data-lazy-src" : "src";
+              const avatar = newest.avatar
+                ? `<a href="${item.url}" class="thumbnail"><img ${imgAttr}="${item.avatar}" alt="${item.nick}"><div class="name"><span>${item.nick} </span></div></a>`
+                : "";
+              const time = window.anzhiyu?.diffDate ? anzhiyu.diffDate(item.date, true) : "";
+              return `<div class="aside-list-item">${avatar}<div class="content"><a class="comment" href="${item.url}" title="${item.content}">${item.content}</a><time datetime="${item.date}">${time}</time></div></div>`;
+            })
+            .join("");
+          window.lazyLoadInstance && window.lazyLoadInstance.update();
+        };
+
+        const loadTwikoo = () =>
+          new Promise((resolve, reject) => {
+            if (window.twikoo) {
+              resolve();
+              return;
+            }
+            const existing = document.querySelector(`script[src="${newest.src}"]`);
+            if (existing) {
+              existing.addEventListener("load", resolve, { once: true });
+              existing.addEventListener("error", reject, { once: true });
+              return;
+            }
+            const script = document.createElement("script");
+            script.src = newest.src;
+            if (newest.integrity) {
+              script.integrity = newest.integrity;
+              script.crossOrigin = "anonymous";
+            }
+            script.addEventListener("load", resolve, { once: true });
+            script.addEventListener("error", reject, { once: true });
+            document.head.appendChild(script);
+          });
+
+        const getComment = () => {
+          loadTwikoo()
+            .then(() =>
+              twikoo.getRecentComments({
+                envId: newest.envId,
+                region: newest.region,
+                pageSize: newest.limit,
+                includeReply: true,
+              })
+            )
+            .then((res) => {
+              const list = (res || []).map((e) => ({
+                content: changeContent(e.comment),
+                avatar: e.avatar,
+                nick: e.nick,
+                url: e.url + "#" + e.id,
+                date: new Date(e.created).toISOString(),
+              }));
+              saveToLocal.set("twikoo-newest-comments", JSON.stringify(list), newest.storageDays);
+              generateHtml(list);
+            })
+            .catch(() => {
+              const $dom = document.querySelector("#card-newest-comments .aside-list");
+              if ($dom) $dom.textContent = newest.labels.error;
+            });
+        };
+
+        if (!document.querySelector("#card-newest-comments .aside-list")) return;
+        const cached = saveToLocal.get("twikoo-newest-comments");
+        if (cached) generateHtml(JSON.parse(cached));
+        else getComment();
+      });
+    </script>
+  )
+}

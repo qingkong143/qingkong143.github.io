@@ -1,0 +1,36 @@
+---
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import { formatDate, getCover, postPermalink, type Post } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+---
+
+{
+  posts.length > 0 && (
+    <div class="relatedPosts">
+      <div class="headline">
+        <i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px" />
+        <span>{t("post.recommend")}</span>
+      </div>
+      <div class="relatedPosts-list">
+        {posts.map((p) => (
+          <div>
+            <a href={postPermalink(p)} title={p.data.title}>
+              <img class="cover" src={getCover(p)} alt="cover" />
+              <div class="content is-center">
+                <div class="date">
+                  <i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw" /> {formatDate(p.data.date)}
+                </div>
+                <div class="title">{p.data.title}</div>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

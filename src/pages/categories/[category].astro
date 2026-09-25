@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ArticleSort from "../../components/ArticleSort.astro";
+import { categoryPath, getAllCategories, getPosts } from "../../lib/posts";
+import { t } from "../../lib/i18n";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getAllCategories(posts).map(([category]) => ({ params: { category } }));
+}
+
+const posts = await getPosts();
+const category = decodeURIComponent(Astro.params.category as string);
+const cats = getAllCategories(posts);
+const filtered = posts.filter((p) => p.data.categories.includes(category));
+---
+
+<Layout pageType="page" pageTitle={`${t("page.category")}: ${category}`} posts={posts}>
+  <div id="category">
+    <div id="catalog-bar">
+      <i class="anzhiyufont anzhiyu-icon-shapes" />
+      <div id="catalog-list">
+        <div class="catalog-list-item" id="/">
+          <a href="/">首页</a>
+        </div>
+        {
+          cats.map(([name]) => (
+            <div
+              class={`catalog-list-item${name === category ? " selected" : ""}`}
+              id={categoryPath(name)}
+            >
+              <a href={categoryPath(name)}>{name}</a>
+            </div>
+          ))
+        }
+      </div>
+      <div class="category-bar-next" id="category-bar-next" onclick="anzhiyu.scrollCategoryBarToRight()">
+        <i class="anzhiyufont anzhiyu-icon-angle-double-right" />
+      </div>
+      <a class="catalog-more" href="/categories/">更多</a>
+    </div>
+    <div class="article-sort-title">{t("page.category")} - {category}</div>
+    <ArticleSort posts={filtered} />
+  </div>
+</Layout>

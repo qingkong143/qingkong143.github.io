@@ -1,0 +1,33 @@
+---
+import { t } from "../lib/i18n";
+---
+
+<div id="local-search">
+  <div class="search-dialog">
+    <nav class="search-nav">
+      <span class="search-dialog-title">{t("search.title")}</span>
+      <span id="loading-status"></span>
+      <button class="search-close-button">
+        <i class="anzhiyufont anzhiyu-icon-xmark" />
+      </button>
+    </nav>
+    <div id="loading-database" class="is-center">
+      <i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon" />
+      <span> {t("search.load_data")}</span>
+    </div>
+    <div class="search-wrap">
+      <div id="local-search-input">
+        <div class="local-search-box">
+          <input
+            class="local-search-box--input"
+            placeholder={t("search.local_search.input_placeholder")}
+            type="text"
+          />
+        </div>
+      </div>
+      <hr />
+      <div id="local-search-results"></div>
+    </div>
+  </div>
+  <div id="search-mask"></div>
+</div>

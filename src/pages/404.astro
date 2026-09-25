@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import { getPosts, dateXml, formatDate, fullDate, getCover, postPermalink } from "../lib/posts";
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+
+const posts = await getPosts();
+const recent = posts.slice(0, theme.related_post?.limit || 6);
+const bg = theme.error_404?.background || theme.default_top_img || "/img/404.jpg";
+---
+
+<Layout pageType="404" pageTitle={t("error404")} posts={posts} is404 hideAside>
+  <div id="body-wrap" class="error">
+    <Header pageType="404" pageTitle={t("error404")} posts={posts} />
+    <div class="error-box">
+      <div id="error-wrap">
+        <div class="error-content">
+          <div class="error-img" style={`background-image: url('${bg}')`}></div>
+          <div class="error-info">
+            <h1 class="error_title">404</h1>
+            <div class="error_subtitle">{theme.error_404?.subtitle}</div>
+            <a class="button--animated" href="/">
+              <i class="anzhiyufont anzhiyu-icon-rocket" />
+              回到主页
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="aside-list">
+        <div class="aside-list-group">
+          {
+            recent.map((article) => (
+              <div class="aside-list-item">
+                <a class="thumbnail" href={postPermalink(article)} title={article.data.title}>
+                  <img src={getCover(article)} alt={article.data.title} />
+                </a>
+                <div class="content">
+                  <a class="title" href={postPermalink(article)} title={article.data.title}>
+                    {article.data.title}
+                  </a>
+                  <time datetime={dateXml(article.data.date)} title={`${t("post.created")} ${fullDate(article.data.date)}`}>
+                    {formatDate(article.data.date)}
+                  </time>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

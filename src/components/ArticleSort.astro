@@ -1,0 +1,84 @@
+---
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+import {
+  dateXml,
+  formatDate,
+  fullDate,
+  getCover,
+  postPermalink,
+  tagPath,
+  type Post,
+} from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+  startIndex?: number;
+}
+const { posts, startIndex = 0 } = Astro.props;
+
+let lastYear = 0;
+const rows: Array<{ type: "year"; year: number } | { type: "post"; post: Post; index: number }> = [];
+posts.forEach((post, i) => {
+  const year = post.data.date.getFullYear();
+  if (year !== lastYear) {
+    lastYear = year;
+    rows.push({ type: "year", year });
+  }
+  rows.push({ type: "post", post, index: startIndex + i + 1 });
+});
+---
+
+<div class="article-sort">
+  {
+    rows.map((row) =>
+      row.type === "year" ? (
+        <div class="article-sort-item year">
+          <span>{row.year}</span>
+        </div>
+      ) : (
+        <div class={`article-sort-item ${theme.cover?.archives_enable ? "" : "no-article-cover"}`}>
+          {theme.cover?.archives_enable && (
+            <a class="article-sort-item-img" href={postPermalink(row.post)} title={row.post.data.title}>
+              <img
+                src={getCover(row.post)}
+                alt={row.post.data.title}
+                onerror={`this.onerror=null;this.src='${theme.error_img?.post_page || "/img/404.jpg"}'`}
+              />
+            </a>
+          )}
+          <div class="article-sort-item-info">
+            <a class="article-sort-item-title" href={postPermalink(row.post)} title={row.post.data.title}>
+              {row.post.data.title}
+            </a>
+            <span class="article-sort-item-index">{row.index}</span>
+            <div class="article-meta-wrap">
+              {theme.post_meta?.page?.tags && row.post.data.tags.length > 0 && (
+                <span class="article-sort-item-tags">
+                  {row.post.data.tags.map((name) => (
+                    <a href={tagPath(name)} tabindex="-1" class="article-meta__tags">
+                      <span>
+                        <i class="anzhiyufont anzhiyu-icon-hashtag" />
+                        {name}
+                      </span>
+                    </a>
+                  ))}
+                </span>
+              )}
+              <div class="article-sort-item-time">
+                <i class="anzhiyufont anzhiyu-icon-calendar-alt" />
+                <time
+                  class="post-meta-date-created"
+                  datetime={dateXml(row.post.data.date)}
+                  title={`${t("post.created")} ${fullDate(row.post.data.date)}`}
+                >
+                  {formatDate(row.post.data.date)}
+                </time>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    )
+  }
+</div>

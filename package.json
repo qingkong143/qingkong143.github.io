@@ -1,0 +1,28 @@
+{
+  "name": "astro-theme-anheyu",
+  "version": "1.7.1",
+  "description": "AnZhiYu theme ported to Astro",
+  "type": "module",
+  "scripts": {
+    "css": "node scripts/compile-stylus.mjs && node scripts/generate-anheyu-css.mjs",
+    "css:anheyu": "node scripts/generate-anheyu-css.mjs",
+    "dev": "npm run css && astro dev",
+    "build": "npm run css && astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [
+    "astro",
+    "theme",
+    "anzhiyu",
+    "anheyu",
+    "blog"
+  ],
+  "license": "GPL-3.0",
+  "dependencies": {
+    "astro": "^5.14.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "stylus": "^0.64.0"
+  }
+}

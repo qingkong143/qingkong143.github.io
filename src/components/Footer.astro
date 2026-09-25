@@ -1,0 +1,33 @@
+---
+import { site, theme } from "../lib/config";
+
+const nowYear = new Date().getFullYear();
+const since = theme.footer?.owner?.since;
+const yearText = since && since != nowYear ? `${since} - ${nowYear}` : `${nowYear}`;
+const authorLink = theme.footer?.footerBar?.authorLink || "/";
+---
+
+{
+  theme.footer?.footerBar?.enable && (
+    <div id="footer-bar">
+      <div class="footer-bar-links">
+        <div class="footer-bar-left">
+          <div id="footer-bar-tips">
+            {theme.footer.owner?.enable && (
+              <div class="copyright">
+                &copy;{yearText} By{" "}
+                <a class="footer-bar-link" href={authorLink} title={site.author}>
+                  {site.author}
+                </a>
+              </div>
+            )}
+          </div>
+          {theme.footer?.custom_text && (
+            <div class="footer_custom_text" set:html={theme.footer.custom_text} />
+          )}
+          <div id="footer-type-tips" />
+        </div>
+      </div>
+    </div>
+  )
+}

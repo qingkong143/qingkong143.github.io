@@ -1,0 +1,71 @@
+---
+import Nav from "./Nav.astro";
+import Social from "./Social.astro";
+import { site, theme } from "../lib/config";
+import type { Post } from "../lib/posts";
+
+interface Props {
+  pageType: "home" | "post" | "page" | "404";
+  pageTitle: string;
+  posts: Post[];
+  post?: Post;
+  headings?: Array<{ depth: number; slug: string; text: string }>;
+  html?: string;
+}
+
+const { pageType, pageTitle, posts, post, headings, html } = Astro.props;
+
+const disableTop = theme.disable_top_img;
+let isHomeClass = "not-top-img";
+let homeIndexBg = "";
+
+if (!disableTop) {
+  if (pageType === "post" && post) {
+    isHomeClass = "not-top-img";
+  } else if (pageType === "home") {
+    const indexImg = theme.index_img;
+    if (indexImg && indexImg !== false) {
+      isHomeClass = "full_page";
+      homeIndexBg = indexImg;
+    } else {
+      isHomeClass = "not-top-img";
+    }
+  } else if (pageType === "404") {
+    isHomeClass = "not-top-img";
+  } else {
+    isHomeClass = theme.default_top_img ? "not-home-page" : "not-top-img";
+  }
+}
+
+const headerStyle = homeIndexBg
+  ? `background: url(${homeIndexBg}) top / cover no-repeat`
+  : undefined;
+---
+
+<header id="page-header" class={isHomeClass} style={headerStyle}>
+  <Nav posts={posts} pageTitle={pageTitle} />
+  {
+    pageType === "home" && isHomeClass === "full_page" && (
+      <>
+        <div id="site-info">
+          <h1 id="site-title">{site.title}</h1>
+          {theme.social && (
+            <div id="site_social_icons">
+              <Social />
+            </div>
+          )}
+        </div>
+        <div id="scroll-down">
+          <i class="anzhiyufont anzhiyu-icon-angle-down scroll-down-effects" />
+        </div>
+      </>
+    )
+  }
+  {
+    pageType === "page" && isHomeClass !== "not-top-img" && (
+      <div id="page-site-info">
+        <h1 id="site-title">{pageTitle}</h1>
+      </div>
+    )
+  }
+</header>

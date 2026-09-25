@@ -1,0 +1,155 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+import { getPosts } from "../lib/posts";
+import fs from "node:fs";
+import path from "node:path";
+
+const posts = await getPosts();
+const todoItems = await getCollection("todo");
+const todo = todoItems[0];
+const { Content } = todo ? await render(todo) : { Content: null };
+
+const todoFilePath = path.resolve(process.cwd(), "src/content/todo/todo.md");
+const rawMd = fs.existsSync(todoFilePath) ? fs.readFileSync(todoFilePath, "utf-8") : "";
+const rawBody = rawMd.replace(/^---[\s\S]*?---\n*/, "");
+
+interface SectionStat {
+  name: string;
+  total: number;
+  done: number;
+}
+
+const sectionStats: SectionStat[] = [];
+const categoryBlocks = rawBody.split(/\n(?=# )/g).filter((block) => block.trim().startsWith("# "));
+
+for (const block of categoryBlocks) {
+  const name = block.match(/^#\s+(.+)/m)?.[1]?.trim();
+  if (!name) continue;
+
+  const itemBlocks = block.split(/\n(?=## )/g).slice(1);
+  let total = 0;
+  let done = 0;
+
+  for (const item of itemBlocks) {
+    if (!item.match(/^##\s+/m)) continue;
+    total += 1;
+    if (/>\s*.*完成[:：]/.test(item)) done += 1;
+  }
+
+  if (total > 0) sectionStats.push({ name, total, done });
+}
+
+const totalTasks = sectionStats.reduce((sum, s) => sum + s.total, 0);
+const totalDone = sectionStats.reduce((sum, s) => sum + s.done, 0);
+const totalPending = totalTasks - totalDone;
+const overallPercent = totalTasks > 0 ? Math.round((totalDone / totalTasks) * 100) : 0;
+const lastUpdate = todo?.data.lastUpdate ?? "";
+const pageTitle = todo?.data.title || "任务清单";
+---
+
+<Layout pageType="page" pageTitle={pageTitle} posts={posts}>
+  <div id="page" class="todo-page">
+    <h1 class="page-title">{pageTitle}</h1>
+    {lastUpdate && <p class="todo-updated">最近更新 · {lastUpdate}</p>}
+
+    <div class="todo-stats-bar" aria-label="任务统计">
+      <div class="todo-stat-item">
+        <span class="todo-stat-value">{totalTasks}</span>
+        <span class="todo-stat-label">总计</span>
+      </div>
+      <div class="todo-stat-item">
+        <span class="todo-stat-value todo-stat-done">{totalDone}</span>
+        <span class="todo-stat-label">已完成</span>
+      </div>
+      <div class="todo-stat-item">
+        <span class="todo-stat-value todo-stat-pending">{totalPending}</span>
+        <span class="todo-stat-label">待办</span>
+      </div>
+      <div class="todo-stat-item">
+        <span class="todo-stat-value todo-stat-pct">{overallPercent}%</span>
+        <span class="todo-stat-label">完成率</span>
+      </div>
+    </div>
+
+    <div class="todo-progress-wrap">
+      <div class="todo-progress-bar">
+        <div class="todo-progress-fill" style={`width: ${overallPercent}%`}></div>
+      </div>
+    </div>
+
+    {
+      sectionStats.length > 0 && (
+        <div class="todo-section-progress">
+          {sectionStats.map((section) => {
+            const pct = Math.round((section.done / section.total) * 100);
+            return (
+              <div class="todo-section-card">
+                <div class="todo-section-card-header">
+                  <span class="todo-section-card-name">{section.name}</span>
+                  <span class="todo-section-card-meta">
+                    {section.done}/{section.total}
+                  </span>
+                </div>
+                <div class="todo-section-progress-bar">
+                  <div class="todo-section-progress-fill" style={`width: ${pct}%`}></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )
+    }
+
+    <hr class="post-divider" />
+    <article id="article-container" class="post-content page-content todo-entry">
+      {Content && <Content />}
+    </article>
+  </div>
+</Layout>
+
+<script>
+  const enhanceTodoEntries = () => {
+    document.querySelectorAll(".todo-entry h2").forEach((heading) => {
+      if (!(heading instanceof HTMLElement)) return;
+      if (heading.querySelector(".todo-status")) return;
+
+      const meta = heading.nextElementSibling;
+      const metaText = meta?.textContent || "";
+      const done = /完成[:：]/.test(metaText);
+      const created = metaText.match(/创建[:：]\s*([0-9]{4}[-/.年][0-9]{1,2}[-/.月][0-9]{1,2}日?)/)?.[1];
+      const completed = metaText.match(/完成[:：]\s*([0-9]{4}[-/.年][0-9]{1,2}[-/.月][0-9]{1,2}日?)/)?.[1];
+
+      heading.classList.add(done ? "is-done" : "is-pending");
+
+      const badge = document.createElement("span");
+      badge.className = `todo-status ${done ? "todo-status-done" : "todo-status-pending"}`;
+      badge.textContent = done ? "已完成" : "进行中";
+      heading.appendChild(badge);
+
+      if (meta instanceof HTMLElement && meta.tagName === "BLOCKQUOTE") {
+        meta.classList.add("todo-meta");
+        meta.replaceChildren();
+
+        if (created) {
+          const createdEl = document.createElement("span");
+          createdEl.className = "todo-meta-item";
+          createdEl.textContent = `创建 ${created}`;
+          meta.appendChild(createdEl);
+        }
+
+        if (completed) {
+          const completedEl = document.createElement("span");
+          completedEl.className = "todo-meta-item todo-meta-done";
+          completedEl.textContent = `完成 ${completed}`;
+          meta.appendChild(completedEl);
+        } else if (!created) {
+          meta.textContent = metaText.trim();
+        }
+      }
+    });
+  };
+
+  enhanceTodoEntries();
+  document.addEventListener("astro:page-load", enhanceTodoEntries);
+</script>

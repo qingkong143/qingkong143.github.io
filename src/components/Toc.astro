@@ -1,0 +1,39 @@
+---
+import { t } from "../lib/i18n";
+import { theme } from "../lib/config";
+import type { Heading } from "../lib/posts";
+
+interface Props {
+  headings: Heading[];
+}
+const { headings } = Astro.props;
+const numbered = theme.toc?.number;
+const expand = theme.toc?.expand ? "is-expand" : "";
+
+function nest(list: Heading[]) {
+  return list.filter((h) => h.depth >= 2 && h.depth <= 4);
+}
+const items = nest(headings);
+---
+
+<div id="card-toc" class="card-widget">
+  <div class="item-headline">
+    <i class="anzhiyufont anzhiyu-icon-bars" />
+    <span>{t("aside.card_toc")}</span>
+    <span class="toc-percentage"></span>
+  </div>
+  <div class={`toc-content ${expand}`}>
+    <ol class="toc">
+      {
+        items.map((h, i) => (
+          <li class={`toc-item toc-level-${h.depth}`}>
+            <a class="toc-link" href={`#${h.slug}`}>
+              {numbered && <span class="toc-number">{i + 1}.</span>}
+              <span class="toc-text">{h.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</div>

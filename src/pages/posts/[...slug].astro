@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PostInfo from "../../components/PostInfo.astro";
+import PostCopyright from "../../components/PostCopyright.astro";
+import PostTools from "../../components/PostTools.astro";
+import PostPagination from "../../components/PostPagination.astro";
+import RelatedPosts from "../../components/RelatedPosts.astro";
+import Comments from "../../components/Comments.astro";
+import { render } from "astro:content";
+import { theme } from "../../lib/config";
+import {
+  getCover,
+  getPosts,
+  postSlug,
+  relatedPosts,
+  type Post,
+} from "../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const posts = await getPosts();
+const { Content, headings } = await render(post);
+const html = post.body || "";
+const idx = posts.findIndex((p) => p.id === post.id);
+const newer = idx > 0 ? posts[idx - 1] : undefined;
+const older = idx < posts.length - 1 ? posts[idx + 1] : undefined;
+const related = theme.related_post?.enable
+  ? relatedPosts(post, posts, theme.related_post.limit || 6)
+  : [];
+const showToc = theme.aside?.enable && (post.data.toc ?? theme.toc?.post) && headings.length > 0;
+const cover = getCover(post);
+---
+
+<Layout
+  pageType="post"
+  pageTitle={post.data.title}
+  description={post.data.description}
+  image={cover}
+  posts={posts}
+  post={post}
+  headings={headings}
+  html={html}
+  showToc={showToc}
+>
+  <div id="post">
+    <PostInfo post={post} headings={headings} html={html} />
+    <hr class="post-divider" />
+    <article id="article-container" class="post-content" itemscope>
+      <Content />
+    </article>
+    <PostCopyright post={post} />
+    <PostTools post={post} />
+    {theme.post_pagination && <PostPagination prev={older} next={newer} />}
+    {related.length > 0 && <RelatedPosts posts={related} />}
+  </div>
+  {post.data.comments !== false && <Comments />}
+</Layout>

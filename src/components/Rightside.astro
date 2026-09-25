@@ -1,0 +1,64 @@
+---
+import { theme } from "../lib/config";
+import { t } from "../lib/i18n";
+
+interface Props {
+  isPost?: boolean;
+  showToc?: boolean;
+}
+const { isPost = false, showToc = false } = Astro.props;
+---
+
+<div id="rightside">
+  <div id="rightside-config-hide">
+    {
+      isPost && theme.readmode && (
+        <button id="readmode" type="button" title={t("rightside.readmode_title")}>
+          <i class="anzhiyufont anzhiyu-icon-book-open" />
+        </button>
+      )
+    }
+    {
+      theme.translate?.enable && (
+        <button id="translateLink" type="button" title={t("rightside.translate_title")}>
+          {theme.translate.default}
+        </button>
+      )
+    }
+    {
+      theme.darkmode?.enable && theme.darkmode.button && (
+        <button id="darkmode" type="button" title={t("rightside.night_mode_title")}>
+          <i class="anzhiyufont anzhiyu-icon-circle-half-stroke" />
+        </button>
+      )
+    }
+    {
+      theme.aside?.enable && theme.aside.button && (
+        <button id="hide-aside-btn" type="button" title={t("rightside.aside")}>
+          <i class="anzhiyufont anzhiyu-icon-arrows-left-right" />
+        </button>
+      )
+    }
+  </div>
+  <div id="rightside-config-show">
+    {
+      (isPost
+        ? theme.readmode || theme.translate?.enable || (theme.darkmode?.enable && theme.darkmode.button)
+        : theme.translate?.enable || (theme.darkmode?.enable && theme.darkmode.button)) && (
+        <button id="rightside-config" type="button" title={t("rightside.setting")}>
+          <i class="anzhiyufont anzhiyu-icon-gear" />
+        </button>
+      )
+    }
+    {
+      showToc && (
+        <button id="mobile-toc-button" class="close" type="button" title={t("rightside.toc")}>
+          <i class="anzhiyufont anzhiyu-icon-list-ul" />
+        </button>
+      )
+    }
+    <button id="go-up" type="button" title={t("rightside.back_to_top")}>
+      <i class="anzhiyufont anzhiyu-icon-arrow-up" />
+    </button>
+  </div>
+</div>

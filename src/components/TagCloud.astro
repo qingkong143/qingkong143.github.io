@@ -1,0 +1,34 @@
+---
+import { anheyu } from "../lib/anheyu";
+import { getAllTags, tagPath, type Post } from "../lib/posts";
+
+interface Props {
+  posts: Post[];
+  limit?: number;
+  highlight?: string[];
+  color?: boolean;
+}
+const { posts, limit = 40, highlight = [], color = false } = Astro.props;
+const tags = getAllTags(posts).slice(0, limit || undefined);
+const sizes = [...new Set(tags.map(([, list]) => list.length))].sort((a, b) => a - b);
+const maxIndex = Math.max(sizes.length - 1, 1);
+---
+
+<div class="card-tag-cloud">
+  {
+    tags.map(([name, list]) => {
+      const ratio = sizes.indexOf(list.length) / maxIndex;
+      const size = (anheyu.tagSizeMin + anheyu.tagSizeSpan * ratio).toFixed(2);
+      const isHi = highlight.includes(name);
+      const style = isHi
+        ? `font-size: ${size}rem; font-weight: 500; color: var(--anzhiyu-lighttext)`
+        : `font-size: ${size}rem;`;
+      return (
+        <a href={tagPath(name)} style={style}>
+          {name}
+          <sup>{list.length}</sup>
+        </a>
+      );
+    })
+  }
+</div>

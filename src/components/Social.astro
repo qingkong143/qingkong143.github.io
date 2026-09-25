@@ -1,0 +1,24 @@
+---
+import { theme } from "../lib/config";
+import Icon from "./Icon.astro";
+
+const social = (theme.social || {}) as Record<string, string>;
+const entries = Object.entries(social).filter(([, v]) => typeof v === "string");
+---
+
+{
+  entries.map(([title, value]) => {
+    const [href, icon, anima] = value.split("||").map((s) => s.trim());
+    return (
+      <a
+        class="social-icon faa-parent animated-hover"
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={title}
+      >
+        <Icon icon={icon} anima={anima || "faa-tada"} />
+      </a>
+    );
+  })
+}
